@@ -1,12 +1,12 @@
 import { GameObject } from "./game-object.class";
 
 export class OverworldMap {
-  gameObject;
+  gameObjects;
   lowerImage;
   upperImage;
 
   constructor(config: any) {
-    this.gameObject = config.gameObject;
+    this.gameObjects = config.gameObjects;
 
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;
@@ -24,9 +24,10 @@ export class OverworldMap {
   }
 }
 
-window.OverworldMaps = {
+(<any>window).OverworldMaps = {
   DemoRoom: {
     lowerSrc: 'assets/overworld-map-01.svg',
+    upperSrc: '',
     gameObjects: {
       hero: new GameObject({
         x: 3,
@@ -42,6 +43,7 @@ window.OverworldMaps = {
   },
   Kitchen: {
     lowerSrc: 'assets/overworld-map-01.svg',
+    upperSrc: '',
     gameObjects: {
       hero: new GameObject({
         x: 3,

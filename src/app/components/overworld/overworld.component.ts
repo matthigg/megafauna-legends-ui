@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameObject } from 'src/app/classes/game-object.class';
+import { OverworldMap } from 'src/app/classes/overworld-map.class';
 
 @Component({
   selector: 'app-overworld',
@@ -11,6 +12,7 @@ export class OverworldComponent implements OnInit {
   canvas: HTMLCanvasElement | null = null;
   ctx: CanvasRenderingContext2D | null = null;
   raf: number | null = null;
+  map: any = null;
 
   constructor(
     private _router: Router,
@@ -20,33 +22,33 @@ export class OverworldComponent implements OnInit {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
-    // Create background
-    const image = new Image();
-    image.onload = () => {
-      this.ctx?.drawImage(image, 0, 0);
-    }
-    image.src = 'assets/overworld-map-01.svg';
+    this.map = new OverworldMap(
+      (<any>window).OverworldMaps.DemoRoom,
+    );
 
-    // Place some game objects
-    const hero = new GameObject({
-      x: 3,
-      y: 3,
-      src: null,
-    });
-
-    const npc1 = new GameObject({
-      x: 5,
-      y: 5,
-      src: null,
-    });
-
-    setTimeout(() => {
-      hero.sprite.draw(this.ctx);
-      npc1.sprite.draw(this.ctx);
-    }, 500)
+    this.startGameLoop();
   }
 
+  startGameLoop(): void {
+    const step = () => {
 
+      // Draw lower map layer
+      this.map.drawLowerImage(this.ctx)
+
+      // Draw game objects
+      Object.values(this.map?.gameObjects)?.forEach(object => {
+        (object as any).sprite.draw(this.ctx);
+      });
+
+      // Draw upper map layer
+      this.map.drawUpperImage(this.ctx)
+      
+      requestAnimationFrame(() => {
+        step();
+      })
+    } 
+    step();
+  }
 }
 
  
