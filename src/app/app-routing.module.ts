@@ -3,13 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
-import { OpenWorldComponent } from './components/open-world/open-world.component';
+import { OverworldComponent } from './components/overworld/overworld.component';
 
 const routes: Routes = [
-  { path: 'battlefield', component: BattlefieldComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'open-world', component: OpenWorldComponent },
+  { path: 'overworld', component: OverworldComponent },
 ];
 
 @NgModule({
