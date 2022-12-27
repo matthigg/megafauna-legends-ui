@@ -16,8 +16,4 @@ export class GameObject {
       animations: null,
     });
   }
-
-  // update(): void {
-
-  // }
 }

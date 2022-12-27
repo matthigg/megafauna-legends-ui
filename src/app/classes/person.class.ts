@@ -2,17 +2,18 @@ import { GameObject } from "./game-object.class";
 
 export class Person extends GameObject {
   movingProgressRemaining: number = 32;
-  directionUpdate: any;
+  directionUpdate: any = {
+    'up': ['y', -1],
+    'down': ['y', 1],
+    'left': ['x', -1],
+    'right': ['x', 1],
+  }
+  isPlayerControlled: boolean = false;
 
   constructor(config: any) {
     super(config);
 
-    this.directionUpdate = {
-      'up': ['y', -1],
-      'down': ['y', 1],
-      'left': ['x', -1],
-      'right': ['x', 1],
-    }
+    this.isPlayerControlled = config.isPlayerControlled || false;
   }
 
   updatePosition(): void {
@@ -28,7 +29,11 @@ export class Person extends GameObject {
 
     // If the user is pressing a direction to move in and the animation has finished via
     // this.movingProgressRemaining === 0, then move in that direction
-    if (state.arrow && this.movingProgressRemaining === 0) {
+    if (
+      state.arrow && 
+      this.movingProgressRemaining === 0 &&
+      this.isPlayerControlled
+    ) {
       this.direction = state.arrow;
       this.movingProgressRemaining = 32;
     }

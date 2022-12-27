@@ -35,6 +35,7 @@ function gridSize(n: number): number {
     upperSrc: '',
     gameObjects: {
       hero: new Person({
+        isPlayerControlled: true,
         x: gridSize(3),
         y: gridSize(3),
         src: null,
