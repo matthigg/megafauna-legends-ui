@@ -22,6 +22,7 @@ export class OverworldComponent implements OnInit {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
+    // Set map
     this.map = new OverworldMap(
       (<any>window).OverworldMaps.DemoRoom,
     );
@@ -31,12 +32,16 @@ export class OverworldComponent implements OnInit {
 
   startGameLoop(): void {
     const step = () => {
+      if (this.canvas) {
+        this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
 
       // Draw lower map layer
       this.map.drawLowerImage(this.ctx)
 
       // Draw game objects
       Object.values(this.map?.gameObjects)?.forEach(object => {
+        // (object as any).x += 0.0025;
         (object as any).sprite.draw(this.ctx);
       });
 
