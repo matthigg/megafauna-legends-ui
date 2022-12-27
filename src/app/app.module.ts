@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverworldComponent } from './components/overworld/overworld.component';
+import { OverworldMapComponent } from './components/overworld-map/overworld-map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OverworldComponent
+    OverworldComponent,
+    OverworldMapComponent
   ],
   imports: [
     BrowserModule,
