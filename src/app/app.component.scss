@@ -1,0 +1,24 @@
+#sidenav-container {
+  background: #ccc;
+  height: 100vh;
+  & nav {
+    & mat-list-item {
+        border-bottom: 2px solid rgba(0, 0, 0, 0);
+      &:hover {
+        background: rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        border-bottom: 2px solid #fff;
+        &:active {
+          background: rgba(0, 0, 0, .25);
+        }
+      }
+    }
+  }
+  & #sidenav-nav {
+    background: #ccc;
+    height: 100%;
+  }
+  & #sidenav-content {
+    height: 100%;
+  }
+}
