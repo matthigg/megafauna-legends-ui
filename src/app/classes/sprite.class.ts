@@ -29,8 +29,8 @@ export class Sprite {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    const x = this.gameObject.x * 32 - 16;
-    const y = this.gameObject.y * 32 - 32;
+    const x = this.gameObject.x - 16;
+    const y = this.gameObject.y - 32;
 
     // Create shadow image
     ctx.beginPath();
