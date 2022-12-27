@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameObject } from 'src/app/classes/game-object.class';
 import { OverworldMap } from 'src/app/classes/overworld-map.class';
+import { DirectionInput } from 'src/app/classes/direction-input.class';
 
 @Component({
   selector: 'app-overworld',
@@ -13,6 +14,7 @@ export class OverworldComponent implements OnInit {
   ctx: CanvasRenderingContext2D | null = null;
   raf: number | null = null;
   map: any = null;
+  directionInput: DirectionInput = new DirectionInput();
 
   constructor(
     private _router: Router,
@@ -26,6 +28,8 @@ export class OverworldComponent implements OnInit {
     this.map = new OverworldMap(
       (<any>window).OverworldMaps.DemoRoom,
     );
+
+    this.directionInput.init();
 
     this.startGameLoop();
   }
