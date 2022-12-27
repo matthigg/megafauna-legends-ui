@@ -1,4 +1,5 @@
 import { GameObject } from "./game-object.class";
+import { Person } from "./person.class";
 
 export class OverworldMap {
   gameObjects;
@@ -33,12 +34,12 @@ function gridSize(n: number): number {
     lowerSrc: 'assets/overworld-map-01.svg',
     upperSrc: '',
     gameObjects: {
-      hero: new GameObject({
+      hero: new Person({
         x: gridSize(3),
         y: gridSize(3),
         src: null,
       }),
-      npc1: new GameObject({
+      npc1: new Person({
         x: gridSize(5),
         y: gridSize(5),
         src: null,
@@ -49,17 +50,17 @@ function gridSize(n: number): number {
     lowerSrc: 'assets/overworld-map-01.svg',
     upperSrc: '',
     gameObjects: {
-      hero: new GameObject({
+      hero: new Person({
         x: gridSize(3),
         y: gridSize(7),
         src: null,
       }),
-      npc1: new GameObject({
+      npc1: new Person({
         x: gridSize(4),
         y: gridSize(8),
         src: null,
       }),
-      npc2: new GameObject({
+      npc2: new Person({
         x: gridSize(7),
         y: gridSize(7),
         src: null,

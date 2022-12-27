@@ -41,7 +41,8 @@ export class OverworldComponent implements OnInit {
 
       // Draw game objects
       Object.values(this.map?.gameObjects)?.forEach(object => {
-        (object as any).x += 0.05;
+        // (object as any).x += 0.05;
+        (object as any).update();
         (object as any).sprite.draw(this.ctx);
       });
 
