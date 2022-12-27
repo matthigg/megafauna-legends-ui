@@ -10,7 +10,7 @@ export class GameObject {
     this.y = config.y || 0;
     this.sprite = new Sprite({
       gameObject: this,
-      src: config.src || 'assets/sprite-sheet-01.webp',
+      src: config.src || 'assets/character-01.webp',
       animations: null,
     });
   }

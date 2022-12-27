@@ -24,12 +24,13 @@ export class OverworldComponent implements OnInit {
     const hero = new GameObject({
       x: 3,
       y: 3,
+      src: null,
     });
 
     const npc1 = new GameObject({
       x: 5,
       y: 5,
-      src: 'assets/sprite-sheet-01.webp',
+      src: null,
     });
 
     setTimeout(() => {
