@@ -29,14 +29,14 @@ export class Sprite {
   }
 
   draw(ctx: any) {
-    const x = this.gameObject.x * 32 - 32;
+    const x = this.gameObject.x * 32 - 16;
     const y = this.gameObject.y * 32 - 32;
 
     // Create shadow image
     ctx.beginPath();
-    ctx.arc(x + 0, y + 16, 16, 0, Math.PI * 2, true);
+    ctx.arc(x - 1, y + 18, 14, 0, Math.PI * 2, true);
     ctx.closePath();
-    ctx.fillStyle = "rgba(0, 0 , 0, 0.15)";
+    ctx.fillStyle = "rgba(0, 0 , 0, 0.25)";
     ctx.fill();
     
     // Create character/npc image

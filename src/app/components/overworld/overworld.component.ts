@@ -20,6 +20,13 @@ export class OverworldComponent implements OnInit {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
+    // Create background
+    const image = new Image();
+    image.onload = () => {
+      this.ctx?.drawImage(image, 0, 0);
+    }
+    image.src = 'assets/overworld-map-01.svg';
+
     // Place some game objects
     const hero = new GameObject({
       x: 3,
