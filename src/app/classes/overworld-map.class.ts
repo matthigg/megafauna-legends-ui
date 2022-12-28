@@ -1,3 +1,4 @@
+import { createMayBeForwardRefExpression } from "@angular/compiler";
 import { GameObject } from "./game-object.class";
 import { Person } from "./person.class";
 
@@ -16,12 +17,20 @@ export class OverworldMap {
     this.upperImage.src = config.upperSrc;
   }
 
-  drawLowerImage(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: any) {
+    ctx.drawImage(
+      this.lowerImage, 
+      gridSize(10.5) - cameraPerson.x, 
+      gridSize(9) - cameraPerson.y, 
+    );
   }
 
-  drawUpperImage(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx: CanvasRenderingContext2D, cameraPerson: any) {
+    ctx.drawImage(
+      this.upperImage, 
+      gridSize(10.5) - cameraPerson.x, 
+      gridSize(9) - cameraPerson.y, 
+    );
   }
 }
 
@@ -40,11 +49,11 @@ function gridSize(n: number): number {
         y: gridSize(3),
         src: null,
       }),
-      // npc1: new Person({
-      //   x: gridSize(5),
-      //   y: gridSize(5),
-      //   src: null,
-      // }),
+      npc1: new Person({
+        x: gridSize(5),
+        y: gridSize(5),
+        src: null,
+      }),
     }
   },
   Kitchen: {

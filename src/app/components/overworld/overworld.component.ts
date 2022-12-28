@@ -40,20 +40,26 @@ export class OverworldComponent implements OnInit {
         this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
 
-      // Draw lower map layer
-      this.map.drawLowerImage(this.ctx)
+      // Establish the 'camera' person
+      const cameraPerson = this.map.gameObjects.hero;
 
-      // Draw game objects
+      // Update all objects
       Object.values(this.map?.gameObjects)?.forEach(object => {
-        // (object as any).x += 0.05;
         (object as any).update({
           arrow: this.directionInput.direction,
         });
-        (object as any).sprite.draw(this.ctx);
+      });
+
+      // Draw lower map layer
+      this.map.drawLowerImage(this.ctx, cameraPerson)
+
+      // Draw game objects
+      Object.values(this.map?.gameObjects)?.forEach(object => {
+        (object as any).sprite.draw(this.ctx, cameraPerson);
       });
 
       // Draw upper map layer
-      this.map.drawUpperImage(this.ctx)
+      this.map.drawUpperImage(this.ctx, cameraPerson)
       
       requestAnimationFrame(() => {
         step();
