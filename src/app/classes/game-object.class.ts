@@ -1,6 +1,7 @@
 import { Sprite } from "src/app/classes/sprite.class";
 
 export class GameObject {
+  isMounted: boolean = false;
   x: number = 0;
   y: number = 0;
   direction: string = 'down';
@@ -15,5 +16,11 @@ export class GameObject {
       src: config.src || 'assets/character-01.webp',
       animations: null,
     });
+  }
+
+  mount(map: any) {
+    this.isMounted = true;
+    map.addWall(this.x, this.y)
+    console.log('--- map.walls:', map.walls)
   }
 }

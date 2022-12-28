@@ -16,9 +16,7 @@ export class Sprite {
     this.image.onload = () => {
       this.isLoaded = true;
     }
-    // left is up
-    // right is left
-    // up is right
+    
     // Configure animation & initial state
     this.animations = config.animations || {
       'idle-down':  [ [0, 0] ],
@@ -30,7 +28,7 @@ export class Sprite {
       'walk-right': [ [1, 2], [0, 2], [3, 2], [0, 2] ],
       'walk-up':    [ [1, 3], [0, 3], [3, 3], [0, 3] ],
     }
-    this.currentAnimation = 'idle-left' // config.currentAnimation || 'idle-down';
+    this.currentAnimation = 'idle-down'
     this.currentAnimationFrame = 0;
     this.animationFrameLimit = config.animationFrameLimit || 16;
     this.animationFrameProgress = 0;

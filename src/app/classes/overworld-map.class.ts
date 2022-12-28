@@ -35,9 +35,34 @@ export class OverworldMap {
     );
   }
 
-  isSpaceTaken(currentX: number, currentY: number, direction: string) {
-    const {x,y} = nextPosition(currentX, currentY, direction);
+  isSpaceTaken(currentX: number, currentY: number, direction: string): boolean {
+    const {x, y} = nextPosition(currentX, currentY, direction);
     return this.walls[`${x},${y}`] || false;
+  }
+
+  mountObjects(): void {
+    Object.values(this.gameObjects).forEach((object: any) => {
+
+      // TODO: determine if this object should mount
+      
+      object.mount(this);
+    })
+  }
+
+  addWall(x: number, y: number) {
+    this.walls[`${x},${y}`] = true;
+  }
+  
+  removeWall(x: number, y: number) {
+    delete this.walls[`${x},${y}`];
+  }
+
+  moveWall(wasX: number, wasY: number, direction: string) {
+    this.removeWall(wasX, wasY);
+    const {x, y} = nextPosition(wasX, wasY, direction);
+    this.addWall(x, y)
+
+    // console.log('--- this.walls:', this.walls);
   }
 }
 
@@ -59,10 +84,10 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     x += size;
   } else if (direction === 'up') {
     y -= size;
-  } else if (direction === 'right') {
+  } else if (direction === 'down') {
     y += size;
   }
-  return {x,y};
+  return {x, y};
 }
 
 (<any>window).OverworldMaps = {
@@ -76,33 +101,33 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         y: gridSize(3),
         src: null,
       }),
-      // npc1: new Person({
-      //   x: gridSize(5),
-      //   y: gridSize(5),
-      //   src: null,
-      // }),
+      npc1: new Person({
+        x: gridSize(5),
+        y: gridSize(5),
+        src: null,
+      }),
     },
     walls: {
-      [asGridCoord(1,1)] : true,
-      [asGridCoord(1,2)] : true,
-      [asGridCoord(1,3)] : true,
-      [asGridCoord(1,4)] : true,
-      [asGridCoord(1,5)] : true,
-      [asGridCoord(2,1)] : true,
-      [asGridCoord(2,2)] : true,
-      [asGridCoord(2,3)] : true,
-      [asGridCoord(2,4)] : true,
-      [asGridCoord(2,5)] : true,
-      [asGridCoord(3,1)] : true,
-      [asGridCoord(3,2)] : true,
-      [asGridCoord(3,3)] : true,
-      [asGridCoord(3,4)] : true,
-      [asGridCoord(3,5)] : true,
-      [asGridCoord(4,1)] : true,
-      [asGridCoord(4,2)] : true,
-      [asGridCoord(4,3)] : true,
-      [asGridCoord(4,4)] : true,
-      [asGridCoord(4,5)] : true,
+      // [asGridCoord(1,1)] : true,
+      // [asGridCoord(1,2)] : true,
+      // [asGridCoord(1,3)] : true,
+      // [asGridCoord(1,4)] : true,
+      // [asGridCoord(1,5)] : true,
+      // [asGridCoord(2,1)] : true,
+      // [asGridCoord(2,2)] : true,
+      // [asGridCoord(2,3)] : true,
+      // [asGridCoord(2,4)] : true,
+      // [asGridCoord(2,5)] : true,
+      // [asGridCoord(3,1)] : true,
+      // [asGridCoord(3,2)] : true,
+      // [asGridCoord(3,3)] : true,
+      // [asGridCoord(3,4)] : true,
+      // [asGridCoord(3,5)] : true,
+      // [asGridCoord(4,1)] : true,
+      // [asGridCoord(4,2)] : true,
+      // [asGridCoord(4,3)] : true,
+      // [asGridCoord(4,4)] : true,
+      // [asGridCoord(4,5)] : true,
     },
   },
   Kitchen: {

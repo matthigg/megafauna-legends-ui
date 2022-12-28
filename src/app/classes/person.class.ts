@@ -1,7 +1,7 @@
 import { GameObject } from "./game-object.class";
 
 export class Person extends GameObject {
-  movingProgressRemaining: number = 32;
+  movingProgressRemaining: number = 0;
   directionUpdate: any = {
     'up': ['y', -1],
     'down': ['y', 1],
@@ -28,6 +28,7 @@ export class Person extends GameObject {
       }
 
       // Ready to walk
+      state.map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = 32;
     }
   }
@@ -47,6 +48,9 @@ export class Person extends GameObject {
   }
 
   update(state: any) {
+
+    // console.log('--- state:', state)
+    
     if (this.movingProgressRemaining > 0) {
       this.updatePosition();
     } else {

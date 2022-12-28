@@ -28,8 +28,7 @@ export class OverworldComponent implements OnInit {
     this.map = new OverworldMap(
       (<any>window).OverworldMaps.DemoRoom,
     );
-
-    console.log('--- this.map.walls:', this.map.walls);
+    this.map.mountObjects();
 
     this.directionInput.init();
 
