@@ -37,6 +37,14 @@ export class Person extends GameObject {
     const [ property, change ] = this.directionUpdate[this.direction];
     (this as any)[property] += change;
     this.movingProgressRemaining -= 1;
+
+    if (this.movingProgressRemaining === 0) {
+
+      // We finished the walk!
+      emitEvent('PersonWalkingComplete', {
+        whoId: this.id
+      });
+    }
   }
 
   updateSprite() {
@@ -48,9 +56,6 @@ export class Person extends GameObject {
   }
 
   update(state: any) {
-
-    // console.log('--- state:', state)
-    
     if (this.movingProgressRemaining > 0) {
       this.updatePosition();
     } else {
@@ -69,4 +74,11 @@ export class Person extends GameObject {
       this.updateSprite();
     }
   }
+}
+
+// ========== Utility Functions ===============================================================
+
+function emitEvent(name: any, { detail }: any) {
+  const event = new CustomEvent(name, detail);
+  document.dispatchEvent(event);
 }

@@ -1,11 +1,15 @@
 import { Sprite } from "src/app/classes/sprite.class";
+import { OverworldEvent } from "./overworld-event.class";
 
 export class GameObject {
+  id: number | null = null;
   isMounted: boolean = false;
   x: number = 0;
   y: number = 0;
   direction: string = 'down';
   sprite: any = null;
+  behaviorLoop: any;
+  behaviorLoopIndex: any;
 
   constructor(config: any) {
     this.x = config.x || 0;
@@ -16,11 +20,44 @@ export class GameObject {
       src: config.src || 'assets/character-01.webp',
       animations: null,
     });
+
+    this.behaviorLoop = config.behaviorLoop || [];
+    this.behaviorLoopIndex = 0;
   }
 
   mount(map: any) {
     this.isMounted = true;
-    map.addWall(this.x, this.y)
-    console.log('--- map.walls:', map.walls)
+    map.addWall(this.x, this.y);
+
+    // If we have a behavior, kick off after a short delay
+    setTimeout(() => {
+      this.doBehaviorEvent(map);
+    }, 10)
+  }
+
+  async doBehaviorEvent(map: any) {
+
+    // Short-circuit this method if a cut scene is playing or if no behavior
+    // loop has been configured
+    if (map.isCutscenePlaying || this.behaviorLoop.length === 0) {
+      return;
+    }
+
+    // Setting up our event with relevant info
+    let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
+    eventConfig.who = this.id;
+
+    // Create an event instance out of our next event config
+    const eventHandler = new OverworldEvent({ map, event: eventConfig });
+    await eventHandler.init();
+
+    // Setting the next event to fire once the behavior loop reaches its end
+    this.behaviorLoopIndex += 1;
+    if (this.behaviorLoopIndex === this.behaviorLoop.length) {
+      this.behaviorLoopIndex = 0;
+    }
+
+    // Recursively call this method 
+    this.doBehaviorEvent(map);
   }
 }

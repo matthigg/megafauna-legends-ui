@@ -7,6 +7,7 @@ export class OverworldMap {
   walls;
   lowerImage;
   upperImage;
+  isCutscenePlaying: boolean = false;
 
   constructor(config: any) {
     this.gameObjects = config.gameObjects;
@@ -41,9 +42,13 @@ export class OverworldMap {
   }
 
   mountObjects(): void {
-    Object.values(this.gameObjects).forEach((object: any) => {
+    Object.keys(this.gameObjects).forEach((key: string) => {
 
-      // TODO: determine if this object should mount
+      let object = this.gameObjects[key];
+      object.id = key;    // each key will probably be named 'hero', 'npc1', npc2', etc.
+
+      // TODO: determine if this game object should mount
+      
       
       object.mount(this);
     })
@@ -65,6 +70,8 @@ export class OverworldMap {
     // console.log('--- this.walls:', this.walls);
   }
 }
+
+// ========== Utility Functions ===============================================================
 
 function gridSize(n: number): number {
   return n * 32;
@@ -90,6 +97,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
   return {x, y};
 }
 
+// ========== Overworld Maps & Game Objects ===================================================
+
 (<any>window).OverworldMaps = {
   DemoRoom: {
     lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
@@ -102,9 +111,27 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         src: null,
       }),
       npc1: new Person({
-        x: gridSize(5),
-        y: gridSize(5),
+        x: gridSize(6),
+        y: gridSize(7),
         src: null,
+        behaviorLoop: [
+          { type: 'walk', direction: 'left' },
+          { type: 'stand', direction: 'up', time: 800 },
+          { type: 'walk', direction: 'up' },
+          { type: 'walk', direction: 'right' },
+          { type: 'walk', direction: 'down' },
+        ],
+      }),
+      npc2: new Person({
+        x: gridSize(8),
+        y: gridSize(7),
+        src: null,
+        behaviorLoop: [
+          { type: 'stand', direction: 'left', time: 800 },
+          { type: 'stand', direction: 'up', time: 800 },
+          { type: 'stand', direction: 'right', time: 1200 },
+          { type: 'stand', direction: 'up', time: 300 },
+        ],
       }),
     },
     walls: {
