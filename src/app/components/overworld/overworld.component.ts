@@ -29,6 +29,8 @@ export class OverworldComponent implements OnInit {
       (<any>window).OverworldMaps.DemoRoom,
     );
 
+    console.log('--- this.map.walls:', this.map.walls);
+
     this.directionInput.init();
 
     this.startGameLoop();
@@ -47,6 +49,7 @@ export class OverworldComponent implements OnInit {
       Object.values(this.map?.gameObjects)?.forEach(object => {
         (object as any).update({
           arrow: this.directionInput.direction,
+          map: this.map,
         });
       });
 

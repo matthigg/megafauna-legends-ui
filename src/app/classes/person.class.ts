@@ -16,44 +16,53 @@ export class Person extends GameObject {
     this.isPlayerControlled = config.isPlayerControlled || false;
   }
 
-  updatePosition(): void {
-    if (this.movingProgressRemaining > 0) {
-      const [ property, change ] = this.directionUpdate[this.direction];
-      (this as any)[property] += change;
-      this.movingProgressRemaining -= 1;
-    }
-  }
+  startBehavior(state: any, behavior: any) {
 
-  updateSprite(state: any) {
-    if (
-      !state.arrow && 
-      this.movingProgressRemaining === 0 &&
-      this.isPlayerControlled
-    ) {
-      this.sprite.setAnimation("idle-" + this.direction);
-    }
+    // Set character direction based on behavior
+    this.direction = behavior.direction;
+    if (behavior.type === 'walk') {
 
-    if (this.movingProgressRemaining > 0) {
-      this.sprite.setAnimation("walk-" + this.direction);
+      // Stop here if space is not free
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        return;
+      }
 
-    }
-  }
-
-  update(state: any) {
-    this.updatePosition();
-    this.updateSprite(state);
-
-    // If the user is pressing a direction to move in and the animation has finished via
-    // this.movingProgressRemaining === 0, then move in that direction
-    if (
-      state.arrow && 
-      this.movingProgressRemaining === 0 &&
-      this.isPlayerControlled
-    ) {
-      this.direction = state.arrow;
+      // Ready to walk
       this.movingProgressRemaining = 32;
     }
   }
+  
+  updatePosition(): void {
+    const [ property, change ] = this.directionUpdate[this.direction];
+    (this as any)[property] += change;
+    this.movingProgressRemaining -= 1;
+  }
 
+  updateSprite() {
+    if (this.movingProgressRemaining > 0) {
+      this.sprite.setAnimation("walk-" + this.direction);
+      return;
+    }
+    this.sprite.setAnimation("idle-" + this.direction);
+  }
 
+  update(state: any) {
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    } else {
+      // Put more cases to starting to walk here
+      // ...
+
+      // If the user is pressing a direction to move in and the animation has finished via
+      // this.movingProgressRemaining === 0, then move in that direction
+      // Case: we're 'keyboard ready' (accepting user input) and have an arrow/WASD pressed
+      if (state.arrow && this.isPlayerControlled) {
+        this.startBehavior(state, {
+          type: 'walk',
+          direction: state.arrow,
+        });
+      }
+      this.updateSprite();
+    }
+  }
 }
