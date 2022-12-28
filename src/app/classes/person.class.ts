@@ -24,8 +24,24 @@ export class Person extends GameObject {
     }
   }
 
+  updateSprite(state: any) {
+    if (
+      !state.arrow && 
+      this.movingProgressRemaining === 0 &&
+      this.isPlayerControlled
+    ) {
+      this.sprite.setAnimation("idle-" + this.direction);
+    }
+
+    if (this.movingProgressRemaining > 0) {
+      this.sprite.setAnimation("walk-" + this.direction);
+
+    }
+  }
+
   update(state: any) {
     this.updatePosition();
+    this.updateSprite(state);
 
     // If the user is pressing a direction to move in and the animation has finished via
     // this.movingProgressRemaining === 0, then move in that direction
@@ -38,4 +54,6 @@ export class Person extends GameObject {
       this.movingProgressRemaining = 32;
     }
   }
+
+
 }

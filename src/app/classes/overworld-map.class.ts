@@ -40,11 +40,11 @@ function gridSize(n: number): number {
         y: gridSize(3),
         src: null,
       }),
-      npc1: new Person({
-        x: gridSize(5),
-        y: gridSize(5),
-        src: null,
-      }),
+      // npc1: new Person({
+      //   x: gridSize(5),
+      //   y: gridSize(5),
+      //   src: null,
+      // }),
     }
   },
   Kitchen: {
