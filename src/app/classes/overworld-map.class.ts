@@ -40,8 +40,8 @@ function gridSize(n: number): number {
 
 (<any>window).OverworldMaps = {
   DemoRoom: {
-    lowerSrc: 'assets/overworld-map-01.svg',
-    upperSrc: '',
+    lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
+    upperSrc: 'assets/pizza-legends-demoroom-upper-map-01.svg',
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
@@ -57,8 +57,8 @@ function gridSize(n: number): number {
     }
   },
   Kitchen: {
-    lowerSrc: 'assets/overworld-map-01.svg',
-    upperSrc: '',
+    lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
+    upperSrc: 'assets/pizza-legends-demoroom-upper-map-01.svg',
     gameObjects: {
       hero: new Person({
         x: gridSize(3),
