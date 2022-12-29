@@ -43,14 +43,18 @@ export class TextMessage {
 
     // Configure the 'Enter' button to close the text message box
     this.actionListener = new KeyPressListener('Enter', () => {
-      this.actionListener.unbind();
       this.done();
     })
   }
 
   // Close the text message
   done(): void {
-    this.element.remove()
-    this.onComplete();
+    if (this.revealingText.isDone) {
+      this.element.remove();
+      this.actionListener.unbind();
+      this.onComplete();
+    } else {
+      this.revealingText.warpToDone();
+    }
   }
 }

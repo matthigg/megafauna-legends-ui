@@ -8,7 +8,7 @@ export class RevealingText {
   constructor(config: any) {
     this.element = config.element;
     this.text = config.text;
-    this.speed = config.speed || 70;
+    this.speed = config.speed || 100;
 
     this.timeout = null;
     this.isDone = false;
@@ -32,7 +32,7 @@ export class RevealingText {
     this.revealOneCharacter(characters);
   }
 
-  revealOneCharacter(list: any[]) {
+  revealOneCharacter(list: any[]): void {
     const next = list.splice(0, 1)[0];
     next.span.classList.add('revealed');
 
@@ -43,5 +43,14 @@ export class RevealingText {
     } else {
       this.isDone = true;
     }
+  }
+
+  // Reveal all characters instead of waiting for the 'type-writer' effect to finish
+  warpToDone(): void {
+    clearTimeout(this.timeout);
+    this.isDone = true;
+    this.element.querySelectorAll('span').forEach((span: any) => {
+      span.classList.add('revealed');
+    })
   }
 }
