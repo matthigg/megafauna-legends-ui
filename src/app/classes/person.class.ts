@@ -48,12 +48,11 @@ export class Person extends GameObject {
       // setTimeout()'s from stacking up, but it's not currently implemented in the
       // game-object class
       this.isStanding = true;
+
+      console.log('--- stand ---')
+      
       setTimeout(() => {
-        emitEvent('PersonStandingComplete', {
-          detail: {
-            whoId: this.id,
-          },
-        });
+        emitEvent('PersonStandingComplete', { whoId: this.id });
         this.isStanding = false;
       }, behavior.time);
     }
@@ -64,14 +63,9 @@ export class Person extends GameObject {
     (this as any)[property] += change;
     this.movingProgressRemaining -= 1;
 
+    // We finished the walk! Part 7 - 19:00
     if (this.movingProgressRemaining === 0) {
-
-      // We finished the walk!
-      emitEvent('PersonWalkingComplete', {
-        detail: {
-          whoId: this.id
-        }
-      });
+      emitEvent('PersonWalkingComplete', { whoId: this.id });
     }
   }
 
@@ -106,18 +100,7 @@ export class Person extends GameObject {
 
 // ========== Utility Functions ===============================================================
 
-// function emitEvent(name: any, { detail }: any) {
-// function emitEvent(name: string, test: any) {
-function emitEvent(name: any, detail: any) {
-
-  // console.log('--- detail:', detail);
-  // console.log('--- name:', name);
-  // console.log('--- test:', test);
-  
-  const event = new CustomEvent(name, detail);
-
-  // console.log('--- event:', event);
-
-
+function emitEvent(name: string, detail: any) {
+  const event = new CustomEvent(name, { detail });
   document.dispatchEvent(event);
 }

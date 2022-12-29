@@ -18,10 +18,6 @@ export class OverworldEvent {
   }
 
   init(): Promise<any> {
-
-    // console.log('--- this.map:', this.map);
-    console.log('--- overworld event init() this.event:', this.event);
-    
     return new Promise(resolve => {
       let key = this.event.type
       this[key as keyof OverworldEventModel](resolve);
@@ -66,8 +62,8 @@ export class OverworldEvent {
       },
     );
 
-    // Set up a handler to complete when correct person is done walking, then resolve the
-    // event/Promise
+    // Set up a handler to complete when the correct person, identified by who & whoId, is 
+    // done walking, then resolve the event/Promise
     const completeHandler = (e: any) => {
       if (e.detail.whoId === this.event.who) {
         document.removeEventListener('PersonWalkingComplete', completeHandler);

@@ -40,8 +40,6 @@ export class GameObject {
 
   async doBehaviorEvent(map: any) {
 
-    console.log('--- game-object map:', map);
-
     // Short-circuit this method if a cut scene is playing or if no behavior
     // loop has been configured
     if (
@@ -54,8 +52,6 @@ export class GameObject {
     ) {
       return;
     }
-
-    console.log('--- BEHAVIOR LOOP RESUMES ---')
 
     // Setting up our event with relevant info
     let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
