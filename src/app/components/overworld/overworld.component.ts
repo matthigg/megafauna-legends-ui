@@ -25,11 +25,7 @@ export class OverworldComponent implements OnInit {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
-    // Set map
-    this.map = new OverworldMap(
-      (<any>window).OverworldMaps.DemoRoom,
-    );
-    this.map.mountObjects();
+    this.startMap((<any>window).OverworldMaps.DemoRoom);
 
     this.bindActionInput();
     this.bindHeroPosition();
@@ -47,6 +43,13 @@ export class OverworldComponent implements OnInit {
     //   { who: 'npc1', type: 'stand', direction: 'up', time: 2000 },
     //   { type: 'textMessage', text: 'Hello Mister'},
     // ]);
+  }
+
+  // Set map here to expose it to the overworld-event class in order to load different maps
+  startMap(mapConfig: any) {
+    this.map = new OverworldMap(mapConfig);
+    this.map.overworld = this;
+    this.map.mountObjects();
   }
 
   bindActionInput(): void {

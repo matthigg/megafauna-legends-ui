@@ -1,5 +1,3 @@
-import { createMayBeForwardRefExpression } from "@angular/compiler";
-import { ObjectUnsubscribedError } from "rxjs";
 import { GameObject } from "./game-object.class";
 import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
@@ -11,6 +9,7 @@ export class OverworldMap {
   upperImage;
   isCutscenePlaying: boolean = false;
   cutsceneSpaces;
+  overworld: any = null;
 
   constructor(config: any) {
     this.gameObjects = config.gameObjects;
@@ -90,14 +89,15 @@ export class OverworldMap {
 
   checkForFootstepCutscene(): any {
     const hero = this.gameObjects['hero'];
-    const match = this.cutsceneSpaces[ `${hero.x},${hero.y}` ];
+    const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
 
     if (match && !this.isCutscenePlaying) {
       this.startCutscene(match[0].events);
     }
   }
 
-  async startCutscene (events: any[]) {
+  async startCutscene(events: any[]) {
+    console.log('--- start cutscene ---')
     this.isCutscenePlaying = true;
 
     // Start a loop of async events & await results from each
@@ -111,9 +111,14 @@ export class OverworldMap {
     this.isCutscenePlaying = false;
 
     // Reset NPC's so they can resume their idle behavior
+    // TODO - this seems to be bugged -- triggering a behavior.type === textMessage causes
+    // unexpected animations & behavior loops start firing off rapidly
     Object.values(this.gameObjects).forEach((object: any) => {
+      // console.log('--- object:', object);
       object.doBehaviorEvent(this);
     });
+    console.log('--- end cutscene ---')
+
   }
 }
 
@@ -223,12 +228,17 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         {
           events: [
             { who: 'npc2', type: 'walk', direction: 'up' },
-            { who: 'npc2', type: 'stand', direction: 'up', time: 1000 },
+            { who: 'npc2', type: 'stand', direction: 'up' },
             { who: 'npc2', type: 'textMessage', text: 'You cannot be in there!'},
             { who: 'npc2', type: 'walk', direction: 'down' },
-
             { who: 'hero', type: 'walk', direction: 'down' },
-            { who: 'hero', type: 'walk', direction: 'right' },
+          ],
+        },
+      ],
+      [asGridCoord(6,10)]: [
+        {
+          events: [
+            { type: 'changeMap', map: 'Kitchen' },
           ],
         },
       ],
@@ -239,6 +249,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     upperSrc: 'assets/pizza-legends-demoroom-upper-map-01.svg',
     gameObjects: {
       hero: new Person({
+        isPlayerControlled: true,
         x: gridSize(3),
         y: gridSize(7),
         src: null,
@@ -247,11 +258,13 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         x: gridSize(4),
         y: gridSize(8),
         src: null,
-      }),
-      npc2: new Person({
-        x: gridSize(7),
-        y: gridSize(7),
-        src: null,
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: 'Greetings!', faceHero: 'npc1'},
+            ],
+          },
+        ],
       }),
     }
   },

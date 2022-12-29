@@ -20,7 +20,7 @@ export class OverworldEvent {
   init(): Promise<any> {
 
     // console.log('--- this.map:', this.map);
-    console.log('--- this.event:', this.event);
+    console.log('--- overworld event init() this.event:', this.event);
     
     return new Promise(resolve => {
       let key = this.event.type
@@ -89,6 +89,11 @@ export class OverworldEvent {
       onComplete: () => resolve(),
     });
     message.init(document.querySelector('.game-container'));
+  }
+
+  changeMap(resolve: any) {
+    this.map.overworld.startMap((<any>window).OverworldMaps[this.event.map]);
+    resolve();
   }
 }
 
