@@ -48,9 +48,6 @@ export class Person extends GameObject {
       // setTimeout()'s from stacking up. It's a property in the game-object class, which
       // this Person class inherits
       this.isStanding = true;
-
-      console.log('--- stand ---')
-      
       setTimeout(() => {
         emitEvent('PersonStandingComplete', { whoId: this.id });
         this.isStanding = false;

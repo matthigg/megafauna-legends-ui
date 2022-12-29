@@ -97,7 +97,6 @@ export class OverworldMap {
   }
 
   async startCutscene(events: any[]) {
-    console.log('--- start cutscene ---')
     this.isCutscenePlaying = true;
 
     // Start a loop of async events & await results from each
@@ -114,10 +113,8 @@ export class OverworldMap {
     // TODO - this seems to be bugged -- triggering a behavior.type === textMessage causes
     // unexpected animations & behavior loops start firing off rapidly
     Object.values(this.gameObjects).forEach((object: any) => {
-      // console.log('--- object:', object);
       object.doBehaviorEvent(this);
     });
-    console.log('--- end cutscene ---')
 
   }
 }
