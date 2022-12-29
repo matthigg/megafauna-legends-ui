@@ -10,6 +10,7 @@ export class GameObject {
   sprite: any = null;
   behaviorLoop: any;
   behaviorLoopIndex: any;
+  talking: any;
 
   constructor(config: any) {
     this.x = config.x || 0;
@@ -23,6 +24,8 @@ export class GameObject {
 
     this.behaviorLoop = config.behaviorLoop || [];
     this.behaviorLoopIndex = 0;
+
+    this.talking = config.talking || [];
   }
 
   mount(map: any) {

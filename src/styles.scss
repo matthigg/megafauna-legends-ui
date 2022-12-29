@@ -2,3 +2,20 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.TextMessage {
+  bottom: 0;
+  height: 2rem;
+  left: 0;
+  position: absolute;
+  right: 0;
+  & .TextMessage_p {
+    font-size: 1rem;
+    margin: 0;
+  }
+  & .TextMessage_button {
+    bottom: 0;
+    position: absolute;
+    right: 1rem;
+  }
+}

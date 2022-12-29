@@ -10,6 +10,7 @@ export class OverworldMap {
   lowerImage;
   upperImage;
   isCutscenePlaying: boolean = false;
+  cutsceneSpaces;
 
   constructor(config: any) {
     this.gameObjects = config.gameObjects;
@@ -20,6 +21,8 @@ export class OverworldMap {
 
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
+
+    this.cutsceneSpaces = config.cutsceneSpaces || {}
   }
 
   drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: any) {
@@ -68,6 +71,30 @@ export class OverworldMap {
     this.removeWall(wasX, wasY);
     const {x, y} = nextPosition(wasX, wasY, direction);
     this.addWall(x, y);
+  }
+
+  checkForActionCutscene(): any {
+    const hero = this.gameObjects['hero'];
+    const nextCoords = nextPosition(hero.x, hero.y, hero.direction);
+
+    // Search through gameObjects to see if any existing game object coords, usually NPC
+    // coords, match where the hero is trying to move to via nextPosition()
+    const match: any = Object.values(this.gameObjects).find((object: any) => {
+      return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`;
+    });
+
+    if (match && match.talking.length && !this.isCutscenePlaying) {
+      this.startCutscene(match.talking[0].events);
+    }
+  }
+
+  checkForFootstepCutscene(): any {
+    const hero = this.gameObjects['hero'];
+    const match = this.cutsceneSpaces[ `${hero.x},${hero.y}` ];
+
+    if (match && !this.isCutscenePlaying) {
+      this.startCutscene(match[0].events);
+    }
   }
 
   async startCutscene (events: any[]) {
@@ -134,11 +161,19 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         y: gridSize(8),
         src: null,
         behaviorLoop: [
-          { type: 'walk', direction: 'left' },
-          { type: 'stand', direction: 'up', time: 5000 },
-          { type: 'walk', direction: 'up' },
-          { type: 'walk', direction: 'right' },
-          { type: 'walk', direction: 'down' },
+          // { type: 'walk', direction: 'left' },
+          // { type: 'stand', direction: 'up', time: 5000 },
+          // { type: 'walk', direction: 'up' },
+          // { type: 'walk', direction: 'right' },
+          // { type: 'walk', direction: 'down' },
+        ],
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: 'Running around!'},
+              { type: 'textMessage', text: 'Still running around!'},
+            ],
+          },
         ],
       }),
       npc2: new Person({
@@ -150,6 +185,14 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           { type: 'stand', direction: 'up', time: 800 },
           { type: 'stand', direction: 'right', time: 5000 },
           { type: 'stand', direction: 'up', time: 300 },
+        ],
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: 'Hello Mister!', faceHero: 'npc2'},
+              { type: 'textMessage', text: 'Goodbye!'},
+            ],
+          },
         ],
       }),
     },
@@ -174,6 +217,21 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       // [asGridCoord(4,3)] : true,
       // [asGridCoord(4,4)] : true,
       // [asGridCoord(4,5)] : true,
+    },
+    cutsceneSpaces: {
+      [asGridCoord(5,1)]: [
+        {
+          events: [
+            { who: 'npc2', type: 'walk', direction: 'up' },
+            { who: 'npc2', type: 'stand', direction: 'up', time: 1000 },
+            { who: 'npc2', type: 'textMessage', text: 'You cannot be in there!'},
+            { who: 'npc2', type: 'walk', direction: 'down' },
+
+            { who: 'hero', type: 'walk', direction: 'down' },
+            { who: 'hero', type: 'walk', direction: 'right' },
+          ],
+        },
+      ],
     },
   },
   Kitchen: {

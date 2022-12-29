@@ -1,9 +1,11 @@
+import { TextMessage } from "./text-message.class";
+
 interface OverworldEventModel {
   map: any,
   event: any,
-  init: any,
-  stand: any,
-  walk: any,
+  // init: any,
+  // stand: any,
+  // walk: any,
 }
 
 export class OverworldEvent {
@@ -16,6 +18,10 @@ export class OverworldEvent {
   }
 
   init(): Promise<any> {
+
+    // console.log('--- this.map:', this.map);
+    console.log('--- this.event:', this.event);
+    
     return new Promise(resolve => {
       let key = this.event.type
       this[key as keyof OverworldEventModel](resolve);
@@ -71,4 +77,26 @@ export class OverworldEvent {
 
     document.addEventListener('PersonWalkingComplete', completeHandler);
   }
+
+  textMessage(resolve: any) {
+    if (this.event.faceHero) {
+      const obj = this.map.gameObjects[this.event.faceHero];
+      obj.direction = oppositeDirection(this.map.gameObjects['hero'].direction);
+    }
+
+    const message = new TextMessage({
+      text: this.event.text,
+      onComplete: () => resolve(),
+    });
+    message.init(document.querySelector('.game-container'));
+  }
+}
+
+// ========== Utility Functions ===============================================================
+
+function oppositeDirection(direction: string) {
+  if (direction === 'left') { return 'right' }
+  if (direction === 'right') { return 'left' }
+  if (direction === 'up') { return 'down' }
+  return 'up'
 }

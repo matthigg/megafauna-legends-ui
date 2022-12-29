@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GameObject } from 'src/app/classes/game-object.class';
 import { OverworldMap } from 'src/app/classes/overworld-map.class';
 import { DirectionInput } from 'src/app/classes/direction-input.class';
+import { KeyPressListener } from 'src/app/classes/key-press-listener.class';
 
 @Component({
   selector: 'app-overworld',
@@ -30,19 +31,40 @@ export class OverworldComponent implements OnInit {
     );
     this.map.mountObjects();
 
-    this.directionInput.init();
+    this.bindActionInput();
+    this.bindHeroPosition();
 
+    this.directionInput.init();
     this.startGameLoop();
 
-    this.map.startCutscene([
-      { who: 'hero', type: 'stand', direction: 'down', time: 2000 },
-      { who: 'hero', type: 'walk', direction: 'down', },
-      { who: 'hero', type: 'walk', direction: 'down' },
-      { who: 'hero', type: 'walk', direction: 'down' },
-      { who: 'npc1', type: 'walk', direction: 'left' },
-      { who: 'npc1', type: 'walk', direction: 'up' },
-      { who: 'npc1', type: 'stand', direction: 'up', time: 2000 },
-    ]);
+    // this.map.startCutscene([
+    //   { who: 'hero', type: 'stand', direction: 'down', time: 2000 },
+    //   { who: 'hero', type: 'walk', direction: 'down', },
+    //   { who: 'hero', type: 'walk', direction: 'down' },
+    //   { who: 'hero', type: 'walk', direction: 'down' },
+    //   { who: 'npc1', type: 'walk', direction: 'left' },
+    //   { who: 'npc1', type: 'walk', direction: 'up' },
+    //   { who: 'npc1', type: 'stand', direction: 'up', time: 2000 },
+    //   { type: 'textMessage', text: 'Hello Mister'},
+    // ]);
+  }
+
+  bindActionInput(): void {
+    new KeyPressListener('Enter', () => {
+
+      // Is there a person here to talk to?
+      this.map.checkForActionCutscene();
+    });
+  }
+
+  bindHeroPosition(): void {
+    document.addEventListener('PersonWalkingComplete', (e: any) => {
+
+      // Check if hero's position has changed
+      if (e.detail.whoId === 'hero') {
+        this.map.checkForFootstepCutscene();
+      }
+    });
   }
 
   startGameLoop(): void {
