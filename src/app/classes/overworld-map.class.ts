@@ -154,13 +154,13 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: gridSize(6),
-        y: gridSize(3),
+        x: gridSize(13),
+        y: gridSize(14),
         src: null,
       }),
       npc1: new Person({
-        x: gridSize(5),
-        y: gridSize(7),
+        x: gridSize(9),
+        y: gridSize(13),
         src: null,
         behaviorLoop: [
           { type: 'walk', direction: 'left' },
@@ -172,15 +172,15 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         talking: [
           {
             events: [
-              { type: 'textMessage', text: 'Running around!'},
+              { type: 'textMessage', text: 'Running around!', faceHero: 'npc1'},
               { type: 'textMessage', text: 'Still running around!'},
             ],
           },
         ],
       }),
       npc2: new Person({
-        x: gridSize(10),
-        y: gridSize(7),
+        x: gridSize(17),
+        y: gridSize(13),
         src: null,
         behaviorLoop: [
           { type: 'stand', direction: 'left', time: 800 },
@@ -199,10 +199,10 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       }),
     },
     walls: {
-      [asGridCoord(4,8)] : true,
-      [asGridCoord(5,8)] : true,
-      [asGridCoord(10,8)] : true,
-      [asGridCoord(11,8)] : true,
+      [asGridCoord(8,14)] : true,
+      [asGridCoord(9,14)] : true,
+      [asGridCoord(17,14)] : true,
+      [asGridCoord(18,14)] : true,
     },
     cutsceneSpaces: {
       [asGridCoord(5,1)]: [
@@ -216,7 +216,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           ],
         },
       ],
-      [asGridCoord(6,10)]: [
+      [asGridCoord(13,16)]: [
         {
           events: [
             { type: 'changeMap', map: 'Kitchen' },

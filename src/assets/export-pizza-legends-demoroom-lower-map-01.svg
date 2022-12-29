@@ -28,14 +28,14 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="0.70710678"
-     inkscape:cx="58.689863"
+     inkscape:cx="-77.781746"
      inkscape:cy="343.6539"
-     inkscape:window-width="1600"
-     inkscape:window-height="829"
-     inkscape:window-x="-8"
-     inkscape:window-y="-4"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="602"
+     inkscape:window-y="896"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g4729" />
   <defs
      id="defs2" />
   <g
@@ -44,7 +44,8 @@
      id="layer1"
      transform="translate(7.4083705,-26.458314)">
     <g
-       id="g4729">
+       id="g4729"
+       transform="translate(1.8005371e-8,-0.00116823)">
       <rect
          style="fill:#87cdde;stroke:#ff0d0d;stroke-width:0"
          id="rect411-75"
@@ -2503,7 +2504,7 @@
          x="43.391636"
          y="153.4595" />
       <rect
-         style="fill:#87cdde;stroke:#ff0d0d;stroke-width:0"
+         style="fill:#87cdde;fill-opacity:1;stroke:#ff0d0d;stroke-width:0"
          id="rect411-9-8-6-2-0-6-6-4"
          width="8.4666662"
          height="8.4666662"
@@ -2580,7 +2581,7 @@
          x="102.65829"
          y="144.9928" />
       <rect
-         style="fill:#afdde9;stroke:#ff0d0d;stroke-width:0"
+         style="fill:#d7e49d;stroke:#ff0d0d;stroke-width:0;fill-opacity:1"
          id="rect411-3-0-7-8-2-7-1"
          width="8.4666662"
          height="8.4666662"
@@ -2736,7 +2737,7 @@
     </g>
     <g
        id="g5112"
-       transform="translate(58.09283,-44.865017)">
+       transform="translate(91.959499,5.9354454)">
       <rect
          style="fill:#a0892c;stroke:#502d16;stroke-width:0.529115;stroke-dasharray:none"
          id="rect1452"
@@ -2768,7 +2769,7 @@
     </g>
     <g
        id="g5112-7"
-       transform="translate(108.89282,-44.865048)">
+       transform="translate(168.15949,5.9353824)">
       <rect
          style="fill:#a0892c;stroke:#502d16;stroke-width:0.529115;stroke-dasharray:none"
          id="rect1452-4"
