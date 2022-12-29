@@ -33,6 +33,16 @@ export class OverworldComponent implements OnInit {
     this.directionInput.init();
 
     this.startGameLoop();
+
+    this.map.startCutscene([
+      { who: 'hero', type: 'stand', direction: 'down', time: 2000 },
+      { who: 'hero', type: 'walk', direction: 'down', },
+      { who: 'hero', type: 'walk', direction: 'down' },
+      { who: 'hero', type: 'walk', direction: 'down' },
+      { who: 'npc1', type: 'walk', direction: 'left' },
+      { who: 'npc1', type: 'walk', direction: 'up' },
+      { who: 'npc1', type: 'stand', direction: 'up', time: 2000 },
+    ]);
   }
 
   startGameLoop(): void {
@@ -56,9 +66,11 @@ export class OverworldComponent implements OnInit {
       this.map.drawLowerImage(this.ctx, cameraPerson)
 
       // Draw game objects
-      Object.values(this.map?.gameObjects)?.forEach(object => {
-        (object as any).sprite.draw(this.ctx, cameraPerson);
-      });
+      Object.values(this.map?.gameObjects)
+        ?.sort((a: any, b: any) => { return a.y - b.y })
+        .forEach(object => {
+          (object as any).sprite.draw(this.ctx, cameraPerson);
+        });
 
       // Draw upper map layer
       this.map.drawUpperImage(this.ctx, cameraPerson)

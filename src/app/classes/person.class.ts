@@ -85,7 +85,7 @@ export class Person extends GameObject {
       // If the user is pressing a direction to move in and the animation has finished via
       // this.movingProgressRemaining === 0, then move in that direction
       // Case: we're 'keyboard ready' (accepting user input) and have an arrow/WASD pressed
-      if (state.arrow && this.isPlayerControlled) {
+      if (state.arrow && this.isPlayerControlled && !state.map.isCutscenePlaying) {
         this.startBehavior(state, {
           type: 'walk',
           direction: state.arrow,

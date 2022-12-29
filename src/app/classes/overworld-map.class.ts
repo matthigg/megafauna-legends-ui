@@ -1,5 +1,6 @@
 import { createMayBeForwardRefExpression } from "@angular/compiler";
 import { GameObject } from "./game-object.class";
+import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
 
 export class OverworldMap {
@@ -54,6 +55,21 @@ export class OverworldMap {
     })
   }
 
+  async startCutscene (events: any[]) {
+    this.isCutscenePlaying = true;
+
+    // Start a loop of async events & await results from each
+    for (let i = 0; i < events.length; i++) {
+      const eventHandler = new OverworldEvent({
+        map: this,
+        event: events[i],
+      });
+      await eventHandler.init();
+    }
+
+    this.isCutscenePlaying = false;
+  }
+
   addWall(x: number, y: number) {
     this.walls[`${x},${y}`] = true;
   }
@@ -67,7 +83,6 @@ export class OverworldMap {
     const {x, y} = nextPosition(wasX, wasY, direction);
     this.addWall(x, y)
 
-    // console.log('--- this.walls:', this.walls);
   }
 }
 
@@ -111,8 +126,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         src: null,
       }),
       npc1: new Person({
-        x: gridSize(6),
-        y: gridSize(7),
+        x: gridSize(7),
+        y: gridSize(8),
         src: null,
         behaviorLoop: [
           { type: 'walk', direction: 'left' },
@@ -123,7 +138,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         ],
       }),
       npc2: new Person({
-        x: gridSize(8),
+        x: gridSize(12),
         y: gridSize(7),
         src: null,
         behaviorLoop: [
