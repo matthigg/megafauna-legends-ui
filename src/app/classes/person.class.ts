@@ -20,6 +20,7 @@ export class Person extends GameObject {
 
     // Set character direction based on behavior
     this.direction = behavior.direction;
+
     if (behavior.type === 'walk') {
 
       // Stop here if space is not free
@@ -27,9 +28,20 @@ export class Person extends GameObject {
         return;
       }
 
-      // Ready to walk
+      // Ready to walk!
       state.map.moveWall(this.x, this.y, this.direction);
       this.movingProgressRemaining = 32;
+      this.updateSprite();
+    }
+
+    if (behavior.type === 'stand') {
+      setTimeout(() => {
+        emitEvent('PersonStandingComplete', {
+          detail: {
+            whoId: this.id,
+          },
+        });
+      }, behavior.time);
     }
   }
   
@@ -42,7 +54,9 @@ export class Person extends GameObject {
 
       // We finished the walk!
       emitEvent('PersonWalkingComplete', {
-        whoId: this.id
+        detail: {
+          whoId: this.id
+        }
       });
     }
   }
@@ -78,7 +92,18 @@ export class Person extends GameObject {
 
 // ========== Utility Functions ===============================================================
 
-function emitEvent(name: any, { detail }: any) {
+// function emitEvent(name: any, { detail }: any) {
+// function emitEvent(name: string, test: any) {
+function emitEvent(name: any, detail: any) {
+
+  // console.log('--- detail:', detail);
+  // console.log('--- name:', name);
+  // console.log('--- test:', test);
+  
   const event = new CustomEvent(name, detail);
+
+  // console.log('--- event:', event);
+
+
   document.dispatchEvent(event);
 }
