@@ -25,6 +25,12 @@ export class Person extends GameObject {
 
       // Stop here if space is not free
       if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+
+        // If an npc is walking via their behaviorLoop but gets blocked, retry walking after
+        // a set amount of time (100ms in this case)
+        behavior.retry && setTimeout(() => {
+          this.startBehavior(state, behavior);
+        }, 100)
         return;
       }
 
