@@ -1,3 +1,4 @@
+import { SceneTransition } from "./scene-transition.class";
 import { TextMessage } from "./text-message.class";
 
 interface OverworldEventModel {
@@ -85,8 +86,16 @@ export class OverworldEvent {
   }
 
   changeMap(resolve: any) {
-    this.map.overworld.startMap((<any>window).OverworldMaps[this.event.map]);
-    resolve();
+    const sceneTransition = new SceneTransition();
+    sceneTransition.init(document.querySelector('.game-container'), () => {
+      
+      this.map.overworld.startMap((<any>window).OverworldMaps[this.event.map]);
+      resolve();
+
+      sceneTransition.fadeOut();
+    });
+    
+
   }
 }
 
