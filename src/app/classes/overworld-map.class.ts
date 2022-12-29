@@ -1,4 +1,5 @@
 import { createMayBeForwardRefExpression } from "@angular/compiler";
+import { ObjectUnsubscribedError } from "rxjs";
 import { GameObject } from "./game-object.class";
 import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
@@ -55,21 +56,6 @@ export class OverworldMap {
     })
   }
 
-  async startCutscene (events: any[]) {
-    this.isCutscenePlaying = true;
-
-    // Start a loop of async events & await results from each
-    for (let i = 0; i < events.length; i++) {
-      const eventHandler = new OverworldEvent({
-        map: this,
-        event: events[i],
-      });
-      await eventHandler.init();
-    }
-
-    this.isCutscenePlaying = false;
-  }
-
   addWall(x: number, y: number) {
     this.walls[`${x},${y}`] = true;
   }
@@ -82,7 +68,25 @@ export class OverworldMap {
     this.removeWall(wasX, wasY);
     const {x, y} = nextPosition(wasX, wasY, direction);
     this.addWall(x, y)
+  }
 
+  async startCutscene (events: any[]) {
+    this.isCutscenePlaying = true;
+
+    // Start a loop of async events & await results from each
+    for (let i = 0; i < events.length; i++) {
+      const eventHandler = new OverworldEvent({
+        map: this,
+        event: events[i],
+      });
+      await eventHandler.init();
+    }
+    this.isCutscenePlaying = false;
+
+    // Reset NPC's so they can resume their idle behavior
+    Object.values(this.gameObjects).forEach((object: any) => {
+      object.doBehaviorEvent(this);
+    })
   }
 }
 
