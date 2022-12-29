@@ -160,14 +160,17 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       }),
       npc1: new Person({
         x: gridSize(9),
-        y: gridSize(13),
+        y: gridSize(11),
         src: null,
         behaviorLoop: [
           { type: 'walk', direction: 'left' },
-          { type: 'stand', direction: 'up', time: 5000 },
+          { type: 'stand', direction: 'up', time: 3000 },
           { type: 'walk', direction: 'up' },
+          { type: 'stand', direction: 'right', time: 3000 },
           { type: 'walk', direction: 'right' },
+          { type: 'stand', direction: 'down', time: 3000 },
           { type: 'walk', direction: 'down' },
+          { type: 'stand', direction: 'left', time: 3000 },
         ],
         talking: [
           {
@@ -180,7 +183,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       }),
       npc2: new Person({
         x: gridSize(17),
-        y: gridSize(13),
+        y: gridSize(11),
         src: null,
         behaviorLoop: [
           { type: 'stand', direction: 'left', time: 800 },
@@ -199,10 +202,14 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       }),
     },
     walls: {
-      [asGridCoord(8,14)] : true,
-      [asGridCoord(9,14)] : true,
-      [asGridCoord(17,14)] : true,
-      [asGridCoord(18,14)] : true,
+      [asGridCoord(8,7)] : true,
+      [asGridCoord(9,7)] : true,
+      [asGridCoord(17,7)] : true,
+      [asGridCoord(18,7)] : true,
+      [asGridCoord(8,12)] : true,
+      [asGridCoord(9,12)] : true,
+      [asGridCoord(17,12)] : true,
+      [asGridCoord(18,12)] : true,
     },
     cutsceneSpaces: {
       [asGridCoord(5,1)]: [
@@ -226,27 +233,46 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     },
   },
   Kitchen: {
-    lowerSrc: 'assets/export-pizza-legends-demoroom-lower-map-01.svg',
+    lowerSrc: 'assets/export-pizza-legends-kitchen-lower-map-01.svg',
     upperSrc: '',
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: gridSize(3),
-        y: gridSize(7),
+        x: gridSize(13),
+        y: gridSize(2),
         src: null,
       }),
-      npc1: new Person({
-        x: gridSize(4),
-        y: gridSize(8),
+      npc3: new Person({
+        x: gridSize(8),
+        y: gridSize(6),
         src: null,
         talking: [
           {
             events: [
-              { type: 'textMessage', text: 'Greetings!', faceHero: 'npc1'},
+              { type: 'textMessage', text: 'Greetings!', faceHero: 'npc3'},
             ],
           },
         ],
       }),
-    }
+    },
+    walls: {
+      [asGridCoord(8,7)] : true,
+      [asGridCoord(9,7)] : true,
+      [asGridCoord(17,7)] : true,
+      [asGridCoord(18,7)] : true,
+      [asGridCoord(8,12)] : true,
+      [asGridCoord(9,12)] : true,
+      [asGridCoord(17,12)] : true,
+      [asGridCoord(18,12)] : true,
+    },
+    cutsceneSpaces: {
+      [asGridCoord(13,16)]: [
+        {
+          events: [
+            { type: 'changeMap', map: 'DemoRoom' },
+          ],
+        },
+      ],
+    },
   },
 }
