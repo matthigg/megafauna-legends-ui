@@ -24,25 +24,18 @@ export class OverworldComponent implements OnInit {
   ngOnInit(): void {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
-
+    
     this.startMap((<any>window).OverworldMaps.DemoRoom);
-
+    
     this.bindActionInput();
     this.bindHeroPosition();
-
+    
     this.directionInput.init();
     this.startGameLoop();
-
-    // this.map.startCutscene([
-    //   { who: 'hero', type: 'stand', direction: 'down', time: 2000 },
-    //   { who: 'hero', type: 'walk', direction: 'down', },
-    //   { who: 'hero', type: 'walk', direction: 'down' },
-    //   { who: 'hero', type: 'walk', direction: 'down' },
-    //   { who: 'npc1', type: 'walk', direction: 'left' },
-    //   { who: 'npc1', type: 'walk', direction: 'up' },
-    //   { who: 'npc1', type: 'stand', direction: 'up', time: 2000 },
-    //   { type: 'textMessage', text: 'Hello Mister'},
-    // ]);
+    
+    this.map.startCutscene([
+      { type: 'textMessage', text: 'This is the very first message!'},
+    ]);
   }
 
   // Set map here to expose it to the overworld-event class in order to load different maps

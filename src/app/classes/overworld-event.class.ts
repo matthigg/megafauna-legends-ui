@@ -3,9 +3,6 @@ import { TextMessage } from "./text-message.class";
 interface OverworldEventModel {
   map: any,
   event: any,
-  // init: any,
-  // stand: any,
-  // walk: any,
 }
 
 export class OverworldEvent {

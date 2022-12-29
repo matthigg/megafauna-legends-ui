@@ -149,8 +149,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
 
 (<any>window).OverworldMaps = {
   DemoRoom: {
-    lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
-    upperSrc: 'assets/pizza-legends-demoroom-upper-map-01.svg',
+    lowerSrc: 'assets/export-pizza-legends-demoroom-lower-map-01.svg',
+    upperSrc: '',
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
@@ -159,8 +159,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         src: null,
       }),
       npc1: new Person({
-        x: gridSize(7),
-        y: gridSize(8),
+        x: gridSize(5),
+        y: gridSize(7),
         src: null,
         behaviorLoop: [
           { type: 'walk', direction: 'left' },
@@ -179,7 +179,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         ],
       }),
       npc2: new Person({
-        x: gridSize(12),
+        x: gridSize(10),
         y: gridSize(7),
         src: null,
         behaviorLoop: [
@@ -199,26 +199,10 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       }),
     },
     walls: {
-      // [asGridCoord(1,1)] : true,
-      // [asGridCoord(1,2)] : true,
-      // [asGridCoord(1,3)] : true,
-      // [asGridCoord(1,4)] : true,
-      // [asGridCoord(1,5)] : true,
-      // [asGridCoord(2,1)] : true,
-      // [asGridCoord(2,2)] : true,
-      // [asGridCoord(2,3)] : true,
-      // [asGridCoord(2,4)] : true,
-      // [asGridCoord(2,5)] : true,
-      // [asGridCoord(3,1)] : true,
-      // [asGridCoord(3,2)] : true,
-      // [asGridCoord(3,3)] : true,
-      // [asGridCoord(3,4)] : true,
-      // [asGridCoord(3,5)] : true,
-      // [asGridCoord(4,1)] : true,
-      // [asGridCoord(4,2)] : true,
-      // [asGridCoord(4,3)] : true,
-      // [asGridCoord(4,4)] : true,
-      // [asGridCoord(4,5)] : true,
+      [asGridCoord(4,8)] : true,
+      [asGridCoord(5,8)] : true,
+      [asGridCoord(10,8)] : true,
+      [asGridCoord(11,8)] : true,
     },
     cutsceneSpaces: {
       [asGridCoord(5,1)]: [
@@ -242,8 +226,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     },
   },
   Kitchen: {
-    lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
-    upperSrc: 'assets/pizza-legends-demoroom-upper-map-01.svg',
+    lowerSrc: 'assets/export-pizza-legends-demoroom-lower-map-01.svg',
+    upperSrc: '',
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
