@@ -11,6 +11,7 @@ export class GameObject {
   behaviorLoop: any;
   behaviorLoopIndex: any;
   talking: any;
+  isStanding: boolean = false;
 
   constructor(config: any) {
     this.x = config.x || 0;
@@ -44,10 +45,11 @@ export class GameObject {
     // loop has been configured
     if (
       map.isCutscenePlaying || 
-      this.behaviorLoop.length === 0 
-      // map.isStanding -- this is supposed to fix a bug where the 'stand' behavior type in 
+      this.behaviorLoop.length === 0 ||
+      this.isStanding
+      // this is supposed to fix a bug where the 'stand' behavior type in 
       // the person class startBehavior() method could lead to multiple PersonStandingComplete
-      // events being emitted & setTimeout()'s stacking up
+      // events being emitted & setTimeout()'s stacking up. Part 9 - 2:00.
 
     ) {
       return;

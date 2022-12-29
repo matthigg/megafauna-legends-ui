@@ -2,7 +2,7 @@ import { GameObject } from "./game-object.class";
 
 export class Person extends GameObject {
   movingProgressRemaining: number = 0;
-  isStanding: boolean = false;
+  // isStanding: boolean = false;
   isPlayerControlled: boolean = false;
 
   directionUpdate: any = {
@@ -45,8 +45,8 @@ export class Person extends GameObject {
     if (behavior.type === 'stand') {
 
       // Setting this to true or false is supposed to squash some bug by preventing the
-      // setTimeout()'s from stacking up, but it's not currently implemented in the
-      // game-object class
+      // setTimeout()'s from stacking up. It's a property in the game-object class, which
+      // this Person class inherits
       this.isStanding = true;
 
       console.log('--- stand ---')

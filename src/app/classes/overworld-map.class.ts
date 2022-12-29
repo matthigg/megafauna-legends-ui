@@ -110,7 +110,7 @@ export class OverworldMap {
     }
     this.isCutscenePlaying = false;
 
-    // Reset NPC's so they can resume their idle behavior
+    // Reset NPCs so they can resume their idle behavior
     // TODO - this seems to be bugged -- triggering a behavior.type === textMessage causes
     // unexpected animations & behavior loops start firing off rapidly
     Object.values(this.gameObjects).forEach((object: any) => {
@@ -166,11 +166,11 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         y: gridSize(8),
         src: null,
         behaviorLoop: [
-          // { type: 'walk', direction: 'left' },
-          // { type: 'stand', direction: 'up', time: 5000 },
-          // { type: 'walk', direction: 'up' },
-          // { type: 'walk', direction: 'right' },
-          // { type: 'walk', direction: 'down' },
+          { type: 'walk', direction: 'left' },
+          { type: 'stand', direction: 'up', time: 5000 },
+          { type: 'walk', direction: 'up' },
+          { type: 'walk', direction: 'right' },
+          { type: 'walk', direction: 'down' },
         ],
         talking: [
           {
