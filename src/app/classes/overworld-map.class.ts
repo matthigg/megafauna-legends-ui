@@ -67,7 +67,7 @@ export class OverworldMap {
   moveWall(wasX: number, wasY: number, direction: string) {
     this.removeWall(wasX, wasY);
     const {x, y} = nextPosition(wasX, wasY, direction);
-    this.addWall(x, y)
+    this.addWall(x, y);
   }
 
   async startCutscene (events: any[]) {
@@ -86,7 +86,7 @@ export class OverworldMap {
     // Reset NPC's so they can resume their idle behavior
     Object.values(this.gameObjects).forEach((object: any) => {
       object.doBehaviorEvent(this);
-    })
+    });
   }
 }
 

@@ -39,7 +39,14 @@ export class GameObject {
 
     // Short-circuit this method if a cut scene is playing or if no behavior
     // loop has been configured
-    if (map.isCutscenePlaying || this.behaviorLoop.length === 0) {
+    if (
+      map.isCutscenePlaying || 
+      this.behaviorLoop.length === 0 
+      // map.isStanding -- this is supposed to fix a bug where the 'stand' behavior type in 
+      // the person class startBehavior() method could lead to multiple PersonStandingComplete
+      // events being emitted & setTimeout()'s stacking up
+
+    ) {
       return;
     }
 

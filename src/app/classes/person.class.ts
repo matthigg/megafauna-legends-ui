@@ -2,13 +2,15 @@ import { GameObject } from "./game-object.class";
 
 export class Person extends GameObject {
   movingProgressRemaining: number = 0;
+  isStanding: boolean = false;
+  isPlayerControlled: boolean = false;
+
   directionUpdate: any = {
     'up': ['y', -1],
     'down': ['y', 1],
     'left': ['x', -1],
     'right': ['x', 1],
   }
-  isPlayerControlled: boolean = false;
 
   constructor(config: any) {
     super(config);
@@ -41,12 +43,18 @@ export class Person extends GameObject {
     }
 
     if (behavior.type === 'stand') {
+
+      // Setting this to true or false is supposed to squash some bug by preventing the
+      // setTimeout()'s from stacking up, but it's not currently implemented in the
+      // game-object class
+      this.isStanding = true;
       setTimeout(() => {
         emitEvent('PersonStandingComplete', {
           detail: {
             whoId: this.id,
           },
         });
+        this.isStanding = false;
       }, behavior.time);
     }
   }
