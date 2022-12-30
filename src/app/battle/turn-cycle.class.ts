@@ -10,6 +10,9 @@ export class TurnCycle {
   }
 
   async init() {
+
+    // This message immediately fires off when a battle first starts, ie. when the battle
+    // class calls init() via this.turnCycle.init()
     await this.onNewEvent({
       type: 'textMessage',
       text: 'The battle is starting!',

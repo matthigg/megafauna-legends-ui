@@ -1,4 +1,6 @@
+import { BattleEvent } from "./battle-event.class";
 import { Combatant } from "./combatant.class";
+import { TurnCycle } from "./turn-cycle.class";
 
 // TODO: this already exists in src/app/content/pizzas.ts, refactor into a helper function
 // to set up global pizza variables
@@ -35,6 +37,7 @@ export class Battle {
   element: any;
   combatants: any;
   activeCombatants: any;
+  turnCycle: any;
 
   constructor() {
     this.combatants = {
@@ -87,6 +90,17 @@ export class Battle {
       combatant.id = key;
       combatant.init(this.element);
     });
+
+    this.turnCycle = new TurnCycle({
+      battle: this,
+      onNewEvent: (event: any) => {
+        return new Promise(resolve => {
+          const battleEvent = new BattleEvent(event, this)
+          battleEvent.init(resolve);
+        });
+      }
+    });
+    this.turnCycle.init();
   }
   
   createElement() {
