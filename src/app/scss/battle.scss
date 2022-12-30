@@ -1,3 +1,6 @@
+$scale: 2;
+$crop: 128px;
+
 .Battle {
   position: absolute;
   left: 0;
@@ -7,4 +10,27 @@
   background-image: url('/assets/pizza-legends-battle-map-01.svg');
   background-size: cover;
   image-rendering: pixelated;
+  & .Battle_hero {
+    bottom: 16rem;
+    left: 0;
+    & img {
+      transform: scale($scale) translateX(0px) translateY(-64px);
+    }
+  }
+  & .Battle_enemy {
+    right: 0;
+    top: 16rem;
+    & img {
+      transform: scale($scale) translateX(0px) translateY(0px);
+    }
+  }
+  & .Battle_hero, .Battle_enemy {
+    position: absolute;
+    width: $crop;
+    height: $crop;
+    overflow: hidden;
+    & img {
+      pointer-events: none;
+    }
+  }
 }
