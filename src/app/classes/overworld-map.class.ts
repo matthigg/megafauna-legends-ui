@@ -27,16 +27,16 @@ export class OverworldMap {
   drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: any) {
     ctx.drawImage(
       this.lowerImage, 
-      gridSize(10.5) - cameraPerson.x, 
-      gridSize(9) - cameraPerson.y, 
+      convertToPx(10.5) - cameraPerson.x, 
+      convertToPx(9) - cameraPerson.y, 
     );
   }
 
   drawUpperImage(ctx: CanvasRenderingContext2D, cameraPerson: any) {
     ctx.drawImage(
       this.upperImage, 
-      gridSize(10.5) - cameraPerson.x, 
-      gridSize(9) - cameraPerson.y, 
+      convertToPx(10.5) - cameraPerson.x, 
+      convertToPx(9) - cameraPerson.y, 
     );
   }
 
@@ -121,7 +121,12 @@ export class OverworldMap {
 
 // ========== Utility Functions ===============================================================
 
-function gridSize(n: number): number {
+// TODO - for some reason, loading moving NPCs on some maps throws off their alignment --
+// they will not move in increments of the grid size of the map (ex. 32px) but instead their
+// alignment will be off by 2 pixels, meaning that their behavior loop and interaction 
+// cutscenes will be broken since they check against coordinates that are multiples of the
+// grid size. A temporary fix could be placed here to try to 'normalize' abberant coordinates.
+function convertToPx(n: number): number {
   return n * 32;
 }
 
@@ -154,13 +159,13 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: gridSize(13),
-        y: gridSize(14),
+        x: convertToPx(13),
+        y: convertToPx(14),
         src: null,
       }),
       npc1: new Person({
-        x: gridSize(9),
-        y: gridSize(11),
+        x: convertToPx(9),
+        y: convertToPx(11),
         src: null,
         behaviorLoop: [
           { type: 'walk', direction: 'left' },
@@ -182,8 +187,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         ],
       }),
       npc2: new Person({
-        x: gridSize(17),
-        y: gridSize(11),
+        x: convertToPx(17),
+        y: convertToPx(11),
         src: null,
         behaviorLoop: [
           { type: 'stand', direction: 'left', time: 800 },
@@ -238,13 +243,13 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: gridSize(13),
-        y: gridSize(2),
+        x: convertToPx(13),
+        y: convertToPx(2),
         src: null,
       }),
       npc3: new Person({
-        x: gridSize(8),
-        y: gridSize(6),
+        x: convertToPx(8),
+        y: convertToPx(6),
         src: null,
         talking: [
           {
