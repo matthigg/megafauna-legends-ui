@@ -117,16 +117,16 @@
 
 .Pizza {
   position: absolute;
-  transform: scale(2);
+  transform: scale(3);
   // background: url(/images/characters/pizzas/pizza-shadow.png) no-repeat no-repeat;
 }
 .Pizza[data-team="player"] {
-  bottom: 73px;
-  left: 51px;
+  bottom: 20rem;
+  left: 10rem;
 }
 .Pizza[data-team="enemy"] {
-  top: 47px;
-  right: 100px;
+  top: 18rem;
+  right: 10rem;
 }
 .Pizza[data-active="false"] {
   opacity:0;

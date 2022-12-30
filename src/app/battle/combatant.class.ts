@@ -26,6 +26,7 @@ export class Combatant {
   init(container: any): void {
     this.createElement();
     container.appendChild(this.hudElement);
+    container.appendChild(this.pizzaElement);
     this.update();
   }
 
@@ -69,18 +70,19 @@ export class Combatant {
       this[key as keyof Combatant] = changes[key];
     });
 
+    // Update the isActive flag to display the correct HUD & pizza
     this.hudElement.setAttribute('data-active', this.isActive());
+    this.pizzaElement.setAttribute('data-active', this.isActive());
     
-    // Pizza HP & XP Bars
+    // Display pizza HP & XP Bars
     this.hpFills.forEach((rect: any) => {
       rect.style.width = `${this.hpPercent()}%`;
     });
-
     this.xpFills.forEach((rect: any) => {
       rect.style.width = `${this.xpPercent()}%`;
     });
 
-    // Pizza Level
+    // Display pizza Level
     this.hudElement.querySelector('.Combatant_level').innerText = this.level;
   }
 
