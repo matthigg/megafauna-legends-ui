@@ -66,7 +66,6 @@ export class Combatant {
 
     // Apply any incoming changes in order to update the HUD
     Object.keys(changes).forEach(key => {
-
       this[key as keyof Combatant] = changes[key];
     });
 
