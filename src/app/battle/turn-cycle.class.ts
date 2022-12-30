@@ -24,6 +24,34 @@ export class TurnCycle {
 
   async turn() {
 
+    // Caster - this is a reference to whose turn it is
+    const casterId = this.battle.activeCombatants[this.currentTeam];
+    const caster = this.battle.combatants[casterId];
+    const enemyId = this.battle.activeCombatants[caster.team === 'player' ? 'enemy' : 'player'];
+    const enemy = this.battle.combatants[enemyId];
+
+    const submission = await this.onNewEvent({
+      type: 'submissionMenu', 
+      caster,
+      enemy,
+    });
+
+    const resultingEvents = submission.action.success;
+    for (let i = 0; i < resultingEvents.length; i++) {
+      const event = {
+        ...resultingEvents[i],
+        submission,
+        action: submission.action,
+        caster,
+        target: submission.target,
+      }
+      await this.onNewEvent(event);
+    }
+
+    // Change teams from 'player' to 'enemy' & vice-versa once all of the events have 
+    // completed
+    this.currentTeam = this.currentTeam === 'player' ? 'enemy' : 'player';
+    this.turn();
   }
   
 }

@@ -1,5 +1,5 @@
-import { InteractivityChecker } from "@angular/cdk/a11y";
 import { TextMessage } from "../classes/text-message.class";
+import { SubmissionMenu } from "./submission-menu.class";
 
 export class BattleEvent {
   event;
@@ -22,5 +22,20 @@ export class BattleEvent {
       },
     });
     message.init(this.battle.element);
+  }
+
+  submissionMenu(resolve: any) {
+    const menu = new SubmissionMenu({
+      caster: this.event.caster,
+      enemy: this.event.enemy,
+      onComplete: (submission: any) => {
+
+        // The submission is what move to use & who to use it on, and is passed through
+        // the following classes & methods: TurnCycle -> Battle -> BattleEvent -> init() -> 
+        // submissionMenu()
+        resolve(submission);
+      },
+    });
+    menu.init(this.battle.element);
   }
 }
