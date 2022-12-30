@@ -25,7 +25,7 @@ export class OverworldComponent implements OnInit {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
     
-    this.startMap((<any>window).OverworldMaps.Kitchen);
+    this.startMap((<any>window).OverworldMaps.DemoRoom);
     
     this.bindActionInput();
     this.bindHeroPosition();
@@ -34,7 +34,8 @@ export class OverworldComponent implements OnInit {
     this.startGameLoop();
     
     this.map.startCutscene([
-      { type: 'changeMap', map: "DemoRoom" },
+      { type: 'battle' }
+      // { type: 'changeMap', map: "DemoRoom" },
       // { type: 'textMessage', text: 'This is the very first message!'},
     ]);
   }
