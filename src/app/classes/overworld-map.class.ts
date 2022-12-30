@@ -266,7 +266,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       [asGridCoord(18,12)] : true,
     },
     cutsceneSpaces: {
-      [asGridCoord(13,16)]: [
+      [asGridCoord(13,1)]: [
         {
           events: [
             { type: 'changeMap', map: 'DemoRoom' },
