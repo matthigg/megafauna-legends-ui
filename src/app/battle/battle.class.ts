@@ -34,6 +34,7 @@ import { Combatant } from "./combatant.class";
 export class Battle {
   element: any;
   combatants: any;
+  activeCombatants: any;
 
   constructor() {
     this.combatants = {
@@ -42,7 +43,8 @@ export class Battle {
         team: 'player',
         hp: 50,
         maxHp: 50,
-        xp: 0,
+        xp: 75,
+        maxXp: 100,
         level: 1,
         status: null,
         // status: {
@@ -56,6 +58,7 @@ export class Battle {
         hp: 50,
         maxHp: 50,
         xp: 20,
+        maxXp: 100,
         level: 1,
       }, this),
       'enemy2': new Combatant({
@@ -64,8 +67,14 @@ export class Battle {
         hp: 50,
         maxHp: 50,
         xp: 30,
+        maxXp: 100,
         level: 1,
       }, this),
+    }
+
+    this.activeCombatants = {
+      player: 'player1',
+      enemy: 'enemy1',
     }
   }
 

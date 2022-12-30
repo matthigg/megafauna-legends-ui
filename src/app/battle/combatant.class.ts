@@ -11,6 +11,10 @@ export class Combatant {
   hp: any;
   maxHp: any;
   hpFills: any;
+  xp: any;
+  maxXp: any;
+  xpFills: any;
+  pizzaElement: any;
   
   constructor(config: any, battle: any) {
     Object.keys(config).forEach(key => {
@@ -47,8 +51,14 @@ export class Combatant {
       </svg>
       <p class="Combatant_status"></p>
     `);
+    this.pizzaElement = document.createElement('img');
+    this.pizzaElement.classList.add('Pizza');
+    this.pizzaElement.setAttribute('src', this.src);
+    this.pizzaElement.setAttribute('alt', this.name);
+    this.pizzaElement.setAttribute('data-team', this.team);
 
     this.hpFills = this.hudElement.querySelectorAll('.Combatant_life-container > rect');
+    this.xpFills = this.hudElement.querySelectorAll('.Combatant_xp-container > rect');
   }
 
   update(changes: any = {}): void {
@@ -59,15 +69,31 @@ export class Combatant {
       this[key as keyof Combatant] = changes[key];
     });
 
+    this.hudElement.setAttribute('data-active', this.isActive());
+    
+    // Pizza HP & XP Bars
     this.hpFills.forEach((rect: any) => {
       rect.style.width = `${this.hpPercent()}%`;
     });
 
+    this.xpFills.forEach((rect: any) => {
+      rect.style.width = `${this.xpPercent()}%`;
+    });
+
+    // Pizza Level
     this.hudElement.querySelector('.Combatant_level').innerText = this.level;
   }
 
   hpPercent(): number {
     const percent = this.hp / this.maxHp * 100;
     return percent > 0 ? percent : 0;
+  }
+
+  xpPercent(): number {
+    return this.xp / this.maxXp * 100;
+  }
+
+  isActive(): boolean {
+    return this.battle.activeCombatants[this.team] === this.id;
   }
 }
