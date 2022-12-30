@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { OverworldComponent } from './components/overworld/overworld.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OverworldComponent,
     LoginComponent,
     DashboardComponent,
-    SidenavComponent
   ],
   imports: [
     BrowserModule,
