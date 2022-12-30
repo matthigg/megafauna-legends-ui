@@ -6,7 +6,7 @@
 }
 
 .Battle .Combatant {
-  transform: scale(2);
+  transform: scale(2.5);
 }
 .Battle .Combatant[data-active="false"] {
   opacity: 0;
@@ -16,12 +16,12 @@
 }
 
 .Combatant[data-team="player"] {
-  left: 46px;
-  top: 70px;
+  left: 4rem;
+  top: 21rem;
 }
 .Combatant[data-team="enemy"] {
-  top: 28px;
-  right: 77px;
+  top: 12rem;
+  right: 4rem;
 }
 
 .Combatant_character_crop {

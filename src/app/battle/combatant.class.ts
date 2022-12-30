@@ -7,6 +7,10 @@ export class Combatant {
   icon: any;
   src: any;
   type: any;
+  level: any;
+  hp: any;
+  maxHp: any;
+  hpFills: any;
   
   constructor(config: any, battle: any) {
     Object.keys(config).forEach(key => {
@@ -18,6 +22,7 @@ export class Combatant {
   init(container: any): void {
     this.createElement();
     container.appendChild(this.hudElement);
+    this.update();
   }
 
   createElement(): void {
@@ -42,5 +47,27 @@ export class Combatant {
       </svg>
       <p class="Combatant_status"></p>
     `);
+
+    this.hpFills = this.hudElement.querySelectorAll('.Combatant_life-container > rect');
+  }
+
+  update(changes: any = {}): void {
+
+    // Apply any incoming changes in order to update the HUD
+    Object.keys(changes).forEach(key => {
+
+      this[key as keyof Combatant] = changes[key];
+    });
+
+    this.hpFills.forEach((rect: any) => {
+      rect.style.width = `${this.hpPercent()}%`;
+    });
+
+    this.hudElement.querySelector('.Combatant_level').innerText = this.level;
+  }
+
+  hpPercent(): number {
+    const percent = this.hp / this.maxHp * 100;
+    return percent > 0 ? percent : 0;
   }
 }
