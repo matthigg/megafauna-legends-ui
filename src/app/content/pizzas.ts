@@ -18,11 +18,11 @@
     type: (<any>window).PizzaTypes.veggie,
     src: 'assets/pizzas/v001.png',
     icon: 'assets/pizza-icons/veggie.png',
-  }
+  },
   'f001': {
     name: 'Portobello Express',
     type: (<any>window).PizzaTypes.fungi,
     src: 'assets/pizzas/f001.png',
     icon: 'assets/pizza-icons/fungi.png',
-  }
+  },
 }
