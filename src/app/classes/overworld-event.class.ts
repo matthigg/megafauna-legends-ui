@@ -2,11 +2,6 @@ import { Battle } from "../battle/battle.class";
 import { SceneTransition } from "./scene-transition.class";
 import { TextMessage } from "./text-message.class";
 
-interface OverworldEventModel {
-  map: any,
-  event: any,
-}
-
 export class OverworldEvent {
   map;
   event;
@@ -19,7 +14,7 @@ export class OverworldEvent {
   init(): Promise<any> {
     return new Promise(resolve => {
       let key = this.event.type
-      this[key as keyof OverworldEventModel](resolve);
+      this[key as keyof OverworldEvent](resolve);
     });
   }
 
