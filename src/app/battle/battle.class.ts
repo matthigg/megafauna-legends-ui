@@ -1,8 +1,23 @@
+import { Combatant } from "./combatant.class";
+
 export class Battle {
   element: any;
+  combatants: {} = {};
 
   constructor() {
-
+    this.combatants = {
+      'player1': new Combatant({
+        hp: 50,
+        maxHp: 50,
+        xp: 0,
+        level: 1,
+        status: null,
+        // status: {
+        //   type: 'clumsy',
+        //   expiresIn: 3,
+        // }
+      }, this),
+    }
   }
 
   init(container: any): void {
