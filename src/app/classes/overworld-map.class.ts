@@ -149,7 +149,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
 
 (<any>window).OverworldMaps = {
   DemoRoom: {
-    lowerSrc: 'assets/export-pizza-legends-demoroom-lower-map-01.svg',
+    lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
     upperSrc: '',
     gameObjects: {
       hero: new Person({
@@ -233,7 +233,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     },
   },
   Kitchen: {
-    lowerSrc: 'assets/export-pizza-legends-kitchen-lower-map-01.svg',
+    lowerSrc: 'assets/pizza-legends-kitchen-lower-map-01.svg',
     upperSrc: '',
     gameObjects: {
       hero: new Person({
