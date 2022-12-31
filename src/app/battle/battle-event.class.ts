@@ -34,12 +34,6 @@ export class BattleEvent {
   async stateChange(resolve: any): Promise<any> {
     const { caster, target, damage, recover, status, action } = this.event;
     let who = this.event.onCaster ? caster : target;
-    if (action.targetType === 'friendly') {
-
-      // Note: this can be changed in the future to target 'friendly' characters other
-      // than the caster
-      who = caster;
-    }
 
     // Modify the target to subtract HP damage
     if (damage) {

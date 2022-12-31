@@ -83,7 +83,7 @@ export const Pizzas = {
     type: PizzaTypes.spicy,
     src: 'assets/pizzas/s001.png',
     icon: 'assets/pizza-icons/spicy.png',
-    actions: [ 'clumsyStatus', 'damage1', ],
+    actions: [ 'saucyStatus', 'clumsyStatus', 'damage1', ],
   },
   'v001': {
     name: 'Call Me Kale',

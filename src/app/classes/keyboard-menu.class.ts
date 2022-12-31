@@ -21,6 +21,10 @@ export class KeyboardMenu {
     container.appendChild(this.descriptionElement);
     container.appendChild(this.element);
 
+    // Note - there is a bug where prevButton references the 'Go back' button from previous
+    // menu submission selections, ex. click Items -> Go back and the submission menu will
+    // go back to the root menu (ie. Attack, Items, Swap) but prevButton will still reference
+    // the 'Go back' button in the Items menu
     this.up = new KeyPressListener('ArrowUp', () => {
       const current = Number(this.prevFocus.getAttribute('data-button'));
       const prevButton = Array.from(this.element.querySelectorAll('button[data-button]'))
@@ -60,13 +64,11 @@ export class KeyboardMenu {
 
       // TODO - fix edge case where a button can be both disabled and receive auto focus
       const disabledAttr = option.disabled ? 'disabled' : '';
-      const autoFocusAttr = index === 0 ? 'autoFocus' : '';
       
       return `
         <div class="option">
           <button 
             ${disabledAttr} 
-            ${autoFocusAttr} 
             data-button="${index}" 
             data-description="${option.description}"
           >
@@ -96,6 +98,11 @@ export class KeyboardMenu {
         this.descriptionElementText.innerText = button.dataset.description;
       });
     });
+
+    // Focus on the first <button> element with the data-button attribute that is not disabled
+    setTimeout(() => {
+      this.element.querySelector['button[data-button]:not([disabled])'].focus();
+    }, 10);
   }
 
   createElement(): void {
