@@ -21,6 +21,7 @@ export const Actions = {
     name: 'Olive Oil',
     success: [
       { type: 'textMessage', text: '{CASTER} uses {ACTION}!' },
+      { type: 'animation', animation: 'glob', color: '#dafd2a' },
       { type: 'stateChange', status: { type: 'Clumsy', expiresIn: 3 } },
       { type: 'textMessage', text: '{TARGET} is slipping all around!' },
     ],
@@ -29,7 +30,7 @@ export const Actions = {
 }
 
 export const BattleAnimations = {
-  async spin(event: any, onComplete: any) {8
+  async spin(event: any, onComplete: any) {
     const element = event.caster.pizzaElement;
     const animationClassName = event.caster.team === "player" ? "battle-spin-right" : "battle-spin-left";
     element.classList.add(animationClassName);
@@ -41,6 +42,29 @@ export const BattleAnimations = {
 
     // Continue battle cycle right around when the pizzas collide
     await wait(100);
+    onComplete();
+  },
+  async glob(event: any, onComplete: any) {
+    const { caster } = event;
+    let div = document.createElement('div');
+    div.classList.add('glob-orb');
+    div.classList.add(caster.team === 'player' ? 'battle-glob-right' : 'battle-glob-left');
+
+    div.innerHTML = (`
+      <svg viewBox="0 0 32 32" width="32" height="32">
+        <circle cx="16" cy="16" r="16" fill="${event.color}" />
+      </svg>
+    `);
+
+    // Remove animation class when animation is fully complete
+    div.addEventListener('animationend', () => {
+      div.remove();
+    });
+
+    // Add 'glob' to DOM
+    document.querySelector('.Battle')?.appendChild(div);
+
+    await wait(820);
     onComplete();
   }
 };
