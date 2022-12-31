@@ -5,6 +5,10 @@
   position:absolute;
 }
 
+.Combatant[data-team="enemy"] {
+  margin-right: 3rem;
+}
+
 .Battle .Combatant {
   transform: scale(2.5);
 }

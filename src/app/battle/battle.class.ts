@@ -21,8 +21,8 @@ export class Battle {
         level: 1,
         status: null,
         // status: {
-        //   type: 'Saucy',
-        //   expiresIn: 1,
+        //   type: 'Clumsy',
+        //   expiresIn: 10,
         // }
       }, this),
       'enemy1': new Combatant({
@@ -33,6 +33,11 @@ export class Battle {
         xp: 20,
         maxXp: 100,
         level: 1,
+        status: null,
+        // status: {
+        //   type: 'Clumsy',
+        //   expiresIn: 10,
+        // }
       }, this),
       'enemy2': new Combatant({
         ...Pizzas.f001,

@@ -1,7 +1,6 @@
 import { TextMessage } from "../classes/text-message.class";
 import { SubmissionMenu } from "./submission-menu.class";
 import { BattleAnimations, wait } from "../shared/utils";
-import { Action } from "rxjs/internal/scheduler/Action";
 
 export class BattleEvent {
   event;

@@ -1,3 +1,5 @@
+import { randomFromArray } from "../shared/utils";
+
 export class Combatant {
   battle;
   hudElement: any;
@@ -107,6 +109,16 @@ export class Combatant {
 
   isActive(): boolean {
     return this.battle.activeCombatants[this.team] === this.id;
+  }
+
+  getReplacedEvents(originalEvents: any): any {
+    if (this.status?.type === 'Clumsy' && randomFromArray([true, false, false])) {
+      return [
+        { type: 'textMessage', text: `${this.name} flops over!` },
+      ];
+    }
+
+    return originalEvents;
   }
 
   getPostEvents(): any[] {

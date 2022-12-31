@@ -36,7 +36,10 @@ export class TurnCycle {
       enemy,
     });
 
-    const resultingEvents = submission.action.success;
+    const resultingEvents = caster.getReplacedEvents(submission.action.success);
+
+    console.log('--- resultingEvents:', resultingEvents);
+
     for (let i = 0; i < resultingEvents.length; i++) {
       const event = {
         ...resultingEvents[i],
@@ -45,6 +48,9 @@ export class TurnCycle {
         caster,
         target: submission.target,
       }
+
+      console.log('--- event:', event);
+      
       await this.onNewEvent(event);
     }
 

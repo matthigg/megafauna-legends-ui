@@ -16,7 +16,16 @@ export const Actions = {
       { type: 'textMessage', text: '{CASTER} uses {ACTION}!' },
       { type: 'stateChange', status: { type: 'Saucy', expiresIn: 3 } },
     ],
-  }
+  },
+  clumsyStatus: {
+    name: 'Olive Oil',
+    success: [
+      { type: 'textMessage', text: '{CASTER} uses {ACTION}!' },
+      { type: 'stateChange', status: { type: 'Clumsy', expiresIn: 3 } },
+      { type: 'textMessage', text: '{TARGET} is slipping all around!' },
+    ],
+  },
+
 }
 
 export const BattleAnimations = {
@@ -50,7 +59,7 @@ export const Pizzas = {
     type: PizzaTypes.spicy,
     src: 'assets/pizzas/s001.png',
     icon: 'assets/pizza-icons/spicy.png',
-    actions: [ 'saucyStatus', 'damage1', ],
+    actions: [ 'clumsyStatus', 'damage1', ],
   },
   'v001': {
     name: 'Call Me Kale',
@@ -69,6 +78,10 @@ export const Pizzas = {
 }
 
 // ========== SHARED FUNCTIONS ==============================================================
+
+export function randomFromArray(array: any[]) {
+  return array[Math.floor(Math.random() * array.length)];
+}
 
 export function wait(ms: number): Promise<any> {
   return new Promise((resolve: any) => {
