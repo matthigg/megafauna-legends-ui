@@ -45,7 +45,7 @@ export class Battle {
       'enemy1': new Combatant({
         ...Pizzas.v001,
         team: 'enemy',
-        hp: 50,
+        hp: 1,
         maxHp: 50,
         xp: 20,
         maxXp: 100,

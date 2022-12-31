@@ -1,5 +1,6 @@
 import { TextMessage } from "../classes/text-message.class";
 import { SubmissionMenu } from "./submission-menu.class";
+import { ReplacementMenu } from "./replacement-menu.class";
 import { BattleAnimations, wait } from "../shared/utils";
 
 export class BattleEvent {
@@ -119,5 +120,19 @@ export class BattleEvent {
     await wait(400);
 
     resolve();
+  }
+
+  replacementMenu(resolve: any) {
+    const menu = new ReplacementMenu({
+
+      replacements: Object.values(this.battle.combatants).filter((c: any) => {
+        return c.team === this.event.team && c.hp > 0
+      }),
+
+      onComplete: (replacement: any) => {
+        resolve(replacement);
+      },
+    });
+    menu.init(this.battle.element);
   }
 }
