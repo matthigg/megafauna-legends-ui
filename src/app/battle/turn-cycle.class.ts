@@ -13,10 +13,10 @@ export class TurnCycle {
 
     // This message immediately fires off when a battle first starts, ie. when the battle
     // class calls init() via this.turnCycle.init()
-    await this.onNewEvent({
-      type: 'textMessage',
-      text: 'The battle is starting!',
-    });
+    // await this.onNewEvent({
+    //   type: 'textMessage',
+    //   text: 'The battle is starting!',
+    // });
 
     // Start the first turn!
     this.turn();
@@ -38,8 +38,6 @@ export class TurnCycle {
 
     const resultingEvents = caster.getReplacedEvents(submission.action.success);
 
-    console.log('--- resultingEvents:', resultingEvents);
-
     for (let i = 0; i < resultingEvents.length; i++) {
       const event = {
         ...resultingEvents[i],
@@ -48,9 +46,6 @@ export class TurnCycle {
         caster,
         target: submission.target,
       }
-
-      console.log('--- event:', event);
-      
       await this.onNewEvent(event);
     }
 

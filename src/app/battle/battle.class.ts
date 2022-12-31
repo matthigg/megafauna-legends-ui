@@ -24,6 +24,7 @@ export class Battle {
         //   type: 'Clumsy',
         //   expiresIn: 10,
         // }
+        isPlayerControlled: true,
       }, this),
       'enemy1': new Combatant({
         ...Pizzas.v001,
