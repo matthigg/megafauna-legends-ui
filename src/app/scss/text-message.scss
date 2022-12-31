@@ -1,0 +1,18 @@
+.TextMessage {
+  border: 2px solid #fff;
+  font-size: 1rem;
+  width: 640px;   // this width is set on the <canvas> element in the overworld template
+  & .TextMessage_p {
+    margin: 0;
+    padding: 1rem;
+    & span {
+      opacity: 0;
+    }
+    & span.revealed {
+      opacity: 1;
+    }
+  }
+  & .TextMessage_button {
+    margin: 0 0 1rem 1rem;
+  }
+}
