@@ -36,11 +36,24 @@ export class TurnCycle {
       enemy,
     });
 
+    // Stop here if we are replacing the pizza
+    if (submission.replacement) {
+      await this.onNewEvent({
+        type: 'replace',
+        replacement: submission.replacement
+      });
+      await this.onNewEvent({
+        type: 'textMessage',
+        text: 'Go get them, ${submission.replacement.name}!'
+      });
+      return;
+    }
+
+    // The instsanceId references the unique id of an item that has been used and needs to be
+    // removed from the player or enemy inventory
     if (submission.instanceId) {
       this.battle.items = this.battle.items
         .filter((item: any) => item.instanceId !== submission.instanceId);
-
-      console.log('--- this.battle.items:', this.battle.items);
     }
 
     const resultingEvents = caster.getReplacedEvents(submission.action.success);

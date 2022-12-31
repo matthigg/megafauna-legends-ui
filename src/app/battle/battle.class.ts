@@ -20,11 +20,26 @@ export class Battle {
         xp: 75,
         maxXp: 100,
         level: 1,
-        // status: null,
-        status: {
-          type: 'Saucy',
-          expiresIn: 10,
-        },
+        status: null,
+        // status: {
+        //   type: 'Saucy',
+        //   expiresIn: 10,
+        // },
+        isPlayerControlled: true,
+      }, this),
+      'player2': new Combatant({
+        ...Pizzas.s002,
+        team: 'player',
+        hp: 50,
+        maxHp: 50,
+        xp: 75,
+        maxXp: 100,
+        level: 1,
+        status: null,
+        // status: {
+        //   type: 'Saucy',
+        //   expiresIn: 10,
+        // },
         isPlayerControlled: true,
       }, this),
       'enemy1': new Combatant({

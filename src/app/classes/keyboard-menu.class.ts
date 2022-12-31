@@ -59,6 +59,9 @@ export class KeyboardMenu {
   }
 
   setOptions(options: any) {
+
+    console.log('--- options:', options);
+    
     this.options = options;
     this.element.innerHTML = this.options.map((option, index) => {
 

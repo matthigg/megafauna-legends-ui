@@ -102,6 +102,15 @@ export const PizzaTypes = {
 export const Pizzas = {
   's001': {
     name: 'Slice Samurai',
+    description: 'A pizza that lives by the sword',
+    type: PizzaTypes.spicy,
+    src: 'assets/pizzas/s001.png',
+    icon: 'assets/pizza-icons/spicy.png',
+    actions: [ 'saucyStatus', 'clumsyStatus', 'damage1', ],
+  },
+  's002': {
+    name: 'Bacon Brigade',
+    description: 'A pork-loving pizza asdf',
     type: PizzaTypes.spicy,
     src: 'assets/pizzas/s001.png',
     icon: 'assets/pizza-icons/spicy.png',
@@ -109,6 +118,7 @@ export const Pizzas = {
   },
   'v001': {
     name: 'Call Me Kale',
+    description: 'A hippie pizza',
     type: PizzaTypes.veggie,
     src: 'assets/pizzas/v001.png',
     icon: 'assets/pizza-icons/veggie.png',
@@ -116,6 +126,7 @@ export const Pizzas = {
   },
   'f001': {
     name: 'Portobello Express',
+    description: 'A Joe Rogan pizza',
     type: PizzaTypes.fungi,
     src: 'assets/pizzas/f001.png',
     icon: 'assets/pizza-icons/fungi.png',

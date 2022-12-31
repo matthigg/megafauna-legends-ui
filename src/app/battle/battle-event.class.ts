@@ -78,10 +78,15 @@ export class BattleEvent {
   }
 
   submissionMenu(resolve: any): void {
+    const { caster } = this.event;
+    
     const menu = new SubmissionMenu({
-      caster: this.event.caster,
+      caster: caster,
       enemy: this.event.enemy,
       items: this.battle.items,
+      replacements: Object.values(this.battle.combatants).filter((c: any) => {
+        return c.id !== caster.id && c.team === caster.team && c.hp > 0;
+      }),
       onComplete: (submission: any) => {
 
         // The submission is what move to use & who to use it on, and is passed through
@@ -91,6 +96,8 @@ export class BattleEvent {
       },
     });
     menu.init(this.battle.element);
+
+    console.log('--- menu.replacements:', menu.replacements);
   }
 
   animation(resolve: any) {

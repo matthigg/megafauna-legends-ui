@@ -7,11 +7,13 @@ export class SubmissionMenu {
   onComplete;
   keyboardMenu: any;
   items;
+  replacements;
 
-  constructor({ caster, enemy, onComplete, items }: any) {
+  constructor({ caster, enemy, onComplete, items, replacements }: any) {
     this.caster = caster;
     this.enemy = enemy;
     this.onComplete = onComplete;
+    this.replacements = replacements;
 
     let quantityMap: any = {}
     items.forEach((item: any) => {
@@ -61,7 +63,6 @@ export class SubmissionMenu {
   }
 
   getPages() {
-
     const backOption = {
       label: 'Go back',
       description: 'Return to previous page',
@@ -101,7 +102,7 @@ export class SubmissionMenu {
           handler: () => {
 
             // See pizza options
-
+            this.keyboardMenu.setOptions(this.getPages().replacements);
           }
         },
       ],
@@ -120,6 +121,8 @@ export class SubmissionMenu {
         }),
         backOption,
       ],
+
+      // Display items options in the submission menu
       items: [
         ...this.items.map((item: any) => {
           const action = Actions[item.actionId as keyof typeof Actions];
@@ -130,19 +133,37 @@ export class SubmissionMenu {
               return "x"+item.quantity;
             },
             handler: () => {
-              this.menuSubmit(action, item.instanceId)
+              this.menuSubmit(action, item.instanceId);
             }
           }
         }),
         backOption,
-      ]
+      ],
+
+      // Display replacement/swap options in the submission menu
+      replacements: [
+        ...this.replacements.map((replacement: any) => {
+          return {
+            label: replacement.name,
+            description: replacement.description,
+            handler: () => {
+              this.menuSubmitReplacement(replacement);
+            }
+          }
+        }),
+        backOption,
+      ],
     }
   }
 
+  menuSubmitReplacement(replacement: any) {
+    this.keyboardMenu?.end();
+    this.onComplete({
+      replacement,
+    });
+  }
+
   menuSubmit(action: any, instanceId = null) {
-
-    console.log('--- instanceId:', instanceId);
-
     this.keyboardMenu?.end();
     
     this.onComplete({
