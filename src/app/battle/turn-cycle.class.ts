@@ -36,6 +36,13 @@ export class TurnCycle {
       enemy,
     });
 
+    if (submission.instanceId) {
+      this.battle.items = this.battle.items
+        .filter((item: any) => item.instanceId !== submission.instanceId);
+
+      console.log('--- this.battle.items:', this.battle.items);
+    }
+
     const resultingEvents = caster.getReplacedEvents(submission.action.success);
 
     for (let i = 0; i < resultingEvents.length; i++) {

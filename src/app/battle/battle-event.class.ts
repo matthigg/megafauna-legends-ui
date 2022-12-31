@@ -35,6 +35,9 @@ export class BattleEvent {
     const { caster, target, damage, recover, status, action } = this.event;
     let who = this.event.onCaster ? caster : target;
 
+    console.log('--- status:', status);
+
+
     // Modify the target to subtract HP damage
     if (damage) {
       target.update({
@@ -57,15 +60,15 @@ export class BattleEvent {
     }
 
     // Modify the target status
+    // Copying over the status object prevents passing it by reference & essentially 
+    // clones it? This is useful since we don't want to modify the base status in the
+    // shared Action variable in the shared/utils.ts file.
     if (status) {
-      
-      // Copying over the status object prevents passing it by reference & essentially 
-      // clones it? This is useful since we don't want to modify the base status in the
-      // shared Action variable in the shared/utils.ts file.
       who.update({ status: { ...status } });
-      if (status === null) {
-        who.update({ status: null });
-      }
+    }
+
+    if (status === null) {
+      who.update({ status: null });
     }
 
     // Pause, stop blinking, and resolve
@@ -78,6 +81,7 @@ export class BattleEvent {
     const menu = new SubmissionMenu({
       caster: this.event.caster,
       enemy: this.event.enemy,
+      items: this.battle.items,
       onComplete: (submission: any) => {
 
         // The submission is what move to use & who to use it on, and is passed through

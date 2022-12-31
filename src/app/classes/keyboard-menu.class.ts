@@ -74,7 +74,7 @@ export class KeyboardMenu {
           >
             ${option.label}
           </button>
-          <span class="right">${option.right ? option.right : ""}</span>
+          <span class="right">${option.right ? option.right() : ""}</span>
         </div>
       `
     }).join('');
@@ -101,7 +101,7 @@ export class KeyboardMenu {
 
     // Focus on the first <button> element with the data-button attribute that is not disabled
     setTimeout(() => {
-      this.element.querySelector['button[data-button]:not([disabled])'].focus();
+      this.element.querySelector("button[data-button]:not([disabled])").focus();
     }, 10);
   }
 

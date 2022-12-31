@@ -6,11 +6,30 @@ export class SubmissionMenu {
   enemy;
   onComplete;
   keyboardMenu: any;
+  items;
 
-  constructor({ caster, enemy, onComplete }: any) {
+  constructor({ caster, enemy, onComplete, items }: any) {
     this.caster = caster;
     this.enemy = enemy;
     this.onComplete = onComplete;
+
+    let quantityMap: any = {}
+    items.forEach((item: any) => {
+      if (item.team === caster.team) {
+
+        let existing = quantityMap[item.actionId];
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          quantityMap[item.actionId] = {
+            actionId: item.actionId,
+            quantity: 1,
+            instanceId: item.instanceId,
+          }
+        }
+      }
+    });
+    this.items = Object.values(quantityMap);
   }
 
   init(container: any) {
@@ -93,7 +112,7 @@ export class SubmissionMenu {
           const action = Actions[key as keyof typeof Actions];
           return {
             label: action.name,
-            // description: action.description,
+            description: action.description,
             handler: () => {
               this.menuSubmit(action)
             }
@@ -102,9 +121,19 @@ export class SubmissionMenu {
         backOption,
       ],
       items: [
-        {
-
-        },
+        ...this.items.map((item: any) => {
+          const action = Actions[item.actionId as keyof typeof Actions];
+          return {
+            label: action.name,
+            description: action.description,
+            right: () => {
+              return "x"+item.quantity;
+            },
+            handler: () => {
+              this.menuSubmit(action, item.instanceId)
+            }
+          }
+        }),
         backOption,
       ]
     }
@@ -112,11 +141,14 @@ export class SubmissionMenu {
 
   menuSubmit(action: any, instanceId = null) {
 
+    console.log('--- instanceId:', instanceId);
+
     this.keyboardMenu?.end();
     
     this.onComplete({
       action,
       target: action.targetType === 'friendly' ? this.caster : this.enemy,
+      instanceId,
     })
   }
 
