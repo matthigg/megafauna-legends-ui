@@ -111,6 +111,10 @@ export class Combatant {
     return this.battle.activeCombatants[this.team] === this.id;
   }
 
+  giveXp(): number {
+    return this.level * 20;
+  }
+
   getReplacedEvents(originalEvents: any): any {
     if (this.status?.type === 'Clumsy' && randomFromArray([true, false, false])) {
       return [
