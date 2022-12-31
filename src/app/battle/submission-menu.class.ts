@@ -1,38 +1,4 @@
-function wait(ms: number): Promise<any> {
-  return new Promise((resolve: any) => {
-    setTimeout(() => {
-      resolve();
-    }, ms)
-  });
-}
-
-(<any>window).BattleAnimations = {
-  async spin(event: any, onComplete: any) {8
-    const element = event.caster.pizzaElement;
-    const animationClassName = event.caster.team === "player" ? "battle-spin-right" : "battle-spin-left";
-    element.classList.add(animationClassName);
-
-    // Remove class when animation is fully complete
-    element.addEventListener("animationend", () => {
-      element.classList.remove(animationClassName);
-    }, { once:true });
-
-    // Continue battle cycle right around when the pizzas collide
-    await wait(100);
-    onComplete();
-  }
-};
-
-(<any>window).Actions = {
-  damage1: {
-    name: 'Whomp!',
-    success: [
-      { type: 'textMessage', text: '{CASTER} uses {ACTION}!' },
-      { type: 'animation', animation: 'spin' },
-      { type: 'stateChange', damage: 10 },
-    ]
-  }
-}
+import { Actions } from "../shared/utils";
 
 export class SubmissionMenu {
   caster;
@@ -50,7 +16,7 @@ export class SubmissionMenu {
   // teammate, your character, etc.
   decide() {
     this.onComplete({
-      action: (<any>window).Actions[this.caster.actions[0]],
+      action: Actions[this.caster.actions[0] as keyof typeof Actions],
       target: this.enemy,
     });
   }

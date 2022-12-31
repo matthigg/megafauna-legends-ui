@@ -1,40 +1,7 @@
 import { BattleEvent } from "./battle-event.class";
 import { Combatant } from "./combatant.class";
 import { TurnCycle } from "./turn-cycle.class";
-
-// TODO: this already exists in src/app/content/pizzas.ts, refactor into a helper function
-// to set up global pizza variables
-(<any>window).PizzaTypes = {
-  normal: 'normal', 
-  spicy: 'spicy', 
-  veggie: 'veggie', 
-  fungi: 'fungi', 
-  chill: 'chill', 
-};
-
-(<any>window).Pizzas = {
-  's001': {
-    name: 'Slice Samurai',
-    type: (<any>window).PizzaTypes.spicy,
-    src: 'assets/pizzas/s001.png',
-    icon: 'assets/pizza-icons/spicy.png',
-    actions: [ 'damage1', ],
-  },
-  'v001': {
-    name: 'Call Me Kale',
-    type: (<any>window).PizzaTypes.veggie,
-    src: 'assets/pizzas/v001.png',
-    icon: 'assets/pizza-icons/veggie.png',
-    actions: [ 'damage1', ],
-  },
-  'f001': {
-    name: 'Portobello Express',
-    type: (<any>window).PizzaTypes.fungi,
-    src: 'assets/pizzas/f001.png',
-    icon: 'assets/pizza-icons/fungi.png',
-    actions: [ 'damage1', ],
-  },
-}
+import { Pizzas } from "../shared/utils";
 
 export class Battle {
   element: any;
@@ -45,7 +12,7 @@ export class Battle {
   constructor() {
     this.combatants = {
       'player1': new Combatant({
-        ...(<any>window).Pizzas['s001'],
+        ...Pizzas.s001,
         team: 'player',
         hp: 50,
         maxHp: 50,
@@ -59,7 +26,7 @@ export class Battle {
         }
       }, this),
       'enemy1': new Combatant({
-        ...(<any>window).Pizzas.v001,
+        ...Pizzas.v001,
         team: 'enemy',
         hp: 50,
         maxHp: 50,
@@ -68,7 +35,7 @@ export class Battle {
         level: 1,
       }, this),
       'enemy2': new Combatant({
-        ...(<any>window).Pizzas.f001,
+        ...Pizzas.f001,
         team: 'enemy',
         hp: 50,
         maxHp: 50,

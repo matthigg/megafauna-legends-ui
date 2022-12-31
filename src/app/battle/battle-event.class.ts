@@ -1,14 +1,6 @@
-import { withLatestFrom } from "rxjs";
 import { TextMessage } from "../classes/text-message.class";
 import { SubmissionMenu } from "./submission-menu.class";
-
-function wait(ms: number): Promise<any> {
-  return new Promise((resolve: any) => {
-    setTimeout(() => {
-      resolve();
-    }, ms)
-  });
-}
+import { BattleAnimations, wait } from "../shared/utils";
 
 export class BattleEvent {
   event;
@@ -85,8 +77,7 @@ export class BattleEvent {
   }
 
   animation(resolve: any) {
-    const fn = (<any>window).BattleAnimations[this.event.animation];
+    const fn = BattleAnimations[this.event.animation as keyof typeof BattleAnimations];
     fn(this.event, resolve);
-
   }
 }
