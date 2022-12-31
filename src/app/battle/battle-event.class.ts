@@ -1,6 +1,7 @@
 import { TextMessage } from "../classes/text-message.class";
 import { SubmissionMenu } from "./submission-menu.class";
 import { BattleAnimations, wait } from "../shared/utils";
+import { Action } from "rxjs/internal/scheduler/Action";
 
 export class BattleEvent {
   event;
@@ -32,10 +33,17 @@ export class BattleEvent {
   }
 
   async stateChange(resolve: any): Promise<any> {
-    const { caster, target, damage, recover } = this.event;
-    if (damage) {
+    const { caster, target, damage, recover, status, action } = this.event;
+    let who = this.event.onCaster ? caster : target;
+    if (action.targetType === 'friendly') {
 
-      // Modify the target to subtract HP damage
+      // Note: this can be changed in the future to target 'friendly' characters other
+      // than the caster
+      who = caster;
+    }
+
+    // Modify the target to subtract HP damage
+    if (damage) {
       target.update({
         hp: target.hp - damage,
       });
@@ -44,8 +52,8 @@ export class BattleEvent {
       target.pizzaElement.classList.add('battle-damage-blink');
     }
 
+    // Modify the target to gain HP
     if (recover) {
-      const who = this.event.onCaster ? caster : target;
       let newHp = who.hp + recover;
       if (newHp > who.maxHp) {
         newHp = who.maxHp;
@@ -53,6 +61,18 @@ export class BattleEvent {
       who.update({
         hp: newHp,
       });
+    }
+
+    // Modify the target status
+    if (status) {
+      
+      // Copying over the status object prevents passing it by reference & essentially 
+      // clones it? This is useful since we don't want to modify the base status in the
+      // shared Action variable in the shared/utils.ts file.
+      who.update({ status: { ...status } });
+      if (status === null) {
+        who.update({ status: null });
+      }
     }
 
     // Pause, stop blinking, and resolve

@@ -7,7 +7,15 @@ export const Actions = {
       { type: 'textMessage', text: '{CASTER} uses {ACTION}!' },
       { type: 'animation', animation: 'spin' },
       { type: 'stateChange', damage: 10 },
-    ]
+    ],
+  },
+  saucyStatus: {
+    name: 'Tomato Squeeze',
+    targetType: 'friendly',
+    success: [
+      { type: 'textMessage', text: '{CASTER} uses {ACTION}!' },
+      { type: 'stateChange', status: { type: 'Saucy', expiresIn: 3 } },
+    ],
   }
 }
 
@@ -42,7 +50,7 @@ export const Pizzas = {
     type: PizzaTypes.spicy,
     src: 'assets/pizzas/s001.png',
     icon: 'assets/pizza-icons/spicy.png',
-    actions: [ 'damage1', ],
+    actions: [ 'saucyStatus', 'damage1', ],
   },
   'v001': {
     name: 'Call Me Kale',
