@@ -44,8 +44,9 @@ export class TurnCycle {
       });
       await this.onNewEvent({
         type: 'textMessage',
-        text: 'Go get them, ${submission.replacement.name}!'
+        text: `Go get them, ${submission.replacement.name}!`
       });
+      this.nextTurn();
       return;
     }
 
@@ -88,9 +89,12 @@ export class TurnCycle {
     if (expiredEvent) {
       await this.onNewEvent(expiredEvent);
     }
+    this.nextTurn();
+  }
 
-    // Change teams from 'player' to 'enemy' & vice-versa once all of the events have 
-    // completed
+  // Change teams from 'player' to 'enemy' & vice-versa once all of the events have 
+  // completed
+  nextTurn(): void {
     this.currentTeam = this.currentTeam === 'player' ? 'enemy' : 'player';
     this.turn();
   }

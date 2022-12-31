@@ -96,12 +96,28 @@ export class BattleEvent {
       },
     });
     menu.init(this.battle.element);
-
-    console.log('--- menu.replacements:', menu.replacements);
   }
 
   animation(resolve: any) {
     const fn = BattleAnimations[this.event.animation as keyof typeof BattleAnimations];
     fn(this.event, resolve);
+  }
+
+  async replace(resolve: any) {
+    const { replacement } = this.event;
+
+    // Clear out the old combatant - this will remove the combatant from the activeCombatants[]
+    // array in the battle class
+    const prevCombatant = this.battle.combatants[this.battle.activeCombatants[replacement.team]]
+    this.battle.activeCombatants[replacement.team] = null;
+    prevCombatant.update();
+    await wait(400);
+
+    // Add in the new combatant
+    this.battle.activeCombatants[replacement.team] = replacement.id;
+    replacement.update();
+    await wait(400);
+
+    resolve();
   }
 }
