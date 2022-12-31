@@ -36,9 +36,6 @@ export class BattleEvent {
     const { caster, target, damage, recover, status, action } = this.event;
     let who = this.event.onCaster ? caster : target;
 
-    console.log('--- status:', status);
-
-
     // Modify the target to subtract HP damage
     if (damage) {
       target.update({
@@ -72,8 +69,14 @@ export class BattleEvent {
       who.update({ status: null });
     }
 
-    // Pause, stop blinking, and resolve
+    // Pause
     await wait(600);
+
+    // Update team pizza icon components at top of screen
+    this.battle.playerTeam.update();
+    this.battle.enemyTeam.update();
+    
+    // Stop blinking and resolve
     target.pizzaElement.classList.remove('battle-damage-blink');
     resolve();
   }
@@ -118,6 +121,10 @@ export class BattleEvent {
     this.battle.activeCombatants[replacement.team] = replacement.id;
     replacement.update();
     await wait(400);
+
+    // Update team pizza icon components at top of screen
+    this.battle.playerTeam.update();
+    this.battle.enemyTeam.update();
 
     resolve();
   }

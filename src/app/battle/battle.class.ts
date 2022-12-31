@@ -2,6 +2,7 @@ import { BattleEvent } from "./battle-event.class";
 import { Combatant } from "./combatant.class";
 import { TurnCycle } from "./turn-cycle.class";
 import { Pizzas } from "../shared/utils";
+import { Team } from "./team.class";
 
 export class Battle {
   element: any;
@@ -9,6 +10,8 @@ export class Battle {
   activeCombatants: any;
   turnCycle: any;
   items: any[] = [];
+  playerTeam: any;
+  enemyTeam: any;
 
   constructor() {
     this.combatants = {
@@ -84,11 +87,24 @@ export class Battle {
     this.createElement();
     container.appendChild(this.element);
 
+    this.playerTeam = new Team('player', 'Hero');
+    this.enemyTeam = new Team('enemy', 'Bully');
+
     Object.keys(this.combatants).forEach(key => {
       let combatant = this.combatants[key];
       combatant.id = key;
       combatant.init(this.element);
+
+      // Add combatant to correct team
+      if (combatant.team === 'player') {
+        this.playerTeam.combatants.push(combatant);
+      } else if (combatant.team === 'enemy') {
+        this.enemyTeam.combatants.push(combatant);
+      }
     });
+
+    this.playerTeam.init(this.element);
+    this.enemyTeam.init(this.element);
 
     this.turnCycle = new TurnCycle({
       battle: this,
