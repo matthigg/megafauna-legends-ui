@@ -59,7 +59,7 @@ $crop: 128px;
 
 @keyframes battle-spin-left {
   0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(3) }
-  25% { transform: translate3d(-200%, 25%, 0) rotate(45deg) scale(3) }
+  25% { transform: translate3d(-200%, 25%, 0) rotate(-45deg) scale(3) }
   100% { transform: translate3d(0, 0, 0) scale(3) }
 }
 
