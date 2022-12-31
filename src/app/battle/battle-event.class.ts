@@ -40,7 +40,7 @@ export class BattleEvent {
   }
 
   async stateChange(resolve: any): Promise<any> {
-    const { caster, target, damage } = this.event;
+    const { caster, target, damage, recover } = this.event;
     if (damage) {
 
       // Modify the target to subtract HP damage
@@ -50,6 +50,17 @@ export class BattleEvent {
 
       // Start blinking animation
       target.pizzaElement.classList.add('battle-damage-blink');
+    }
+
+    if (recover) {
+      const who = this.event.onCaster ? caster : target;
+      let newHp = who.hp + recover;
+      if (newHp > who.maxHp) {
+        newHp = who.maxHp;
+      }
+      who.update({
+        hp: newHp,
+      });
     }
 
     // Pause, stop blinking, and resolve

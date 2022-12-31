@@ -52,11 +52,11 @@ export class Battle {
         xp: 75,
         maxXp: 100,
         level: 1,
-        status: null,
-        // status: {
-        //   type: 'clumsy',
-        //   expiresIn: 3,
-        // }
+        // status: null,
+        status: {
+          type: 'Saucy',
+          expiresIn: 1,
+        }
       }, this),
       'enemy1': new Combatant({
         ...(<any>window).Pizzas.v001,

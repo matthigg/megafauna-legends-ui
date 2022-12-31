@@ -15,6 +15,7 @@ export class Combatant {
   maxXp: any;
   xpFills: any;
   pizzaElement: any;
+  status: any;
   
   constructor(config: any, battle: any) {
     Object.keys(config).forEach(key => {
@@ -83,6 +84,16 @@ export class Combatant {
 
     // Display pizza Level
     this.hudElement.querySelector('.Combatant_level').innerText = this.level;
+
+    // Update status
+    const statusElement = this.hudElement.querySelector('.Combatant_status');
+    if (this.status) {
+      statusElement.innerText = this.status.type;
+      statusElement.style.display = 'block';
+    } else {
+      statusElement.innerText = '';
+      statusElement.style.display = 'none';
+    }
   }
 
   hpPercent(): number {
@@ -96,5 +107,26 @@ export class Combatant {
 
   isActive(): boolean {
     return this.battle.activeCombatants[this.team] === this.id;
+  }
+
+  getPostEvents(): any[] {
+    if (this.status?.type === 'Saucy') {
+      return [
+        { type: 'textMessage', text: 'Feeling saucy!' },
+        { type: 'stateChange', recover: 5, onCaster: true },
+      ]
+    }
+    return [];
+  }
+
+  decrementStatus() {
+    if (this.status?.expiresIn > 0) {
+      this.status.expiresIn -= 1;
+      if (this.status.expiresIn === 0) {
+        this.update({ status: null });
+        return { type: 'textMessage', text: `Status expired!` }
+      }
+    }
+    return null;
   }
 }
