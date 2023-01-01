@@ -201,6 +201,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
             events: [
               { type: 'textMessage', text: 'Hello Mister!', faceHero: 'npc2'},
               { type: 'textMessage', text: 'Goodbye!'},
+              { type: 'battle', enemyId: 'beth' },
             ],
           },
         ],

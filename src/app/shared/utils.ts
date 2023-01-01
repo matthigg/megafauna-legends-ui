@@ -1,3 +1,5 @@
+import { PlayerState } from "../state/player-state.class";
+
 // ========== SHARED VARIABLES ==============================================================
 
 export const Actions = {
@@ -147,3 +149,45 @@ export function wait(ms: number): Promise<any> {
     }, ms)
   });
 }
+
+// ========== GLOBAL VARIABLES ==============================================================
+
+// (<any>window).Enemies = {
+export const Enemies = {
+  'erio': {
+    name: 'Erio',
+    // src: 'assets/character-01.webp',
+    src: 'assets/test-01.svg',
+    pizzas: {
+      'a': {
+        pizzaId: 'v001',
+        maxHp: 50,
+        level: 1,
+      },
+      'b': {
+        pizzaId: 'f001',
+        maxHp: 50,
+        level: 1,
+      }
+    }
+  },
+  'beth': {
+    name: 'Beth',
+    src: 'assets/test-02.svg',
+    pizzas: {
+      'a': {
+        pizzaId: 'f001',
+        hp: 1,
+        maxHp: 50,
+        level: 1,
+      },
+      // 'b': {
+      //   pizzaId: 'v001',
+      //   maxHp: 50,
+      //   level: 1,
+      // }
+    }
+  }
+}
+
+export const playerState = new PlayerState();

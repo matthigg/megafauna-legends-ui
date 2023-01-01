@@ -33,11 +33,11 @@ export class OverworldComponent implements OnInit {
     this.directionInput.init();
     this.startGameLoop();
     
-    this.map.startCutscene([
-      { type: 'battle' }
-      // { type: 'changeMap', map: "DemoRoom" },
-      // { type: 'textMessage', text: 'This is the very first message!'},
-    ]);
+    // this.map.startCutscene([
+    //   { type: 'battle', enemyId: 'beth' }
+    //   // { type: 'changeMap', map: "DemoRoom" },
+    //   // { type: 'textMessage', text: 'This is the very first message!'},
+    // ]);
   }
 
   // Set map here to expose it to the overworld-event class in order to load different maps

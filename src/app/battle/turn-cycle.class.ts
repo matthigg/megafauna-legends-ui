@@ -2,10 +2,12 @@ export class TurnCycle {
   battle: any;
   onNewEvent;
   currentTeam;
+  onWinner;
 
-  constructor({ battle, onNewEvent }: any) {
+  constructor({ battle, onNewEvent, onWinner }: any) {
     this.battle = battle;
     this.onNewEvent = onNewEvent;
+    this.onWinner = onWinner;
     this.currentTeam = 'player'; // can be 'player' or 'enemy'
   }
 
@@ -13,10 +15,10 @@ export class TurnCycle {
 
     // This message immediately fires off when a battle first starts, ie. when the battle
     // class calls init() via this.turnCycle.init()
-    // await this.onNewEvent({
-    //   type: 'textMessage',
-    //   text: 'The battle is starting!',
-    // });
+    await this.onNewEvent({
+      type: 'textMessage',
+      text: `${this.battle.enemy.name} wants to throw down!`,
+    });
 
     // Start the first turn!
     this.turn();
@@ -53,6 +55,11 @@ export class TurnCycle {
     // The instsanceId references the unique id of an item that has been used and needs to be
     // removed from the player or enemy inventory
     if (submission.instanceId) {
+
+      // Keep track of used items to update player state later on
+      this.battle.usedInstanceIds[submission.instanceId] = true;
+
+      // Remove item from battle state
       this.battle.items = this.battle.items
         .filter((item: any) => item.instanceId !== submission.instanceId);
     }
@@ -102,6 +109,7 @@ export class TurnCycle {
       await this.onNewEvent({
         type: 'textMessage', text: 'Winner!'
       });
+      this.onWinner(winner);
       return;
     }
 

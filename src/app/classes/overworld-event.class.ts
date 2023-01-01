@@ -1,6 +1,7 @@
 import { Battle } from "../battle/battle.class";
 import { SceneTransition } from "./scene-transition.class";
 import { TextMessage } from "./text-message.class";
+import { Enemies } from "../shared/utils";
 
 export class OverworldEvent {
   map;
@@ -95,12 +96,13 @@ export class OverworldEvent {
   }
 
   battle(resolve: any) {
-    // const battle = new Battle({
-    //   onComplete: () => {
-    //     resolve();
-    //   }
-    // });
-    const battle = new Battle();
+    const battle = new Battle({
+      enemy: Enemies[this.event.enemyId as keyof typeof Enemies],
+      onComplete: () => {
+        resolve();
+      }
+    });
+    // const battle = new Battle();
     battle.init(document.querySelector('.game-container'));
   }
 }

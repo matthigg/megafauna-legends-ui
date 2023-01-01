@@ -22,7 +22,8 @@ export class Combatant {
   constructor(config: any, battle: any) {
     Object.keys(config).forEach(key => {
       this[key as keyof Combatant] = config[key];
-    })
+    });
+    this.hp = this.hp ?? this.maxHp;
     this.battle = battle;
   }
 
