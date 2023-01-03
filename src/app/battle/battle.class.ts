@@ -3,7 +3,8 @@ import { Combatant } from "./combatant.class";
 import { TurnCycle } from "./turn-cycle.class";
 import { Pizzas } from "../shared/utils";
 import { Team } from "./team.class";
-// import { playerState } from "../shared/utils";
+import { emitEvent } from "../shared/utils";
+import { playerState } from "../shared/player-state";
 
 export class Battle {
   element: any;
@@ -155,9 +156,8 @@ export class Battle {
         // Update player state to the window.PlayerState object, so that player state is saved
         // between battles
         if (winner === 'player') {
-          const playerState = (<any>window).PlayerState;
           Object.keys(playerState.pizzas).forEach(id => {
-            const playerStatePizza = playerState.pizzas[id];
+            const playerStatePizza = (playerState.pizzas as any)[id];
             const combatant = this.combatants[id];
             if (combatant) {
               playerStatePizza.hp = combatant.hp;
@@ -171,6 +171,9 @@ export class Battle {
           playerState.items = playerState.items.filter((item: any) => {
             return !this.usedInstanceIds[item.instanceId];
           });
+
+          // Let the Overworld HUD know that the player state has changed
+          emitEvent('PlayerStateUpdated', null);
         }
         
         this.element.remove();

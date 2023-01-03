@@ -1,4 +1,5 @@
 import { GameObject } from "./game-object.class";
+import { emitEvent } from "../shared/utils";
 
 export class Person extends GameObject {
   movingProgressRemaining: number = 0;
@@ -97,7 +98,7 @@ export class Person extends GameObject {
 
 // ========== Utility Functions ===============================================================
 
-function emitEvent(name: string, detail: any) {
-  const event = new CustomEvent(name, { detail });
-  document.dispatchEvent(event);
-}
+// function emitEvent(name: string, detail: any) {
+//   const event = new CustomEvent(name, { detail });
+//   document.dispatchEvent(event);
+// }

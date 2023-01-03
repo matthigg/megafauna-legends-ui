@@ -109,7 +109,11 @@ export class Combatant {
   }
 
   isActive(): boolean {
-    return this.battle.activeCombatants[this.team] === this.id;
+
+    // TODO - setting this.battle? null check is to prevent an error in the overworld
+    // HUD when trying to re-use the HUD from this Combatant class as the Overworld
+    // HUD -- consider refactoring so that the Overworld has its own HUD
+    return this.battle?.activeCombatants[this.team] === this.id;
   }
 
   giveXp(): number {

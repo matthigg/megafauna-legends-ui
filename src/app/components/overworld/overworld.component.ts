@@ -4,6 +4,7 @@ import { GameObject } from 'src/app/classes/game-object.class';
 import { OverworldMap } from 'src/app/classes/overworld-map.class';
 import { DirectionInput } from 'src/app/classes/direction-input.class';
 import { KeyPressListener } from 'src/app/classes/key-press-listener.class';
+import { Hud } from 'src/app/classes/hud.class';
 
 @Component({
   selector: 'app-overworld',
@@ -16,6 +17,7 @@ export class OverworldComponent implements OnInit {
   raf: number | null = null;
   map: any = null;
   directionInput: DirectionInput = new DirectionInput();
+  hud: any;
 
   constructor(
     private _router: Router,
@@ -24,6 +26,9 @@ export class OverworldComponent implements OnInit {
   ngOnInit(): void {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
+
+    this.hud = new Hud();
+    this.hud.init(document.querySelector('.game-container'));
     
     this.startMap((<any>window).OverworldMaps.DemoRoom);
     

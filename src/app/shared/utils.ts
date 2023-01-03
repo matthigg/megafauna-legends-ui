@@ -1,5 +1,3 @@
-import { PlayerState } from "../state/player-state.class";
-
 // ========== SHARED VARIABLES ==============================================================
 
 export const Actions = {
@@ -150,6 +148,11 @@ export function wait(ms: number): Promise<any> {
   });
 }
 
+export function emitEvent(name: string, detail: any) {
+  const event = new CustomEvent(name, { detail });
+  document.dispatchEvent(event);
+}
+
 // ========== GLOBAL VARIABLES ==============================================================
 
 // (<any>window).Enemies = {
@@ -189,5 +192,3 @@ export const Enemies = {
     }
   }
 }
-
-export const playerState = new PlayerState();
