@@ -20,7 +20,10 @@ export class KeyboardMenu {
 
   init(container: any): void {
     this.createElement();
-    container.appendChild(this.descriptionElement);
+
+    // This is an alternative way to call *.appendChild() on either this.descriptionContainer
+    // or container
+    (this.descriptionContainer || container).appendChild(this.descriptionElement);
     container.appendChild(this.element);
 
     // Note - there is a bug where prevButton references the 'Go back' button from previous

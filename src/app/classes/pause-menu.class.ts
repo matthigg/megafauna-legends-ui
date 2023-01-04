@@ -1,6 +1,8 @@
 import { KeyPressListener } from "./key-press-listener.class";
 import { KeyboardMenu } from "./keyboard-menu.class";
 import { wait } from "../shared/utils";
+import { playerState } from "../shared/player-state";
+import { Pizzas } from "../shared/utils";
 
 export class PauseMenu {
   onComplete;
@@ -15,27 +17,38 @@ export class PauseMenu {
   async init(container: any) {
     this.createElement();
     this.keyboardMenu = new KeyboardMenu({
-
-      //
-      
-    })
-    
+      descriptionContainer: container,
+    });
     this.keyboardMenu.init(this.element);
     this.keyboardMenu.setOptions(this.getOptions('root'));
 
     container.appendChild(this.element);
 
-    wait(200)
+    // TODO - fix bug where hitting escape >= 3 times throws everything out of sync
+    wait(200);
     this.esc = new KeyPressListener('Escape', () => {
       this.close();
     })
   }
 
   getOptions(pageKey: any) {
-    if (pageKey === 'root') {
 
-      // TODO - dynamically return all pizzas here
+    // Case 1: Show the first page of pause menu options
+    if (pageKey === 'root') {
+      const lineupPizzas = playerState.lineup.map(id => {
+        const { pizzaId } = (playerState.pizzas as any)[id];
+        const base = (Pizzas as any)[pizzaId];
+        return {
+          label: base.name,
+          description: base.description,
+          handler: () => {
+            this.keyboardMenu.setOptions(this.getOptions(id));
+          },
+        }
+      });
+      
       return [
+        ... lineupPizzas,
         {
           label: 'Save',
           description: 'Save your progress',
@@ -54,7 +67,45 @@ export class PauseMenu {
       ];
     }
     
-    return [];
+    // Case 2: Show the options for a single pizza (by id)
+    const unequipped = Object.keys(playerState.pizzas).filter(id => {
+      return playerState.lineup.indexOf(id) === -1;
+    }).map(id => {
+      const { pizzaId } = (playerState as any).pizzas[id];
+      const base = (Pizzas as any)[pizzaId];
+      return {
+        label: `Swap for ${base.name}`,
+        description: base.description,
+        handler: () => {
+
+          // TODO
+          
+        },
+      }
+    });
+    
+    
+    return [
+      ...unequipped,
+
+      // Swap current pizza for another one
+      {
+        label: 'Move to front',
+        description: 'Move this pizza to the front of the list',
+        handler: () => {
+
+        },
+      },
+
+      // Go back to main menu
+      {
+        label: 'Back',
+        description: 'Go back to root menu',
+        handler: () => {
+          this.keyboardMenu.setOptions(this.getOptions('root'));
+        },
+      },
+    ];
   }
 
   close(): void {
