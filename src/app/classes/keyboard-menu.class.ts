@@ -8,12 +8,14 @@ export class KeyboardMenu {
   element: any;
   descriptionElement: any;
   descriptionElementText: any;
+  descriptionContainer;
 
-  constructor() {
+  constructor(config: any = {}) {
     this.options = [];  // Set by setOptions()
     this.up = null;
     this.down = null;
     this.prevFocus = null;
+    this.descriptionContainer = config.descriptionContainer || null;
   }
 
   init(container: any): void {

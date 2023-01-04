@@ -31,21 +31,5 @@ export class PlayerState {
       { actionId: 'item_recoverHp', instanceId: 'item2' },
       { actionId: 'item_recoverHp', instanceId: 'item3' },
     ]
-
-    console.log('--- window:', (window as any).PlayerState);
   }
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
-(<any>window).PlayerState = new PlayerState();

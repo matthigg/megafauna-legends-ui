@@ -45,8 +45,6 @@ export class Hud {
   update(): void {
     this.scoreboards.forEach((s: any) => {
 
-      console.log('--- (playerState.pizzas as any)[s.id]:', (playerState.pizzas as any)[s.id]);
-
       // Update scoreboard here
       s.update((playerState.pizzas as any)[s.id])
       

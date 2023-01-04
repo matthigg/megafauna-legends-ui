@@ -12,13 +12,14 @@ export class PauseMenu {
     this.onComplete = onComplete;
   }
 
-  async init(container: any): void {
+  async init(container: any) {
     this.createElement();
     this.keyboardMenu = new KeyboardMenu({
 
       //
-
-    });
+      
+    })
+    
     this.keyboardMenu.init(this.element);
     this.keyboardMenu.setOptions(this.getOptions('root'));
 
@@ -57,7 +58,10 @@ export class PauseMenu {
   }
 
   close(): void {
-
+    this.esc?.unbind();
+    this.keyboardMenu.end();
+    this.element.remove();
+    this.onComplete();
   }
 
   createElement(): void {

@@ -2,6 +2,7 @@ import { Battle } from "../battle/battle.class";
 import { SceneTransition } from "./scene-transition.class";
 import { TextMessage } from "./text-message.class";
 import { Enemies } from "../shared/utils";
+import { PauseMenu } from "./pause-menu.class";
 
 export class OverworldEvent {
   map;
@@ -104,6 +105,18 @@ export class OverworldEvent {
     });
     // const battle = new Battle();
     battle.init(document.querySelector('.game-container'));
+  }
+
+  pause(resolve: any) {
+    this.map.isPaused = true;
+    const menu = new PauseMenu({
+      onComplete: () => {
+        resolve();
+        this.map.isPaused = false;
+        this.map.overworld.startGameLoop();
+      },
+    });
+    menu.init(document.querySelector('.game-container'));
   }
 }
 

@@ -58,6 +58,14 @@ export class OverworldComponent implements OnInit {
       // Is there a person here to talk to?
       this.map.checkForActionCutscene();
     });
+
+    new KeyPressListener('Escape', () => {
+      if (!this.map.isCutScenePlaying) {
+        this.map.startCutscene([
+          { type: 'pause' },
+        ]);
+      }
+    });
   }
 
   bindHeroPosition(): void {
@@ -100,9 +108,11 @@ export class OverworldComponent implements OnInit {
       // Draw upper map layer
       this.map.drawUpperImage(this.ctx, cameraPerson)
       
-      requestAnimationFrame(() => {
-        step();
-      })
+      if (!this.map.isPaused) {
+        requestAnimationFrame(() => {
+          step();
+        });
+      }
     } 
     step();
   }

@@ -89,17 +89,14 @@ export class Battle {
     };
 
     // Dynamically add the player team    
-    (<any>window).PlayerState.lineup.forEach((id: any) => {   
-      this.addCombatant(id, 'player', (<any>window).PlayerState.pizzas[id])
+    playerState.lineup.forEach((id: any) => {   
+      this.addCombatant(id, 'player', (playerState.pizzas as any)[id])
     })
 
     // Dynamically add the enemy team    
     Object.keys(this.enemy.pizzas).forEach(key => {
       this.addCombatant('e_' + key, 'enemy', this.enemy.pizzas[key])
     })
-    // (<any>window).PlayerState.lineup.forEach((id: any) => {   
-    //   this.addCombatant(id, 'player', (<any>window).PlayerState.pizzas[id])
-    // })
 
     this.items = [
       // { actionId: 'item_recoverStatus', instanceId: 'p1', team: 'player' },
@@ -109,7 +106,7 @@ export class Battle {
     ];
 
     // Populate initial items[] list from player state
-    (<any>window).PlayerState.items.forEach((item: any) => {
+    playerState.items.forEach((item: any) => {
       this.items.push({
         ...item,
         team: 'player',
@@ -153,7 +150,7 @@ export class Battle {
       }, 
       onWinner: (winner: any) => {
 
-        // Update player state to the window.PlayerState object, so that player state is saved
+        // Update player state to the playerState object, so that player state is saved
         // between battles
         if (winner === 'player') {
           Object.keys(playerState.pizzas).forEach(id => {
