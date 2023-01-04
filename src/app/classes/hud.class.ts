@@ -19,9 +19,21 @@ export class Hud {
     document.addEventListener('PlayerStateUpdated', () => {
       this.update();
     });
+
+    // When the pizza lineup changes, notify the HUD so the HP & XP bars are updated
+    document.addEventListener('LineupChanged', () => {
+      this.createElement();
+      container.appendChild(this.element);
+    })
   }
 
   createElement(): void {
+
+    if (this.element) {
+      this.element.remove();
+      this.scoreboards = [];
+    }
+    
     this.element = document.createElement('div');
     this.element.classList.add('Hud');
 

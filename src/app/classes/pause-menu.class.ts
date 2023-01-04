@@ -77,9 +77,8 @@ export class PauseMenu {
         label: `Swap for ${base.name}`,
         description: base.description,
         handler: () => {
-
-          // TODO
-          
+          playerState.swapLineup(pageKey, id);
+          this.keyboardMenu.setOptions(this.getOptions('root'));
         },
       }
     });
@@ -93,7 +92,9 @@ export class PauseMenu {
         label: 'Move to front',
         description: 'Move this pizza to the front of the list',
         handler: () => {
+          playerState.moveToFront(pageKey);
 
+          this.keyboardMenu.setOptions(this.getOptions('root'));
         },
       },
 
