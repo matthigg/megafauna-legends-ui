@@ -3,6 +3,7 @@ import { SceneTransition } from "./scene-transition.class";
 import { TextMessage } from "./text-message.class";
 import { Enemies } from "../shared/utils";
 import { PauseMenu } from "./pause-menu.class";
+import { playerState } from "../shared/player-state";
 
 export class OverworldEvent {
   map;
@@ -20,7 +21,7 @@ export class OverworldEvent {
     });
   }
 
-  stand(resolve: any) {
+  stand(resolve: any): void {
     const who = this.map.gameObjects[this.event.who];
     who.startBehavior(
       {
@@ -45,7 +46,7 @@ export class OverworldEvent {
     document.addEventListener('PersonStandingComplete', completeHandler);
   }
 
-  walk(resolve: any) {
+  walk(resolve: any): void {
     const who = this.map.gameObjects[this.event.who];
     who.startBehavior(
       {
@@ -70,7 +71,7 @@ export class OverworldEvent {
     document.addEventListener('PersonWalkingComplete', completeHandler);
   }
 
-  textMessage(resolve: any) {
+  textMessage(resolve: any): void {
     if (this.event.faceHero) {
       const obj = this.map.gameObjects[this.event.faceHero];
       obj.direction = oppositeDirection(this.map.gameObjects['hero'].direction);
@@ -83,7 +84,7 @@ export class OverworldEvent {
     message.init(document.querySelector('.game-container'));
   }
 
-  changeMap(resolve: any) {
+  changeMap(resolve: any): void {
     const sceneTransition = new SceneTransition();
     sceneTransition.init(document.querySelector('.game-container'), () => {
       
@@ -96,7 +97,7 @@ export class OverworldEvent {
 
   }
 
-  battle(resolve: any) {
+  battle(resolve: any): void {
     const battle = new Battle({
       enemy: Enemies[this.event.enemyId as keyof typeof Enemies],
       onComplete: () => {
@@ -107,7 +108,7 @@ export class OverworldEvent {
     battle.init(document.querySelector('.game-container'));
   }
 
-  pause(resolve: any) {
+  pause(resolve: any): void {
     this.map.isPaused = true;
     const menu = new PauseMenu({
       onComplete: () => {
@@ -117,6 +118,11 @@ export class OverworldEvent {
       },
     });
     menu.init(document.querySelector('.game-container'));
+  }
+
+  addStoryFlag(resolve: any): void {
+    (playerState.storyFlags as any)[this.event.flag] = true;
+    resolve();
   }
 }
 

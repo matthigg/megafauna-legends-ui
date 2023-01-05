@@ -4,6 +4,7 @@ export class PlayerState {
   pizzas;
   lineup;
   items;
+  storyFlags = {};
 
   constructor() {
     this.pizzas = {
@@ -41,7 +42,7 @@ export class PlayerState {
       { actionId: 'item_recoverHp', instanceId: 'item1' },
       { actionId: 'item_recoverHp', instanceId: 'item2' },
       { actionId: 'item_recoverHp', instanceId: 'item3' },
-    ]
+    ];
   }
 
   moveToFront(futureFrontId: any): void {

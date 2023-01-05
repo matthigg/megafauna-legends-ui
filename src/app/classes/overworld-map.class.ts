@@ -1,6 +1,7 @@
 import { GameObject } from "./game-object.class";
 import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
+import { playerState } from "../shared/player-state";
 
 export class OverworldMap {
   gameObjects;
@@ -85,7 +86,20 @@ export class OverworldMap {
     });
 
     if (match && match.talking.length && !this.isCutscenePlaying) {
-      this.startCutscene(match.talking[0].events);
+
+      const relevantScenario = match.talking.find((scenario: any) => {
+        return (scenario.required || []).every((storyFlag: any) => {
+          return (playerState.storyFlags as any)[storyFlag];
+        })
+      });
+      relevantScenario && this.startCutscene(relevantScenario.events);
+
+      // const relevantScenario = match.talking.find((scenario: any) => {
+      //   return (scenario.required || []).every((storyFlag: any) => {
+      //     return (playerState.storyFlags as any)[storyFlag]
+      //   })
+      // })
+      // relevantScenario && this.startCutscene(relevantScenario.events)
     }
   }
 
@@ -200,10 +214,29 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         ],
         talking: [
           {
+            required: ['TALKED_TO_ERIO'],
             events: [
-              { type: 'textMessage', text: 'Hello Mister!', faceHero: 'npc2'},
-              { type: 'textMessage', text: 'Goodbye!'},
-              { type: 'battle', enemyId: 'beth' },
+              { type: 'textMessage', text: "Isn't Erio the coolest?", faceHero: 'npc2'},
+
+            ],
+          },
+          {
+            events: [
+              { type: 'textMessage', text: "Have you met Erio?", faceHero: 'npc2'},
+              // { type: 'battle', enemyId: 'beth' },
+            ],
+          },
+        ],
+      }),
+      npc3: new Person({
+        x: convertToPx(17),
+        y: convertToPx(9),
+        src: null,
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: 'Bahahaha?', faceHero: 'npc3'},
+              { type: 'addStoryFlag', flag: 'TALKED_TO_ERIO'},
             ],
           },
         ],
