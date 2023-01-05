@@ -10,7 +10,7 @@ export class PlayerState {
     this.pizzas = {
       'p1': {
         pizzaId: 's001',
-        hp: 30,
+        hp: 10,
         maxHp: 50,
         xp: 95,
         maxXp: 100,
@@ -37,7 +37,7 @@ export class PlayerState {
       },
     }
 
-    this.lineup = ['p1', 'p2'];
+    this.lineup = ['p1'];
     this.items = [
       { actionId: 'item_recoverHp', instanceId: 'item1' },
       { actionId: 'item_recoverHp', instanceId: 'item2' },

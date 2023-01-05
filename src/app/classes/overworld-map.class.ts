@@ -93,13 +93,6 @@ export class OverworldMap {
         })
       });
       relevantScenario && this.startCutscene(relevantScenario.events);
-
-      // const relevantScenario = match.talking.find((scenario: any) => {
-      //   return (scenario.required || []).every((storyFlag: any) => {
-      //     return (playerState.storyFlags as any)[storyFlag]
-      //   })
-      // })
-      // relevantScenario && this.startCutscene(relevantScenario.events)
     }
   }
 
@@ -121,7 +114,14 @@ export class OverworldMap {
         map: this,
         event: events[i],
       });
-      await eventHandler.init();
+      const result = await eventHandler.init();
+
+      // This result value comes from battle.class.ts in the TurnCycle object, specifically
+      // this.onComplete(winner === 'player'); -- next, it ends up in the battle() method
+      // in the overworld-event-class.ts file. finally, it ends up here.
+      if (result === 'LOST_BATTLE') {
+        break;
+      }
     }
     this.isCutscenePlaying = false;
 
@@ -222,8 +222,11 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           },
           {
             events: [
-              { type: 'textMessage', text: "Have you met Erio?", faceHero: 'npc2'},
-              // { type: 'battle', enemyId: 'beth' },
+              // { type: 'textMessage', text: "Have you met Erio?", faceHero: 'npc2'},
+              { type: 'textMessage', text: "I'm going to crush you?", faceHero: 'npc2'},
+              { type: 'battle', enemyId: 'beth' },
+              { type: 'addStoryFlag', flag: 'DEFEATED_BETH'},
+              { type: 'textMessage', text: "You crushed me?", faceHero: 'npc2'},
             ],
           },
         ],

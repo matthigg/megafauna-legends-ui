@@ -100,8 +100,8 @@ export class OverworldEvent {
   battle(resolve: any): void {
     const battle = new Battle({
       enemy: Enemies[this.event.enemyId as keyof typeof Enemies],
-      onComplete: () => {
-        resolve();
+      onComplete: (wonBattle: boolean) => {
+        resolve(wonBattle ? 'WON_BATTLE' : 'LOST_BATTLE');
       }
     });
     // const battle = new Battle();
