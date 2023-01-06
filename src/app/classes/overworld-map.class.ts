@@ -248,6 +248,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       pizzaStone: new PizzaStone({
         x: convertToPx(4),
         y: convertToPx(10),
+        storyFlag: "USED_PIZZA_STONE",
+        pizzas: ['v001', 'f001'],
       }),
     },
     walls: {

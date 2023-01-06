@@ -119,6 +119,7 @@ export class PauseMenu {
   createElement(): void {
     this.element = document.createElement('div');
     this.element.classList.add('PauseMenu');
+    this.element.classList.add('overLayMenu');
     this.element.innerHTML = (`
       <h2>Pause Menu</h2>
     `);

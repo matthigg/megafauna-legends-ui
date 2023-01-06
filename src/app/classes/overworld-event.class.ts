@@ -4,6 +4,7 @@ import { TextMessage } from "./text-message.class";
 import { Enemies } from "../shared/utils";
 import { PauseMenu } from "./pause-menu.class";
 import { playerState } from "../shared/player-state";
+import { CraftingMenu } from "./crafting-menu.class";
 
 export class OverworldEvent {
   map;
@@ -123,6 +124,16 @@ export class OverworldEvent {
   addStoryFlag(resolve: any): void {
     (playerState.storyFlags as any)[this.event.flag] = true;
     resolve();
+  }
+
+  craftingMenu(resolve: any) {
+    const menu = new CraftingMenu({
+      pizzas: this.event.pizzas,
+      onComplete: () => {
+        resolve();
+      }
+    });
+    menu.init(document.querySelector('.game-container'));
   }
 }
 

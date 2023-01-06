@@ -45,6 +45,27 @@ export class PlayerState {
     ];
   }
 
+  addPizza(pizzaId: any) {
+    const newId = `p${Date.now()}` +Math.floor(Math.random() * 99999);
+    (this.pizzas as any)[newId] = {
+      pizzaId: 'v001',
+      hp: 50,
+      maxHp: 50,
+      xp: 75,
+      maxXp: 100,
+      level: 1,
+      status: null,
+    }
+
+    
+    if (this.lineup.length < 3) {
+      this.lineup.push(newId);
+    }
+    emitEvent("LineupChanged", {});
+
+    console.log('--- this:', this);
+  }
+
   moveToFront(futureFrontId: any): void {
     this.lineup = this.lineup.filter(id => id !== futureFrontId)
     this.lineup.unshift(futureFrontId);

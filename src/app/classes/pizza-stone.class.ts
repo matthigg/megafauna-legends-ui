@@ -10,7 +10,8 @@ export class PizzaStone extends GameObject {
     super(config);
     this.sprite = new Sprite({
       gameObject: this,
-      src: "assets/pizza-stone.png",
+      // src: "assets/pizza-stone.png",
+      src: "assets/character-01.webp",
       animations: {
         "used-down"   : [ [0, 0] ],
         "unused-down" : [ [1, 0] ],
