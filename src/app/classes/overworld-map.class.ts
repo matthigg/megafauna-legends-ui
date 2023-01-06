@@ -2,6 +2,7 @@ import { GameObject } from "./game-object.class";
 import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
 import { playerState } from "../shared/player-state";
+import { PizzaStone } from "./pizza-stone.class";
 
 export class OverworldMap {
   gameObjects;
@@ -243,6 +244,10 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
             ],
           },
         ],
+      }),
+      pizzaStone: new PizzaStone({
+        x: convertToPx(4),
+        y: convertToPx(10),
       }),
     },
     walls: {
