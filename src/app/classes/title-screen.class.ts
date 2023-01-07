@@ -36,7 +36,7 @@ class TitleScreen {
     this.element = document.createElement("div");
     this.element.classList.add("TitleScreen");
     this.element.innerHTML = (`
-      <img class="TitleScreen_logo" src="/images/logo.png" alt="Pizza Legends" />
+      <img class="TitleScreen_logo" src="assets/images/logo.png" alt="Pizza Legends" />
     `)
 
   }
@@ -52,7 +52,7 @@ class TitleScreen {
       container.appendChild(this.element);
       this.keyboardMenu = new KeyboardMenu();
       this.keyboardMenu.init(this.element);
-      this.keyboardMenu.setOptions(this.getOptions(resolve: any))
+      this.keyboardMenu.setOptions(this.getOptions(resolve))
     })
   }
 
