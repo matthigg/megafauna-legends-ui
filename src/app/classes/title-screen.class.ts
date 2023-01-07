@@ -1,6 +1,6 @@
 import { KeyboardMenu } from "./keyboard-menu.class";
 
-class TitleScreen {
+export class TitleScreen {
   keyboardMenu: any;
   progress: any;
   element: any;

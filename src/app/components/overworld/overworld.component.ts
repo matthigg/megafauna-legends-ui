@@ -6,6 +6,7 @@ import { DirectionInput } from 'src/app/classes/direction-input.class';
 import { KeyPressListener } from 'src/app/classes/key-press-listener.class';
 import { Hud } from 'src/app/classes/hud.class';
 import { Progress } from 'src/app/classes/progress.class';
+import { TitleScreen } from 'src/app/classes/title-screen.class';
 
 @Component({
   selector: 'app-overworld',
@@ -20,17 +21,28 @@ export class OverworldComponent implements OnInit {
   directionInput: any;
   hud: any;
   progress: any;
+  titleScreen: any;
 
   constructor(
     private _router: Router,
   ) {}
 
-  ngOnInit(): void {
+  // ngOnInit(): any {
+  async ngOnInit(): Promise<any> {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
+    const container = document.querySelector(".game-container");
+
     //Create a new Progress tracker
     this.progress = new Progress();
+
+    // Show the title screen
+    this.titleScreen = new TitleScreen({
+      progress: this.progress,
+    });
+    // this.titleScreen.init(container);
+    await this.titleScreen.init(container);
 
     //Potentially load saved data
     let initialHeroState = null;
@@ -46,7 +58,7 @@ export class OverworldComponent implements OnInit {
 
     // Load the HUD
     this.hud = new Hud();
-    this.hud.init(document.querySelector(".game-container"));
+    this.hud.init(container);
     
     //Start the first map
     this.startMap((<any>window).OverworldMaps[this.progress.mapId], initialHeroState);
