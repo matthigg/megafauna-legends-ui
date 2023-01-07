@@ -340,6 +340,20 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           ],
         },
       ],
+      [asGridCoord(13,17)]: [
+        {
+          events: [
+            // { type: 'changeMap', map: 'DemoRoom' },
+            { 
+              type: "changeMap", 
+              map: "Street",
+              x: convertToPx(9),
+              y: convertToPx(9), 
+              direction: "down"
+            }
+          ],
+        },
+      ],
     },
   },
   Street: {
@@ -354,14 +368,14 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       })
     },
     cutsceneSpaces: {
-      [asGridCoord(7, 9)]: [
+      [asGridCoord(9, 9)]: [
         {
           events: [
             { 
               type: "changeMap",
               map: "Kitchen",
-              x: convertToPx(7),
-              y: convertToPx(9), 
+              x: convertToPx(13),
+              y: convertToPx(17), 
               direction: "up"
             }
           ]
