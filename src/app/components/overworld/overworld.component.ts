@@ -42,12 +42,12 @@ export class OverworldComponent implements OnInit {
       progress: this.progress,
     });
     // this.titleScreen.init(container);
-    await this.titleScreen.init(container);
+    const useSaveFile = await this.titleScreen.init(container);
 
     //Potentially load saved data
     let initialHeroState = null;
-    const saveFile = this.progress.getSaveFile();
-    if (saveFile) {
+    // const saveFile = this.progress.getSaveFile();
+    if (useSaveFile) {
       this.progress.load();
       initialHeroState = {
         x: this.progress.startingHeroX,

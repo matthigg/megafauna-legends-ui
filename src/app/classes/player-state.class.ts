@@ -10,31 +10,31 @@ export class PlayerState {
     this.pizzas = {
       'p1': {
         pizzaId: 's001',
-        hp: 10,
-        maxHp: 50,
-        xp: 95,
-        maxXp: 100,
-        level: 1,
-        status: { type: 'Saucy' },
-      },
-      'p2': {
-        pizzaId: 'v001',
         hp: 50,
         maxHp: 50,
-        xp: 75,
+        xp: 0,
         maxXp: 100,
-        level: 2,
-        status: null,
+        level: 1,
+        // status: { type: 'Saucy' },
       },
-      'p3': {
-        pizzaId: 'f001',
-        hp: 40,
-        maxHp: 50,
-        xp: 25,
-        maxXp: 100,
-        level: 2,
-        status: null,
-      },
+      // 'p2': {
+      //   pizzaId: 'v001',
+      //   hp: 50,
+      //   maxHp: 50,
+      //   xp: 75,
+      //   maxXp: 100,
+      //   level: 2,
+      //   status: null,
+      // },
+      // 'p3': {
+      //   pizzaId: 'f001',
+      //   hp: 40,
+      //   maxHp: 50,
+      //   xp: 25,
+      //   maxXp: 100,
+      //   level: 2,
+      //   status: null,
+      // },
     }
 
     this.lineup = ['p1'];
