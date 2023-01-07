@@ -17,7 +17,7 @@ export class OverworldComponent implements OnInit {
   ctx: CanvasRenderingContext2D | null = null;
   raf: number | null = null;
   map: any = null;
-  directionInput: DirectionInput = new DirectionInput();
+  directionInput: any;
   hud: any;
   progress: any;
 
@@ -49,33 +49,18 @@ export class OverworldComponent implements OnInit {
     this.hud.init(document.querySelector(".game-container"));
     
     //Start the first map
-  // this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
     this.startMap((<any>window).OverworldMaps[this.progress.mapId], initialHeroState);
-    // this.startMap((<any>window).OverworldMaps.DemoRoom);
-    // this.startMap((<any>window).OverworldMaps.Street);
     
+    //Create controls
     this.bindActionInput();
     this.bindHeroPosition();
+    // this.bindHeroPositionCheck();
     
+    this.directionInput = new DirectionInput();
     this.directionInput.init();
+
+    //Kick off the game!
     this.startGameLoop();
-
-  //     //Load the HUD
-  // this.hud = new Hud();
-  // this.hud.init(document.querySelector(".game-container"));
-
-  // //Start the first map
-  // this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
-
-  // //Create controls
-  // this.bindActionInput();
-  // this.bindHeroPositionCheck();
-
-  // this.directionInput = new DirectionInput();
-  // this.directionInput.init();
-
-  // //Kick off the game!
-  // this.startGameLoop();
     
     // this.map.startCutscene([
     //   { type: 'battle', enemyId: 'beth' }
@@ -91,9 +76,12 @@ export class OverworldComponent implements OnInit {
     this.map.mountObjects();
 
     if (heroInitialState) {
-      this.map.gameObjects.hero.x = heroInitialState.x;
-      this.map.gameObjects.hero.y = heroInitialState.y;
-      this.map.gameObjects.hero.direction = heroInitialState.direction;
+      const {hero} = this.map.gameObjects;
+      this.map.removeWall(hero.x, hero.y);
+      hero.x = heroInitialState.x;
+      hero.y = heroInitialState.y;
+      hero.direction = heroInitialState.direction;
+      this.map.addWall(hero.x, hero.y);
     }
 
     this.progress.mapId = mapConfig.id;
