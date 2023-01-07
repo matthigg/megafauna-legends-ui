@@ -171,6 +171,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
 
 (<any>window).OverworldMaps = {
   DemoRoom: {
+    id: 'DemoRoom',
     lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
     upperSrc: '',
     gameObjects: {
@@ -284,6 +285,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     },
   },
   Kitchen: {
+    id: 'Kitchen',
     lowerSrc: 'assets/pizza-legends-kitchen-lower-map-01.svg',
     upperSrc: '',
     gameObjects: {
@@ -326,4 +328,31 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       ],
     },
   },
+  Street: {
+    id: "Street",
+    lowerSrc: "assets/images/maps/StreetLower.png",
+    upperSrc: "assets/images/maps/StreetUpper.png",
+    gameObjects: {
+      hero: new Person({
+        isPlayerControlled: true,
+        x: convertToPx(9),
+        y: convertToPx(9),
+      })
+    },
+    cutsceneSpaces: {
+      [asGridCoord(7, 9)]: [
+        {
+          events: [
+            { 
+              type: "changeMap",
+              map: "Kitchen",
+              x: convertToPx(7),
+              y: convertToPx(9), 
+              direction: "up"
+            }
+          ]
+        }
+      ]
+    }
+  }
 }

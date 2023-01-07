@@ -30,7 +30,8 @@ export class OverworldComponent implements OnInit {
     this.hud = new Hud();
     this.hud.init(document.querySelector('.game-container'));
     
-    this.startMap((<any>window).OverworldMaps.DemoRoom);
+    // this.startMap((<any>window).OverworldMaps.DemoRoom);
+    this.startMap((<any>window).OverworldMaps.Street);
     
     this.bindActionInput();
     this.bindHeroPosition();
