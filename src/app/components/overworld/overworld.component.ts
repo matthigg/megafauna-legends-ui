@@ -30,8 +30,8 @@ export class OverworldComponent implements OnInit {
     this.hud = new Hud();
     this.hud.init(document.querySelector('.game-container'));
     
-    // this.startMap((<any>window).OverworldMaps.DemoRoom);
-    this.startMap((<any>window).OverworldMaps.Street);
+    this.startMap((<any>window).OverworldMaps.DemoRoom);
+    // this.startMap((<any>window).OverworldMaps.Street);
     
     this.bindActionInput();
     this.bindHeroPosition();
@@ -47,10 +47,16 @@ export class OverworldComponent implements OnInit {
   }
 
   // Set map here to expose it to the overworld-event class in order to load different maps
-  startMap(mapConfig: any) {
+  startMap(mapConfig: any, heroInitialState: any = null) {
     this.map = new OverworldMap(mapConfig);
     this.map.overworld = this;
     this.map.mountObjects();
+
+    if (heroInitialState) {
+      this.map.gameObjects.hero.x = heroInitialState.x;
+      this.map.gameObjects.hero.y = heroInitialState.y;
+      this.map.gameObjects.hero.direction = heroInitialState.direction;
+    }
   }
 
   bindActionInput(): void {

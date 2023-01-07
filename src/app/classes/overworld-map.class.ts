@@ -275,10 +275,17 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           ],
         },
       ],
-      [asGridCoord(13,16)]: [
+      [asGridCoord(13,17)]: [
         {
           events: [
-            { type: 'changeMap', map: 'Kitchen' },
+            // { type: 'changeMap', map: 'Kitchen' },
+            { 
+              type: "changeMap", 
+              map: "Kitchen",
+              x: convertToPx(13),
+              y: convertToPx(1), 
+              direction: "down"
+            }
           ],
         },
       ],
@@ -292,7 +299,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       hero: new Person({
         isPlayerControlled: true,
         x: convertToPx(13),
-        y: convertToPx(2),
+        y: convertToPx(1),
         src: null,
       }),
       npc3: new Person({
@@ -322,7 +329,14 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       [asGridCoord(13,1)]: [
         {
           events: [
-            { type: 'changeMap', map: 'DemoRoom' },
+            // { type: 'changeMap', map: 'DemoRoom' },
+            { 
+              type: "changeMap", 
+              map: "DemoRoom",
+              x: convertToPx(13),
+              y: convertToPx(17), 
+              direction: "up"
+            }
           ],
         },
       ],

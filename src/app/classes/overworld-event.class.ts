@@ -88,15 +88,38 @@ export class OverworldEvent {
   changeMap(resolve: any): void {
     const sceneTransition = new SceneTransition();
     sceneTransition.init(document.querySelector('.game-container'), () => {
+
+      console.log('--- this.event:', this.event);
       
-      this.map.overworld.startMap((<any>window).OverworldMaps[this.event.map]);
+      this.map.overworld.startMap((<any>window).OverworldMaps[this.event.map], {
+        x: this.event.x,
+        y: this.event.y,
+        direction: this.event.direction,
+      });
       resolve();
 
       sceneTransition.fadeOut();
     });
-    
-
   }
+
+
+  // changeMap(resolve) {
+
+  //   const sceneTransition = new SceneTransition();
+  //   sceneTransition.init(document.querySelector(".game-container"), () => {
+  //     this.map.overworld.startMap( window.OverworldMaps[this.event.map], {
+  //       x: this.event.x,
+  //       y: this.event.y,
+  //       direction: this.event.direction,
+  //     });
+  //     resolve();
+
+  //     sceneTransition.fadeOut();
+
+  //   })
+  // }
+  
+  
 
   battle(resolve: any): void {
     const battle = new Battle({
