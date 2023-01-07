@@ -5,12 +5,14 @@ import { playerState } from "../shared/player-state";
 import { Pizzas } from "../shared/utils";
 
 export class PauseMenu {
+  progress;
   onComplete;
   element: any;
   keyboardMenu: any;
   esc: any;
 
-  constructor({ onComplete }: any) {
+  constructor({ progress, onComplete }: any) {
+    this.progress = progress;
     this.onComplete = onComplete;
   }
 
@@ -53,8 +55,8 @@ export class PauseMenu {
           label: 'Save',
           description: 'Save your progress',
           handler: () => {
-
-            // TODO - put something here
+            this.progress.save();
+            this.close();
           },
         },
         {

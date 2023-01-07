@@ -5,6 +5,7 @@ import { OverworldMap } from 'src/app/classes/overworld-map.class';
 import { DirectionInput } from 'src/app/classes/direction-input.class';
 import { KeyPressListener } from 'src/app/classes/key-press-listener.class';
 import { Hud } from 'src/app/classes/hud.class';
+import { Progress } from 'src/app/classes/progress.class';
 
 @Component({
   selector: 'app-overworld',
@@ -18,6 +19,7 @@ export class OverworldComponent implements OnInit {
   map: any = null;
   directionInput: DirectionInput = new DirectionInput();
   hud: any;
+  progress: any;
 
   constructor(
     private _router: Router,
@@ -27,10 +29,29 @@ export class OverworldComponent implements OnInit {
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
+    //Create a new Progress tracker
+    this.progress = new Progress();
+
+    //Potentially load saved data
+    let initialHeroState = null;
+    const saveFile = this.progress.getSaveFile();
+    if (saveFile) {
+      this.progress.load();
+      initialHeroState = {
+        x: this.progress.startingHeroX,
+        y: this.progress.startingHeroY,
+        direction: this.progress.startingHeroDirection,
+      }
+    }
+
+    // Load the HUD
     this.hud = new Hud();
-    this.hud.init(document.querySelector('.game-container'));
+    this.hud.init(document.querySelector(".game-container"));
     
-    this.startMap((<any>window).OverworldMaps.DemoRoom);
+    //Start the first map
+  // this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
+    this.startMap((<any>window).OverworldMaps[this.progress.mapId], initialHeroState);
+    // this.startMap((<any>window).OverworldMaps.DemoRoom);
     // this.startMap((<any>window).OverworldMaps.Street);
     
     this.bindActionInput();
@@ -38,6 +59,23 @@ export class OverworldComponent implements OnInit {
     
     this.directionInput.init();
     this.startGameLoop();
+
+  //     //Load the HUD
+  // this.hud = new Hud();
+  // this.hud.init(document.querySelector(".game-container"));
+
+  // //Start the first map
+  // this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
+
+  // //Create controls
+  // this.bindActionInput();
+  // this.bindHeroPositionCheck();
+
+  // this.directionInput = new DirectionInput();
+  // this.directionInput.init();
+
+  // //Kick off the game!
+  // this.startGameLoop();
     
     // this.map.startCutscene([
     //   { type: 'battle', enemyId: 'beth' }
@@ -57,6 +95,11 @@ export class OverworldComponent implements OnInit {
       this.map.gameObjects.hero.y = heroInitialState.y;
       this.map.gameObjects.hero.direction = heroInitialState.direction;
     }
+
+    this.progress.mapId = mapConfig.id;
+    this.progress.startingHeroX = this.map.gameObjects.hero.x;
+    this.progress.startingHeroY = this.map.gameObjects.hero.y;
+    this.progress.startingHeroDirection = this.map.gameObjects.hero.direction;
   }
 
   bindActionInput(): void {

@@ -177,8 +177,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: convertToPx(13),
-        y: convertToPx(14),
+        // x: convertToPx(13),
+        // y: convertToPx(14),
         src: null,
       }),
       npc1: new Person({
@@ -275,6 +275,13 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           ],
         },
       ],
+
+      // Note -- when moving to a different map, a wall is left in the spot that the
+      // hero was previously occupying before the map change. If the hero returns to
+      // the original map then the wall will still be there, unless the hero returns
+      // to the exact spot that it left -- this will remove the wall once the hero
+      // moves out of that spot (i forget if this is handled in the sprite class or
+      // somewhere else)
       [asGridCoord(13,17)]: [
         {
           events: [
@@ -298,8 +305,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
-        x: convertToPx(13),
-        y: convertToPx(1),
+        // x: convertToPx(13),
+        // y: convertToPx(1),
         src: null,
       }),
       npc3: new Person({
