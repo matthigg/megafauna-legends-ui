@@ -182,7 +182,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       })
     },
     cutsceneSpaces: {
-      [asGridCoord(9, 21)]: [
+      [asGridCoord(14, 23)]: [
         {
           events: [
             { 
@@ -385,7 +385,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
   },
   Street: {
     id: "Street",
-    lowerSrc: "assets/sfbl-home-cave-lower-map-01.svg",
+    lowerSrc: "assets/images/maps/StreetNort",
     upperSrc: "",
     gameObjects: {
       hero: new Person({
