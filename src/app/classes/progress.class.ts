@@ -8,7 +8,7 @@ export class Progress {
   saveFileKey;
   
   constructor() {
-    this.mapId = "DemoRoom";
+    this.mapId = "HomeCave";
     this.startingHeroX = 0;
     this.startingHeroY = 0;
     this.startingHeroDirection = "down";

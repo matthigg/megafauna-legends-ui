@@ -74,6 +74,7 @@ export class OverworldComponent implements OnInit {
     //Kick off the game!
     this.startGameLoop();
     
+    // TODO - open the game with a cutscene here?
     // this.map.startCutscene([
     //   { type: 'battle', enemyId: 'beth' }
     //   // { type: 'changeMap', map: "DemoRoom" },

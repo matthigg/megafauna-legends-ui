@@ -170,6 +170,33 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
 // ========== Overworld Maps & Game Objects ===================================================
 
 (<any>window).OverworldMaps = {
+  HomeCave: {
+    id: "HomeCave",
+    lowerSrc: "assets/sfbl-home-cave-lower-map-01.svg",
+    upperSrc: "assets/sfbl-home-cave-upper-map-01.svg",
+    gameObjects: {
+      hero: new Person({
+        isPlayerControlled: true,
+        x: convertToPx(9),
+        y: convertToPx(9),
+      })
+    },
+    cutsceneSpaces: {
+      [asGridCoord(9, 21)]: [
+        {
+          events: [
+            { 
+              type: "changeMap",
+              map: "Kitchen",
+              x: convertToPx(13),
+              y: convertToPx(17), 
+              direction: "up"
+            }
+          ]
+        }
+      ]
+    }
+  },
   DemoRoom: {
     id: 'DemoRoom',
     lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
@@ -358,8 +385,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
   },
   Street: {
     id: "Street",
-    lowerSrc: "assets/images/maps/StreetLower.png",
-    upperSrc: "assets/images/maps/StreetUpper.png",
+    lowerSrc: "assets/sfbl-home-cave-lower-map-01.svg",
+    upperSrc: "",
     gameObjects: {
       hero: new Person({
         isPlayerControlled: true,
