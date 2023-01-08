@@ -1,22 +1,24 @@
+$font-color: #ddd;
+$background-color: #000;
+
 .TitleScreen {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  background: #000;
+  background: $background-color;
   & .KeyboardMenu {
-    // border: 1px solid red;
     & button {
-      background: #000;
-      color: #ddd;
+      background: $background-color;
+      color: $font-color;
     }
   }
   & .DescriptionBox {
-    // background: transparent;
-    color: #ddd;
-    // border: 0;
-    // text-align: center;
+    color: $font-color;
+    font-style: italic;
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -26,10 +28,3 @@
   width: 128px;
   image-rendering: pixelated;
 }
-
-// .TitleScreen .DescriptionBox {
-//   background: transparent;
-//   color: #fff;
-//   border: 0;
-//   text-align: center;
-// }
