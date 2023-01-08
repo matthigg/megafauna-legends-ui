@@ -1,29 +1,41 @@
 .KeyboardMenu {
   // border: 1px solid var(--border-color);
   // background: var(--menu-background);
-  position: absolute;
+  // position: absolute;
+  // width: 15vw;
+  // width: 100px;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & .option {
+    margin-bottom: 1rem;
+  }
 }
 .KeyboardMenu button {
- display: flex;
- align-items: center;
- width: 100%;
- text-align:left;
- -webkit-appearance: none;
- border:0;
- background: none;
- height: 20px;
- cursor:pointer;
- font-family:inherit;
- padding:0;
- padding-left: 1em;
-//  font-size: 10px;
- font-size: 1.5rem;
- margin-bottom: 0.5rem;
+//  display: flex;
+//  align-items: center;
+//  width: 100%;
+//  text-align:left;
+//  -webkit-appearance: none;
+//  border:0;
+//  background: none;
+//  height: 20px;
+ cursor: pointer;
+//  font-family:inherit;
+//  padding:0;
+//  padding-left: 1em;
+// //  font-size: 10px;
+//  font-size: 1.5rem;
+//  margin-bottom: 0.5rem;
 }
 .KeyboardMenu button:focus {
 //  background: var(--menu-selected-background);
-background: white;
- outline: 0;
+// background: white;
+//  outline: 0;
+  // background: red;
 }
 
 // .KeyboardMenu .option {
@@ -37,25 +49,25 @@ background: white;
 //  }
 
  .DescriptionBox {
-  position:absolute;
-  bottom:10rem;
-  left:0;
-  right:0;
-  color: var(--menu-font-color);
-  border-top: 1px solid var(--border-color);
-  background: var(--menu-background);
-  padding: 2px;
+  // position:absolute;
+  // bottom:10rem;
+  // left:0;
+  // right:0;
+  // color: #fff;
+  // border-top: 1px solid red;
+  // background: blue;
+  // padding: 2px;
  }
  .DescriptionBox p {
-  font-size: 2rem;
-  margin:0;
+  // font-size: 2rem;
+  margin: 0;
  }
 
 
 
  /* Battle specific */
 .Battle .KeyboardMenu {
-  right:0;
-  bottom:10rem;
+  right: 0;
+  bottom: 10rem;
   width: 140px;
 }

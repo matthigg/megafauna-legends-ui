@@ -37,8 +37,6 @@ export class KeyboardMenu {
           return el.dataset.button < current && !el.disabled;
       });
       (prevButton as any)?.focus();
-
-      
     });
 
     this.down = new KeyPressListener('ArrowDown', () => {
@@ -46,9 +44,8 @@ export class KeyboardMenu {
       const nextButton = Array.from(this.element.querySelectorAll('button[data-button]'))
         .find((el: any) => {
           return el.dataset.button > current && !el.disabled;
-      });
+      });      
       (nextButton as any)?.focus();
-
     });
   }
 
@@ -65,6 +62,9 @@ export class KeyboardMenu {
 
   setOptions(options: any) {
     this.options = options;
+
+    console.log('--- options:', options);
+    
     this.element.innerHTML = this.options.map((option, index) => {
 
       // TODO - fix edge case where a button can be both disabled and receive auto focus
@@ -93,6 +93,9 @@ export class KeyboardMenu {
         chosenOption.handler();
       });
       button.addEventListener('mouseenter', () => {
+
+        // Note -- this adds the user agent stylesheet :focus-visible { outline: ... }
+        // to buttons, which is basically a button border
         button.focus();
       });
       button.addEventListener('focus', () => {
@@ -106,8 +109,9 @@ export class KeyboardMenu {
 
     // Focus on the first <button> element with the data-button attribute that is not disabled
     setTimeout(() => {
-      this.element.querySelector("button[data-button]:not([disabled])").focus();
-    }, 10);
+      const focusButtonDisasbled = this.element.querySelector("button:not([disabled])").focus();
+      // const focusButton = this.element.querySelector("button[data-button]:not([disabled])").focus();
+    });
   }
 
   createElement(): void {

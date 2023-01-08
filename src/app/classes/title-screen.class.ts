@@ -13,18 +13,10 @@ export class TitleScreen {
   getOptions(resolve: any) {
     const saveFile = this.progress.getSaveFile();
     return [
-      { 
-        label: "New Game",
-        description: "Start a new pizza adventure.",
-        handler: () => {
-          this.close();
-          resolve();
-        }
-      },
 
-      // Use a ternary operator here to conditionally add this object
+      // Use a ternary operator here to conditionally add the "Continue" option
       saveFile ? {
-        label: "Continue Game",
+        label: "Continue",
         description: "Resume your adventure",
         handler: () => {
           this.close();
@@ -32,7 +24,18 @@ export class TitleScreen {
           // The saveFile is passed to the overworld component & stored as 'useSaveFile'
           resolve(saveFile);
         }
-      } : null
+      } : null,
+      
+      { 
+        label: "New Game",
+        description: "Start a new pizza adventure",
+        handler: () => {
+          this.close();
+          resolve();
+        }
+      },
+
+
 
       // Filter out falsy values (ie. filter out the above object if it's falsy)
     ].filter(v => v);
