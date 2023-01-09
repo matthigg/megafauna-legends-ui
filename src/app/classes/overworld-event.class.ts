@@ -5,10 +5,12 @@ import { Enemies } from "../shared/utils";
 import { PauseMenu } from "./pause-menu.class";
 import { playerState } from "../shared/player-state";
 import { CraftingMenu } from "./crafting-menu.class";
+import { KeyboardMenu } from "./keyboard-menu.class";
 
 export class OverworldEvent {
   map;
   event;
+  keyboardMenu: any;
 
   constructor({ map, event }: any) {
     this.map = map;
@@ -72,6 +74,79 @@ export class OverworldEvent {
     document.addEventListener('PersonWalkingComplete', completeHandler);
   }
 
+  openContainer(resolve: any): void {
+    this.keyboardMenu = new KeyboardMenu();
+    // this.keyboardMenu.init(this.element);
+    // this.keyboardMenu.setOptions(this.getOptions(resolve))
+
+    // console.log('--- this.map:', this.map);
+    // console.log('--- this.event:', this.event);
+
+    this.keyboardMenu = new KeyboardMenu();
+    // this.keyboardMenu.init(container);
+
+    this.keyboardMenu.init(document.querySelector('.game-container'));
+    
+    this.keyboardMenu.setOptions(
+      // this.replacements.map((c: any) => {
+      //   return {
+      //     label: c.name,
+      //     description: c.description,
+      //     handler: () => {
+      //       this.menuSubmit(c)
+      //     }
+      //   }
+      // }),
+
+      [ 
+        {
+          label: 'test',
+          description: 'test desc',
+          handler: () => {
+
+          }
+        },
+      ],
+
+
+
+    );
+
+    resolve();
+    
+  }
+
+  // showMenu(container: any) {
+  //   this.keyboardMenu = new KeyboardMenu();
+  //   this.keyboardMenu.init(container);
+  //   this.keyboardMenu.setOptions(
+  //     this.replacements.map((c: any) => {
+  //       return {
+  //         label: c.name,
+  //         description: c.description,
+  //         handler: () => {
+  //           this.menuSubmit(c)
+  //         }
+  //       }
+  //     }),
+  //   );
+  // }
+
+  // close() {
+  //   this.keyboardMenu.end();
+  //   this.element.remove();
+  // }
+  
+  // init(container: any) {
+  //   return new Promise(resolve => {
+  //     this.createElement();
+  //     container.appendChild(this.element);
+  //     this.keyboardMenu = new KeyboardMenu();
+  //     this.keyboardMenu.init(this.element);
+  //     this.keyboardMenu.setOptions(this.getOptions(resolve))
+  //   })
+  // }
+
   textMessage(resolve: any): void {
     if (this.event.faceHero) {
       const obj = this.map.gameObjects[this.event.faceHero];
@@ -89,7 +164,7 @@ export class OverworldEvent {
     const sceneTransition = new SceneTransition();
     sceneTransition.init(document.querySelector('.game-container'), () => {
 
-      console.log('--- this.event:', this.event);
+      // console.log('--- this.event:', this.event);
       
       this.map.overworld.startMap((<any>window).OverworldMaps[this.event.map], {
         x: this.event.x,

@@ -171,6 +171,9 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
 // ========== Overworld Maps & Game Objects ===================================================
 
 (<any>window).OverworldMaps = {
+
+
+
   HomeCave: {
     id: "HomeCave",
     lowerSrc: "assets/sfbl-home-cave-lower-map-01.svg",
@@ -189,19 +192,15 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         items: [
           { label: 'stone', description: 'this is a stone' },
         ],
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: 'Greetings!', faceHero: 'container'},
+              { type: 'openContainer'},
+            ],
+          },
+        ],
       }),
-      // npc3: new Person({
-      //   x: convertToPx(8),
-      //   y: convertToPx(6),
-      //   src: null,
-      //   talking: [
-      //     {
-      //       events: [
-      //         { type: 'textMessage', text: 'Greetings!', faceHero: 'npc3'},
-      //       ],
-      //     },
-      //   ],
-      // }),
     },
     cutsceneSpaces: {
       [asGridCoord(14, 23)]: [
@@ -219,6 +218,9 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       ]
     }
   },
+
+
+
     Outdoors: {
     id: "Outdoors",
     lowerSrc: "assets/sfbl-outdoors-lower-map-01.svg",
