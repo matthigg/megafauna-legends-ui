@@ -183,7 +183,7 @@ export class OverworldEvent {
     menu.init(document.querySelector('.game-container'));
   }
 
-  openContainer(resolve: any): void {
+  openChest(resolve: any): void {
     this.keyboardMenu = new KeyboardMenu();
     this.keyboardMenu.init(document.querySelector('.game-container'));
     this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
@@ -232,7 +232,6 @@ export class OverworldEvent {
       // Display items in the player's inventory that can be deposited
       items: [
         ...this.items.map((item: any) => {
-
           
           // Note: items are stored under the shared Actions object
           const action = Actions[item.actionId as keyof typeof Actions];
@@ -258,7 +257,17 @@ export class OverworldEvent {
   menuSubmit(action: any, instanceId = null, resolve: any) {
     
     // console.log('--- action:', action);
-    // console.log('--- instanceid:', instanceId);
+    console.log('--- instanceId:', instanceId);
+    // const x = playerState.items.find(item => item.instanceId === instanceId)
+    let depositItem;
+    playerState.items.forEach((item, i) => {
+      if (item.instanceId === instanceId) {
+        depositItem = playerState.items.splice(i, 1);
+      }
+    })
+
+    console.log('--- playerState.items:', playerState.items);
+    console.log('--- depositItem:', depositItem);
   
       
     this.keyboardMenu?.end();

@@ -1,6 +1,6 @@
 import { GameObject } from "./game-object.class";
 
-export class Container extends GameObject {
+export class Chest extends GameObject {
   items: any[];
   // x: number;
   // y: number;

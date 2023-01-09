@@ -3,7 +3,7 @@ import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
 import { playerState } from "../shared/player-state";
 import { PizzaStone } from "./pizza-stone.class";
-import { Container } from "./container.class";
+import { Chest } from "./chest.class";
 
 export class OverworldMap {
   gameObjects;
@@ -184,7 +184,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         x: convertToPx(9),
         y: convertToPx(9),
       }),
-      container: new Container({
+      chest1: new Chest({
         x: convertToPx(10),
         y: convertToPx(10),
         isContainer: true,
@@ -196,7 +196,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           {
             events: [
               // { type: 'textMessage', text: 'Greetings!', faceHero: 'container'},
-              { type: 'openContainer'},
+              { type: 'openChest'},
             ],
           },
         ],
