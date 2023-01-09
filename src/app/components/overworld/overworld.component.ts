@@ -149,7 +149,10 @@ export class OverworldComponent implements OnInit {
       // Draw lower map layer
       this.map.drawLowerImage(this.ctx, cameraPerson)
 
-      // Draw game objects
+      // Draw game objects - sorting places objects with higher y-values later in the array, which means
+      // that they are rendered after objects earlier in the array. This translates to objects with
+      // higher y-values (ie. located down/lower on the y-axis in the canvas map) being rendered later
+      // than, and on top of, objects with lower y-values.
       Object.values(this.map?.gameObjects)
         ?.sort((a: any, b: any) => { return a.y - b.y })
         .forEach(object => {

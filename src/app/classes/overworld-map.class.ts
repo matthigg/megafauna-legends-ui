@@ -179,7 +179,19 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         isPlayerControlled: true,
         x: convertToPx(9),
         y: convertToPx(9),
-      })
+      }),
+      npc3: new Person({
+        x: convertToPx(8),
+        y: convertToPx(6),
+        src: null,
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: 'Greetings!', faceHero: 'npc3'},
+            ],
+          },
+        ],
+      }),
     },
     cutsceneSpaces: {
       [asGridCoord(14, 23)]: [
@@ -187,9 +199,36 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           events: [
             { 
               type: "changeMap",
-              map: "Kitchen",
-              x: convertToPx(13),
-              y: convertToPx(17), 
+              map: "Outdoors",
+              x: convertToPx(14),
+              y: convertToPx(3), 
+              direction: "up"
+            }
+          ]
+        }
+      ]
+    }
+  },
+    Outdoors: {
+    id: "Outdoors",
+    lowerSrc: "assets/sfbl-outdoors-lower-map-01.svg",
+    upperSrc: "",
+    gameObjects: {
+      hero: new Person({
+        isPlayerControlled: true,
+        x: convertToPx(14),
+        y: convertToPx(3),
+      })
+    },
+    cutsceneSpaces: {
+      [asGridCoord(14, 3)]: [
+        {
+          events: [
+            { 
+              type: "changeMap",
+              map: "HomeCave",
+              x: convertToPx(14),
+              y: convertToPx(23), 
               direction: "up"
             }
           ]

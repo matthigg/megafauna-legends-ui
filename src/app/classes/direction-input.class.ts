@@ -1,5 +1,3 @@
-import { InteractivityChecker } from "@angular/cdk/a11y";
-
 export class DirectionInput {
   heldDirections: any[] = [];
   map = {
@@ -28,7 +26,6 @@ export class DirectionInput {
       const index = this.heldDirections.indexOf(direction);
       if (index > -1) {
         this.heldDirections.splice(index, 1);
-
       }
     })
   }
