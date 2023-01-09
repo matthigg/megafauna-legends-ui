@@ -6,15 +6,36 @@ import { PauseMenu } from "./pause-menu.class";
 import { playerState } from "../shared/player-state";
 import { CraftingMenu } from "./crafting-menu.class";
 import { KeyboardMenu } from "./keyboard-menu.class";
+import { Actions } from "../shared/utils";
 
 export class OverworldEvent {
   map;
   event;
   keyboardMenu: any;
+  quantityMap: any = {}
+  items: any;
 
   constructor({ map, event }: any) {
     this.map = map;
     this.event = event;
+
+    // Condense multiple quantities of the same player items stored in playerState (ex.
+    // display 'Cheese x 2' instead of 'Cheese, Cheese')
+    playerState.items.forEach((item: any) => {
+      // if (item.team === caster.team) {
+      let existing = this.quantityMap[item.actionId];
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        this.quantityMap[item.actionId] = {
+          actionId: item.actionId,
+          quantity: 1,
+          instanceId: item.instanceId,
+        }
+      }
+      // }
+    });
+    this.items = Object.values(this.quantityMap);
   }
 
   init(): Promise<any> {
@@ -73,79 +94,6 @@ export class OverworldEvent {
 
     document.addEventListener('PersonWalkingComplete', completeHandler);
   }
-
-  openContainer(resolve: any): void {
-    this.keyboardMenu = new KeyboardMenu();
-    // this.keyboardMenu.init(this.element);
-    // this.keyboardMenu.setOptions(this.getOptions(resolve))
-
-    // console.log('--- this.map:', this.map);
-    // console.log('--- this.event:', this.event);
-
-    this.keyboardMenu = new KeyboardMenu();
-    // this.keyboardMenu.init(container);
-
-    this.keyboardMenu.init(document.querySelector('.game-container'));
-    
-    this.keyboardMenu.setOptions(
-      // this.replacements.map((c: any) => {
-      //   return {
-      //     label: c.name,
-      //     description: c.description,
-      //     handler: () => {
-      //       this.menuSubmit(c)
-      //     }
-      //   }
-      // }),
-
-      [ 
-        {
-          label: 'test',
-          description: 'test desc',
-          handler: () => {
-
-          }
-        },
-      ],
-
-
-
-    );
-
-    resolve();
-    
-  }
-
-  // showMenu(container: any) {
-  //   this.keyboardMenu = new KeyboardMenu();
-  //   this.keyboardMenu.init(container);
-  //   this.keyboardMenu.setOptions(
-  //     this.replacements.map((c: any) => {
-  //       return {
-  //         label: c.name,
-  //         description: c.description,
-  //         handler: () => {
-  //           this.menuSubmit(c)
-  //         }
-  //       }
-  //     }),
-  //   );
-  // }
-
-  // close() {
-  //   this.keyboardMenu.end();
-  //   this.element.remove();
-  // }
-  
-  // init(container: any) {
-  //   return new Promise(resolve => {
-  //     this.createElement();
-  //     container.appendChild(this.element);
-  //     this.keyboardMenu = new KeyboardMenu();
-  //     this.keyboardMenu.init(this.element);
-  //     this.keyboardMenu.setOptions(this.getOptions(resolve))
-  //   })
-  // }
 
   textMessage(resolve: any): void {
     if (this.event.faceHero) {
@@ -234,6 +182,88 @@ export class OverworldEvent {
     });
     menu.init(document.querySelector('.game-container'));
   }
+
+  openContainer(resolve: any): void {
+    this.keyboardMenu = new KeyboardMenu();
+    this.keyboardMenu.init(document.querySelector('.game-container'));
+    this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
+
+    // resolve();
+    
+  }
+
+  getContainerOptions(resolve: any) {
+
+    console.log('--- playerState:', playerState);
+    
+    const backOption = {
+      label: 'Go back',
+      description: 'Return to previous page',
+      handler: () => {
+        this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
+      }
+    }
+
+    return {
+      mainMenu: [ 
+        {
+          label: 'Deposit',
+          description: 'Place items in this chest',
+          handler: () => {
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+          }
+        },
+        {
+          label: 'Withdraw',
+          description: 'Take items from this chest',
+          handler: () => {
+  
+          }
+        },
+        {
+          label: 'Pick up chest',
+          description: 'Pick up this chest',
+          handler: () => {
+  
+          }
+        },
+      ],
+
+      // Display items in the player's inventory that can be deposited
+      items: [
+        ...this.items.map((item: any) => {
+
+          
+          // Note: items are stored under the shared Actions object
+          const action = Actions[item.actionId as keyof typeof Actions];
+          return {
+            label: action.name,
+            description: action.description,
+            right: () => {
+              return "x"+item.quantity;
+            },
+            handler: () => {
+              this.menuSubmit(action, item.instanceId, resolve);
+            }
+          }
+        }),
+        backOption,
+      ],
+      
+    }
+  }
+
+
+
+  menuSubmit(action: any, instanceId = null, resolve: any) {
+    
+    // console.log('--- action:', action);
+    // console.log('--- instanceid:', instanceId);
+  
+      
+    this.keyboardMenu?.end();
+    resolve();
+  }
 }
 
 // ========== Utility Functions ===============================================================
@@ -244,3 +274,5 @@ function oppositeDirection(direction: string) {
   if (direction === 'up') { return 'down' }
   return 'up'
 }
+
+

@@ -126,6 +126,10 @@ export class SubmissionMenu {
       items: [
         ...this.items.map((item: any) => {
           const action = Actions[item.actionId as keyof typeof Actions];
+
+          console.log('--- item:', item);
+          console.log('--- action:', action);
+          
           return {
             label: action.name,
             description: action.description,

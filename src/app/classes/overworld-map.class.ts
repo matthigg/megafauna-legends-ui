@@ -195,7 +195,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         talking: [
           {
             events: [
-              { type: 'textMessage', text: 'Greetings!', faceHero: 'container'},
+              // { type: 'textMessage', text: 'Greetings!', faceHero: 'container'},
               { type: 'openContainer'},
             ],
           },
