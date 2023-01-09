@@ -188,6 +188,8 @@ export class OverworldEvent {
     this.keyboardMenu.init(document.querySelector('.game-container'));
     this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
 
+    console.log('--- this.event:', this.event);
+
     // resolve();
     
   }
@@ -242,7 +244,7 @@ export class OverworldEvent {
               return "x"+item.quantity;
             },
             handler: () => {
-              this.menuSubmit(action, item.instanceId, resolve);
+              this.depositItem(action, item.instanceId, resolve);
             }
           }
         }),
@@ -254,20 +256,27 @@ export class OverworldEvent {
 
 
 
-  menuSubmit(action: any, instanceId = null, resolve: any) {
+  depositItem(action: any, instanceId = null, resolve: any) {
     
     // console.log('--- action:', action);
-    console.log('--- instanceId:', instanceId);
+    // console.log('--- instanceId:', instanceId);
     // const x = playerState.items.find(item => item.instanceId === instanceId)
-    let depositItem;
+    let itemToBeDeposited: any[] = [];
     playerState.items.forEach((item, i) => {
       if (item.instanceId === instanceId) {
-        depositItem = playerState.items.splice(i, 1);
+        itemToBeDeposited = playerState.items.splice(i, 1);
       }
-    })
+    });
 
-    console.log('--- playerState.items:', playerState.items);
-    console.log('--- depositItem:', depositItem);
+    // console.log('--- playerState.items:', playerState.items);
+    // console.log('--- itemToBeDeposited:', itemToBeDeposited);
+
+    let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
+
+    chest.items.push(...itemToBeDeposited);
+
+    console.log('--- chest.items:', chest.items);
+    console.log('--- playerState:', playerState);
   
       
     this.keyboardMenu?.end();

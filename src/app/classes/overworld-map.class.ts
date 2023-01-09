@@ -196,7 +196,8 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
           {
             events: [
               // { type: 'textMessage', text: 'Greetings!', faceHero: 'container'},
-              { type: 'openChest'},
+              // { type: 'openChest', chest: (<any>window).OverworldMaps.HomeCave.gameObjects.chest1 },
+              { type: 'openChest', chest: 'chest1' },
             ],
           },
         ],
