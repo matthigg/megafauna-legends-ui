@@ -3,6 +3,7 @@ import { OverworldEvent } from "./overworld-event.class";
 import { Person } from "./person.class";
 import { playerState } from "../shared/player-state";
 import { PizzaStone } from "./pizza-stone.class";
+import { Container } from "./container.class";
 
 export class OverworldMap {
   gameObjects;
@@ -180,18 +181,26 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         x: convertToPx(9),
         y: convertToPx(9),
       }),
-      npc3: new Person({
-        x: convertToPx(8),
-        y: convertToPx(6),
+      container: new Container({
+        x: convertToPx(10),
+        y: convertToPx(10),
         src: null,
-        talking: [
-          {
-            events: [
-              { type: 'textMessage', text: 'Greetings!', faceHero: 'npc3'},
-            ],
-          },
+        items: [
+          { label: 'stone', description: 'this is a stone' },
         ],
       }),
+      // npc3: new Person({
+      //   x: convertToPx(8),
+      //   y: convertToPx(6),
+      //   src: null,
+      //   talking: [
+      //     {
+      //       events: [
+      //         { type: 'textMessage', text: 'Greetings!', faceHero: 'npc3'},
+      //       ],
+      //     },
+      //   ],
+      // }),
     },
     cutsceneSpaces: {
       [asGridCoord(14, 23)]: [
