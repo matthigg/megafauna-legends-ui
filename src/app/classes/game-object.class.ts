@@ -4,6 +4,7 @@ import { OverworldEvent } from "./overworld-event.class";
 export class GameObject {
   id: number | null = null;
   isMounted: boolean = false;
+  isContainer: boolean = false;
   x: number = 0;
   y: number = 0;
   direction: string = 'down';
@@ -14,6 +15,8 @@ export class GameObject {
   isStanding: boolean = false;
 
   constructor(config: any) {
+    if (config.isContainer) this.isContainer = true;
+    
     this.x = config.x || 0;
     this.y = config.y || 0;
     this.direction = config.direction || 'down';
@@ -22,6 +25,7 @@ export class GameObject {
       src: config.src || 'assets/character-01.webp',
       animations: null,
     });
+    
 
     this.behaviorLoop = config.behaviorLoop || [];
     this.behaviorLoopIndex = 0;

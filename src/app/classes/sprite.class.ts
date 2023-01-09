@@ -1,6 +1,7 @@
 export class Sprite {
   image;
   isLoaded: boolean = false;
+  isContainer: boolean = false;
   animations: any;
   gameObject: any;
   currentAnimation: string = '';
@@ -9,6 +10,13 @@ export class Sprite {
   animationFrameProgress: number = 0;
 
   constructor(config: any) {
+
+    if (config.gameObject.isContainer === true) {
+      this.isContainer = true;
+    }
+    // console.log('--- config.isContainer:', config.isContainer);
+    // console.log('--- config.gameObject.isContainer:', config.gameObject.isContainer);
+    
 
     // Set up the image
     this.image = new Image();
@@ -69,12 +77,14 @@ export class Sprite {
     const x = this.gameObject.x - 16 + (10.5 * 32) - cameraPerson.x;
     const y = this.gameObject.y - 32 + (9 * 32) - cameraPerson.y;
 
-    // Create shadow image
-    ctx.beginPath();
-    ctx.arc(x, y + 18, 14, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.fillStyle = "rgba(0, 0 , 0, 0.25)";
-    ctx.fill();
+    // Create shadow image if the gameObject is not a container
+    if (!this.isContainer) {
+      ctx.beginPath();
+      ctx.arc(x, y + 18, 14, 0, Math.PI * 2, true);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(0, 0 , 0, 0.25)";
+      ctx.fill();
+    }
 
     const [ frameX, frameY ] = this.frame;
     

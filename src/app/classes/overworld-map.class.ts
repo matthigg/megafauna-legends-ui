@@ -184,6 +184,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       container: new Container({
         x: convertToPx(10),
         y: convertToPx(10),
+        isContainer: true,
         src: "assets/sfbl-container-01.svg",
         items: [
           { label: 'stone', description: 'this is a stone' },
