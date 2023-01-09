@@ -12,9 +12,13 @@ export class GameObject {
   behaviorLoop: any;
   behaviorLoopIndex: any;
   talking: any;
+  interaction: any;
   isStanding: boolean = false;
 
   constructor(config: any) {
+
+    // console.log('--- config:', config);
+    
     if (config.isContainer) this.isContainer = true;
     
     this.x = config.x || 0;
@@ -31,6 +35,7 @@ export class GameObject {
     this.behaviorLoopIndex = 0;
 
     this.talking = config.talking || [];
+    this.interaction = config.interaction || [];
   }
 
   mount(map: any) {

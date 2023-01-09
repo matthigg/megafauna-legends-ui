@@ -62,6 +62,7 @@ export class KeyboardMenu {
 
   setOptions(options: any) {
     this.options = options;
+    
     this.element.innerHTML = this.options.map((option, index) => {
 
       // TODO - fix edge case where a button can be both disabled and receive auto focus

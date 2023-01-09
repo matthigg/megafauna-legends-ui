@@ -192,12 +192,15 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         items: [
           { label: 'stone', description: 'this is a stone' },
         ],
+        // interaction: [
         talking: [
           {
             events: [
               // { type: 'textMessage', text: 'Greetings!', faceHero: 'container'},
               // { type: 'openChest', chest: (<any>window).OverworldMaps.HomeCave.gameObjects.chest1 },
-              { type: 'openChest', chest: 'chest1' },
+              { type: 'openChest', chestName: 'chest1' },
+              // { type: 'openChest', chest: (<any>window).OverworldMaps.HomeCave.gameObjects.chest1 },
+              // { type: 'openChest', chest: (<any>window).OverworldMaps },
             ],
           },
         ],

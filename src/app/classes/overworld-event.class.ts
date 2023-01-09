@@ -6,36 +6,17 @@ import { PauseMenu } from "./pause-menu.class";
 import { playerState } from "../shared/player-state";
 import { CraftingMenu } from "./crafting-menu.class";
 import { KeyboardMenu } from "./keyboard-menu.class";
-import { Actions } from "../shared/utils";
 
 export class OverworldEvent {
   map;
   event;
   keyboardMenu: any;
-  quantityMap: any = {}
-  items: any;
 
   constructor({ map, event }: any) {
     this.map = map;
     this.event = event;
 
-    // Condense multiple quantities of the same player items stored in playerState (ex.
-    // display 'Cheese x 2' instead of 'Cheese, Cheese')
-    playerState.items.forEach((item: any) => {
-      // if (item.team === caster.team) {
-      let existing = this.quantityMap[item.actionId];
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        this.quantityMap[item.actionId] = {
-          actionId: item.actionId,
-          quantity: 1,
-          instanceId: item.instanceId,
-        }
-      }
-      // }
-    });
-    this.items = Object.values(this.quantityMap);
+
   }
 
   init(): Promise<any> {
@@ -184,104 +165,31 @@ export class OverworldEvent {
   }
 
   openChest(resolve: any): void {
-    this.keyboardMenu = new KeyboardMenu();
-    this.keyboardMenu.init(document.querySelector('.game-container'));
-    this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
 
-    console.log('--- this.event:', this.event);
+    // this.keyboardMenu.setOptions(this.event.getContainerOptions(resolve).mainMenu);
+
+    // console.log('--- this.event:', this.event);
+
+    const chest = (<any>window).OverworldMaps.HomeCave.gameObjects[this.event.chestName];
+
+    // console.log('--- chest:', chest);
+
+    // chest.getContainerOptions(resolve);
+    chest.init(resolve);
+
+    // this.keyboardMenu = new KeyboardMenu();
+    // this.keyboardMenu.init(document.querySelector('.game-container'));
+    // this.keyboardMenu.setOptions(chest.getContainerOptions(resolve).mainMenu);
 
     // resolve();
     
   }
 
-  getContainerOptions(resolve: any) {
-
-    console.log('--- playerState:', playerState);
-    
-    const backOption = {
-      label: 'Go back',
-      description: 'Return to previous page',
-      handler: () => {
-        this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
-      }
-    }
-
-    return {
-      mainMenu: [ 
-        {
-          label: 'Deposit',
-          description: 'Place items in this chest',
-          handler: () => {
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
-          }
-        },
-        {
-          label: 'Withdraw',
-          description: 'Take items from this chest',
-          handler: () => {
-  
-          }
-        },
-        {
-          label: 'Pick up chest',
-          description: 'Pick up this chest',
-          handler: () => {
-  
-          }
-        },
-      ],
-
-      // Display items in the player's inventory that can be deposited
-      items: [
-        ...this.items.map((item: any) => {
-          
-          // Note: items are stored under the shared Actions object
-          const action = Actions[item.actionId as keyof typeof Actions];
-          return {
-            label: action.name,
-            description: action.description,
-            right: () => {
-              return "x"+item.quantity;
-            },
-            handler: () => {
-              this.depositItem(action, item.instanceId, resolve);
-            }
-          }
-        }),
-        backOption,
-      ],
-      
-    }
-  }
 
 
 
-  depositItem(action: any, instanceId = null, resolve: any) {
-    
-    // console.log('--- action:', action);
-    // console.log('--- instanceId:', instanceId);
-    // const x = playerState.items.find(item => item.instanceId === instanceId)
-    let itemToBeDeposited: any[] = [];
-    playerState.items.forEach((item, i) => {
-      if (item.instanceId === instanceId) {
-        itemToBeDeposited = playerState.items.splice(i, 1);
-      }
-    });
 
-    // console.log('--- playerState.items:', playerState.items);
-    // console.log('--- itemToBeDeposited:', itemToBeDeposited);
 
-    let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
-
-    chest.items.push(...itemToBeDeposited);
-
-    console.log('--- chest.items:', chest.items);
-    console.log('--- playerState:', playerState);
-  
-      
-    this.keyboardMenu?.end();
-    resolve();
-  }
 }
 
 // ========== Utility Functions ===============================================================
