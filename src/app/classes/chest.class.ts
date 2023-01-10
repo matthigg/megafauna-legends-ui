@@ -4,63 +4,26 @@ import { Actions, Items } from "../shared/utils";
 import { KeyboardMenu } from "./keyboard-menu.class";
 
 export class Chest extends GameObject {
-  // stackedItems: any[] = [];
   storedItems: any[] = [];
-  // x: number;
-  // y: number;
   keyboardMenu: any;
   stackMap: any = {}
 
   constructor(config: any) {
     super(config);
 
-    // this.items = config.items;
     this.x = config.x;
     this.y = config.y;
-
     this.storedItems = config.items;
-
     this.keyboardMenu = new KeyboardMenu();
 
-
-
-
     console.log('--- config.items:', config.items);
-    // console.log('--- this.stackedItems:', this.stackedItems);
     console.log('--- playerState.items:', playerState.items);
-    
   }
 
   init(resolve: any): void {
     this.keyboardMenu.init(document.querySelector('.game-container'));
     this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
   }
-
-  // Condense multiple quantities of the same player items stored in playerState (ex.
-  // display 'Cheese x 2' instead of 'Cheese, Cheese')
-  // stackItems(): void {
-  //   playerState.items.forEach((item: any) => {
-  //     // if (item.team === caster.team) {
-
-  //     // console.log('--- item:', item);
-        
-  //     let stack = this.stackMap[item.itemId];
-  //     if (stack) {
-  //       stack.quantity += 1;
-  //       stack.instanceIds.push(item.instanceId);
-  //     } else {
-  //       this.stackMap[item.itemId] = {
-  //         itemId: item.itemId,
-  //         quantity: 1,
-  //         // instanceId: item.instanceId,
-  //         stackId: Object.keys(this.stackMap).length,
-  //         instanceIds: [ item.instanceId ],
-  //       }
-  //     }
-  //     // }
-  //   });
-  //   this.stackedItems = Object.values(this.stackMap);
-  // }
 
   // Note: this is copied from person.class.ts, and currently does nothing
   update(state: any) {
@@ -85,12 +48,9 @@ export class Chest extends GameObject {
 
 
 
-  getContainerOptions(resolve: any) {
+  getContainerOptions(resolve: any, itemConfig?: any) {
 
-    // this.keyboardMenu.setOptions(this.event.getContainerOptions(resolve).mainMenu);
-
-    // console.log('--- playerState.items:', playerState.items);
-    // console.log('--- this.items:', this.items);
+    console.log('--- itemConfig:', itemConfig);
     
     const backOption = {
       label: 'Go back',
@@ -123,28 +83,53 @@ export class Chest extends GameObject {
   
           }
         },
+        {
+          label: 'Exit',
+          description: 'Close menu',
+          handler: () => {
+            this.keyboardMenu?.end();
+            resolve();
+          }
+        },
       ],
 
       // Display items in the player's inventory that can be deposited
       items: [
         ...playerState.items.map((playerItem: any) => {
-
-          const item = Items[playerItem.itemId as keyof typeof Items];
+          const itemConfig = Items[playerItem.itemId as keyof typeof Items];
 
           return {
-            label: item.name,
-            description: item.description,
+            label: itemConfig.name,
+            description: itemConfig.description,
             right: () => {
               return "x"+playerItem.quantity;
             },
             handler: () => {
-
-              console.log('--- playerItem:', playerItem);
-              
               this.depositItem(resolve, playerItem.itemId);
             }
           }
         }),
+        backOption,
+      ],
+
+      // Handle depositing multiple items
+      deposit: [
+        {
+          label: 'Deposit all',
+          description: `Place all ${itemConfig?.name} into the chest`,
+          // description: `Place all into the chest`,
+          handler: () => {
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+          }
+        },
+        {
+          description: `Place some ${itemConfig?.name} into the chest`,
+          // description: `Place some into the chest`,
+          label: 'Deposit some',
+          handler: () => {
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+          }
+        },
         backOption,
       ],
       
@@ -154,50 +139,40 @@ export class Chest extends GameObject {
 
 
   depositItem(resolve: any, itemId: string) {
+    let depositCustomQuantity: any;
     
-    let itemToBeDeposited: any[] = [];
     playerState.items.forEach((playerItem, i) => {
+      const itemConfig = Items[playerItem.itemId as keyof typeof Items];
 
-      // console.log('--- playerItem:', playerItem);
       if (playerItem.itemId === itemId) {
+
+        if (playerItem.quantity > 1) {
+
+          // console.log('--- playerItem:', playerItem);
+
+          // this.keyboardMenu?.end();
+          // resolve();
+          depositCustomQuantity = itemConfig;
+          
+          
+        }
 
         this.storedItems.push(playerItem)
         playerState.items.splice(i, 1);
 
-        console.log('--- this.storedItems:', this.storedItems);
-        console.log('--- playerState:', playerState);
+        // console.log('--- this.storedItems:', this.storedItems);
+        // console.log('--- playerState.items:', playerState.items);
       }
 
-
-      // if (item.stackId === stackId) {
-      //   if (quantity > 1) {
-
-      //     // TODO - handle depositing more than 1 item at a time
-
-
-      //   }
-
-        
-      //   itemToBeDeposited = playerState.items.splice(i, 1);
-      // }
     });
 
-    // console.log('--- playerState.items:', playerState.items);
-    // console.log('--- itemToBeDeposited:', itemToBeDeposited);
+    if (depositCustomQuantity) {
+      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, depositCustomQuantity).deposit);
+    }
 
     let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
-
-    // console.log('--- chest:', chest);
-
-    this.storedItems.push(...itemToBeDeposited);
-
-    // console.log('--- this.storedItems:', this.storedItems);
-    
-    // console.log('--- chest.items:', chest.items);
-    // console.log('--- playerState:', playerState);
-  
       
-    this.keyboardMenu?.end();
-    resolve();
+    // this.keyboardMenu?.end();
+    // resolve();
   }
 }
