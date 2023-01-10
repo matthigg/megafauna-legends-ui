@@ -167,8 +167,13 @@ export class KeyboardMenu {
       // Note: button.dataset.button references the data-button attribute on the <button> 
       // element
       button.addEventListener('click', () => {
+
+        const rangeSliderValue = document.getElementById('keyboard-menu-range-slider-value');
+
+        const quantity = rangeSliderValue?.innerText;
+        
         const chosenOption = this.options[ Number(button.dataset.button) ];
-        chosenOption.handler();
+        chosenOption.handler(quantity);
       });
 
       button.addEventListener('mouseenter', () => {

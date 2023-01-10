@@ -151,13 +151,9 @@ export class Chest extends GameObject {
         {
           label: 'Place items in chest',
           description: `Place some ${itemConfig?.name} into the chest`,
-          handler: () => {
-            console.log('--- Place items in chest clicked ---');
+          handler: (quantity: number) => {
 
-            // console.log('--- itemConfig:', itemConfig);
-            // console.log('--- depositedPlayerItem:', depositedPlayerItem);
-            // this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
-            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+            console.log('--- quantity:', quantity);
           }
         },
         backOption,
