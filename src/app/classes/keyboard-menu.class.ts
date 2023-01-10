@@ -48,8 +48,6 @@ export class KeyboardMenu {
       });      
       (nextButton as any)?.focus();
     });
-
-
   }
 
   end(): void {
@@ -122,7 +120,17 @@ export class KeyboardMenu {
         
         chosenOption.handler();
       });
+
+      button.addEventListener('mouseenter', () => {
+        button.focus();
+      });
+      button.addEventListener('focus', () => {
+        this.prevFocus = button;
+        this.descriptionElementText.innerText = button.dataset.description;
+      });
     });
+
+    
 
     // const depositButton = this.element.querySelector('#keyboard-menu-range-slider-deposit');
     // const backButton = this.element.querySelector('#keyboard-menu-range-slider-back');
