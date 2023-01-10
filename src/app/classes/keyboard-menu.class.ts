@@ -64,9 +64,9 @@ export class KeyboardMenu {
   }
 
   setOptionsRangeSlider(options: any, depositedPlayerItem: any) {
+    this.options = options;
 
-    console.log('--- options:', options);
-    console.log('--- depositedPlayerItem:', depositedPlayerItem);
+    // console.log('--- depositedPlayerItem:', depositedPlayerItem);
 
     // this.element.innerHTML = this.options.map((option, index) => {
     this.element.innerHTML = `
@@ -77,7 +77,62 @@ export class KeyboardMenu {
     `;
 
     // emitEvent('TrackRangeSliderValue', null);
+
+    this.element.innerHTML += this.options.map((option: any, index: number) => {
+    // this.options.map((option: any, index: number) => {
+
+      // console.log('--- options:', options);
+      console.log('--- option:', option);
+      console.log('--- index:', index);
+      
+      const disabledAttr = option.disabled ? 'disabled' : '';
+
+      return `
+
+      <div class="option">
+        <button 
+          ${disabledAttr} 
+          data-button="${index}" 
+          data-description="${option.description}"
+        >
+          ${option.label}
+        </button>
+        <span class="right">${option.right ? option.right() : ""}</span>
+      </div>
+      
+      `;
+    }).join('');
+
+    // Note: this event has to be emitted after this.element.innerHTML has the button
+    // elements concatenated into the DOM in order for the slider value to properly 
+    // update
     emitEvent('TrackRangeSliderValue', null);
+
+
+    this.element.querySelectorAll('button').forEach((button: any) => {
+
+      // Note: button.dataset.button references the data-button attribute on the <button> 
+      // element
+      button.addEventListener('click', () => {
+        const chosenOption = this.options[ Number(button.dataset.button) ];
+
+        // console.log('--- Number(button.dataset.button):', Number(button.dataset.button));
+        // console.log('--- this.options:', this.options);
+        // console.log('--- chosenOption:', chosenOption);
+        
+        chosenOption.handler();
+      });
+    });
+
+    // const depositButton = this.element.querySelector('#keyboard-menu-range-slider-deposit');
+    // const backButton = this.element.querySelector('#keyboard-menu-range-slider-back');
+
+    // depositButton.addEventListener('click', () => {
+
+    //   console.log('--- this.options:', this.options);
+      
+    //   // chosenOption.handler();
+    // });
   }
 
   setOptions(options: any) {
@@ -108,6 +163,11 @@ export class KeyboardMenu {
       // element
       button.addEventListener('click', () => {
         const chosenOption = this.options[ Number(button.dataset.button) ];
+
+        // console.log('--- Number(button.dataset.button):', Number(button.dataset.button));
+        // console.log('--- this.options:', this.options);
+        // console.log('--- chosenOption:', chosenOption);
+        
         chosenOption.handler();
       });
 
