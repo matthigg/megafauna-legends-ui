@@ -117,7 +117,6 @@ export class Chest extends GameObject {
         {
           label: 'Deposit all',
           description: `Place all ${itemConfig?.name} into the chest`,
-          // description: `Place all into the chest`,
           handler: () => {
             this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
@@ -125,9 +124,9 @@ export class Chest extends GameObject {
         },
         {
           description: `Place some ${itemConfig?.name} into the chest`,
-          // description: `Place some into the chest`,
           label: 'Deposit some',
           handler: () => {
+            this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve))
             // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },

@@ -60,6 +60,34 @@ export class KeyboardMenu {
     this.down.unbind();
   }
 
+  setOptionsRangeSlider(options: any) {
+
+
+
+    // this.element.innerHTML = this.options.map((option, index) => {
+    this.element.innerHTML = `
+      <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </div>
+      
+      <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+        
+        slider.oninput = function() {
+          console.log('--- slider input ---');
+          output.innerHTML = this.value;
+        }
+      </script>
+    `;
+    
+    
+    
+    
+  }
+
   setOptions(options: any) {
     this.options = options;
     
