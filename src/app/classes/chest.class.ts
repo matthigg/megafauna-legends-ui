@@ -119,7 +119,7 @@ export class Chest extends GameObject {
           description: `Place all ${itemConfig?.name} into the chest`,
           // description: `Place all into the chest`,
           handler: () => {
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },
         {
@@ -127,7 +127,7 @@ export class Chest extends GameObject {
           // description: `Place some into the chest`,
           label: 'Deposit some',
           handler: () => {
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },
         backOption,
@@ -139,10 +139,12 @@ export class Chest extends GameObject {
 
 
   depositItem(resolve: any, itemId: string) {
-    let depositCustomQuantity: any;
+    let isCustomDepositQuantity: boolean = false;
+    let itemConfig: any;
+    let depositedItem: string = '';
     
     playerState.items.forEach((playerItem, i) => {
-      const itemConfig = Items[playerItem.itemId as keyof typeof Items];
+      itemConfig = Items[playerItem.itemId as keyof typeof Items];
 
       if (playerItem.itemId === itemId) {
 
@@ -152,13 +154,18 @@ export class Chest extends GameObject {
 
           // this.keyboardMenu?.end();
           // resolve();
-          depositCustomQuantity = itemConfig;
+          isCustomDepositQuantity = true;
           
           
+        } else {
+          this.storedItems.push(playerItem)
+          playerState.items.splice(i, 1);
         }
 
-        this.storedItems.push(playerItem)
-        playerState.items.splice(i, 1);
+        // The quantity here isn't accurate if player deposits a custom amount if items
+        // TODO - create message/alert popup to display depositedItem
+        depositedItem = itemConfig.name + ' x' + playerItem.quantity;
+
 
         // console.log('--- this.storedItems:', this.storedItems);
         // console.log('--- playerState.items:', playerState.items);
@@ -166,8 +173,11 @@ export class Chest extends GameObject {
 
     });
 
-    if (depositCustomQuantity) {
-      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, depositCustomQuantity).deposit);
+
+    if (isCustomDepositQuantity) {
+      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).deposit);
+    } else {
+      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
     }
 
     let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
