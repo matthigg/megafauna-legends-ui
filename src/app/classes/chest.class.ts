@@ -48,9 +48,9 @@ export class Chest extends GameObject {
 
 
 
-  getContainerOptions(resolve: any, itemConfig?: any) {
+  getContainerOptions(resolve: any, itemConfig?: any, depositedPlayerItem?: any, depositedPlayerItemIndex?: number) {
 
-    console.log('--- itemConfig:', itemConfig);
+    // console.log('--- itemConfig:', itemConfig);
     
     const backOption = {
       label: 'Go back',
@@ -119,7 +119,8 @@ export class Chest extends GameObject {
           description: `Place all ${itemConfig?.name} into the chest`,
           // description: `Place all into the chest`,
           handler: () => {
-            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+            this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },
         {
@@ -136,12 +137,20 @@ export class Chest extends GameObject {
     }
   }
 
+  depositAllItems(depositedPlayerItem: any, depositedPlayerItemIndex: any): void {
+    this.storedItems.push(depositedPlayerItem)
+    if (depositedPlayerItemIndex >= 0) {
+      playerState.items.splice(depositedPlayerItemIndex, 1);
+    }
+  }
 
 
   depositItem(resolve: any, itemId: string) {
-    let isCustomDepositQuantity: boolean = false;
+    let isCustomDepositQuantity: boolean | null = null;
     let itemConfig: any;
-    let depositedItem: string = '';
+    let depositedItemName: string | null = null;
+    let depositedPlayerItem: any;
+    let depositedPlayerItemIndex: any;
     
     playerState.items.forEach((playerItem, i) => {
       itemConfig = Items[playerItem.itemId as keyof typeof Items];
@@ -155,6 +164,8 @@ export class Chest extends GameObject {
           // this.keyboardMenu?.end();
           // resolve();
           isCustomDepositQuantity = true;
+          depositedPlayerItem = playerItem;
+          depositedPlayerItemIndex = i;
           
           
         } else {
@@ -163,8 +174,8 @@ export class Chest extends GameObject {
         }
 
         // The quantity here isn't accurate if player deposits a custom amount if items
-        // TODO - create message/alert popup to display depositedItem
-        depositedItem = itemConfig.name + ' x' + playerItem.quantity;
+        // TODO - create message/alert popup to display depositedItemName
+        depositedItemName = itemConfig.name + ' x' + playerItem.quantity;
 
 
         // console.log('--- this.storedItems:', this.storedItems);
@@ -175,7 +186,7 @@ export class Chest extends GameObject {
 
 
     if (isCustomDepositQuantity) {
-      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).deposit);
+      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig, depositedPlayerItem, depositedPlayerItemIndex).deposit);
     } else {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
     }
