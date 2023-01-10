@@ -185,7 +185,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         y: convertToPx(9),
       }),
       chest1: new Chest({
-        x: convertToPx(10),
+        x: convertToPx(9),
         y: convertToPx(10),
         isContainer: true,
         src: "assets/sfbl-container-01.svg",

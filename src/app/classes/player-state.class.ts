@@ -39,9 +39,10 @@ export class PlayerState {
 
     this.lineup = ['p1'];
     this.items = [
-      { actionId: 'item_recoverHp', instanceId: 'item1' },
-      { actionId: 'item_recoverHp', instanceId: 'item2' },
-      { actionId: 'item_recoverHp', instanceId: 'item3' },
+      { itemId: 'item_recoverHp', quantity: 3 },
+      // { itemId: 'item_recoverHp', instanceId: 'item1' },
+      // { itemId: 'item_recoverHp', instanceId: 'item2' },
+      // { itemId: 'item_recoverHp', instanceId: 'item3' },
     ];
   }
 

@@ -1,15 +1,15 @@
 import { GameObject } from "./game-object.class";
 import { playerState } from "../shared/player-state";
-import { Actions } from "../shared/utils";
+import { Actions, Items } from "../shared/utils";
 import { KeyboardMenu } from "./keyboard-menu.class";
 
 export class Chest extends GameObject {
-  stackedItems: any[] = [];
+  // stackedItems: any[] = [];
   storedItems: any[] = [];
   // x: number;
   // y: number;
   keyboardMenu: any;
-  quantityMap: any = {}
+  stackMap: any = {}
 
   constructor(config: any) {
     super(config);
@@ -22,12 +22,11 @@ export class Chest extends GameObject {
 
     this.keyboardMenu = new KeyboardMenu();
 
-    this.stackItems();
 
 
 
     console.log('--- config.items:', config.items);
-    console.log('--- this.stackedItems:', this.stackedItems);
+    // console.log('--- this.stackedItems:', this.stackedItems);
     console.log('--- playerState.items:', playerState.items);
     
   }
@@ -39,23 +38,29 @@ export class Chest extends GameObject {
 
   // Condense multiple quantities of the same player items stored in playerState (ex.
   // display 'Cheese x 2' instead of 'Cheese, Cheese')
-  stackItems(): void {
-    playerState.items.forEach((item: any) => {
-      // if (item.team === caster.team) {
-      let existing = this.quantityMap[item.actionId];
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        this.quantityMap[item.actionId] = {
-          actionId: item.actionId,
-          quantity: 1,
-          instanceId: item.instanceId,
-        }
-      }
-      // }
-    });
-    this.stackedItems = Object.values(this.quantityMap);
-  }
+  // stackItems(): void {
+  //   playerState.items.forEach((item: any) => {
+  //     // if (item.team === caster.team) {
+
+  //     // console.log('--- item:', item);
+        
+  //     let stack = this.stackMap[item.itemId];
+  //     if (stack) {
+  //       stack.quantity += 1;
+  //       stack.instanceIds.push(item.instanceId);
+  //     } else {
+  //       this.stackMap[item.itemId] = {
+  //         itemId: item.itemId,
+  //         quantity: 1,
+  //         // instanceId: item.instanceId,
+  //         stackId: Object.keys(this.stackMap).length,
+  //         instanceIds: [ item.instanceId ],
+  //       }
+  //     }
+  //     // }
+  //   });
+  //   this.stackedItems = Object.values(this.stackMap);
+  // }
 
   // Note: this is copied from person.class.ts, and currently does nothing
   update(state: any) {
@@ -122,20 +127,18 @@ export class Chest extends GameObject {
 
       // Display items in the player's inventory that can be deposited
       items: [
-        ...this.stackedItems.map((item: any) => {
+        ...playerState.items.map((playerItem: any) => {
 
-          console.log('--- stacked item:', item);
-          
-          // Note: items are stored under the shared Actions object
-          const action = Actions[item.actionId as keyof typeof Actions];
+          const item = Items[playerItem.itemId as keyof typeof Items];
+
           return {
-            label: action.name,
-            description: action.description,
+            label: item.name,
+            description: item.description,
             right: () => {
-              return "x"+item.quantity;
+              return "x"+playerItem.quantity;
             },
             handler: () => {
-              this.depositItem(action, item.instanceId, item.quantity, resolve);
+              this.depositItem(resolve);
             }
           }
         }),
@@ -147,28 +150,29 @@ export class Chest extends GameObject {
 
 
 
-  depositItem(action: any, instanceId = null, quantity: number, resolve: any) {
+  depositItem(resolve: any) {
     
-    // console.log('--- action:', action);
-    // console.log('--- instanceId:', instanceId);
-    // const x = playerState.items.find(item => item.instanceId === instanceId)
     let itemToBeDeposited: any[] = [];
-    playerState.items.forEach((item, i) => {
+    playerState.items.forEach((playerItem, i) => {
 
-      console.log('--- item.instanceId:', item.instanceId);
-      console.log('--- instanceId:', instanceId);
-      
-      if (item.instanceId === instanceId) {
-        if (quantity > 1) {
+      // console.log('--- playerItem:', playerItem);
+      this.storedItems.push(playerItem)
+      playerState.items.pop()
 
-          // TODO - handle depositing more than 1 item at a time
+      console.log('--- this.storedItems:', this.storedItems);
+      console.log('--- playerState:', playerState);
+
+      // if (item.stackId === stackId) {
+      //   if (quantity > 1) {
+
+      //     // TODO - handle depositing more than 1 item at a time
 
 
-        }
+      //   }
 
         
-        itemToBeDeposited = playerState.items.splice(i, 1);
-      }
+      //   itemToBeDeposited = playerState.items.splice(i, 1);
+      // }
     });
 
     // console.log('--- playerState.items:', playerState.items);

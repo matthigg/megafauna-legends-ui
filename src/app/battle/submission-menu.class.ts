@@ -1,5 +1,5 @@
 import { KeyboardMenu } from "../classes/keyboard-menu.class";
-import { Actions } from "../shared/utils";
+import { Actions, Items } from "../shared/utils";
 
 export class SubmissionMenu {
   caster;
@@ -125,10 +125,7 @@ export class SubmissionMenu {
       // Display items options in the submission menu
       items: [
         ...this.items.map((item: any) => {
-          const action = Actions[item.actionId as keyof typeof Actions];
-
-          console.log('--- item:', item);
-          console.log('--- action:', action);
+          const action = Items[item.actionId as keyof typeof Items];
           
           return {
             label: action.name,

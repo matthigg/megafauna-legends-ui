@@ -29,6 +29,9 @@ export const Actions = {
       { type: 'textMessage', text: '{TARGET} is slipping all around!' },
     ],
   },
+}
+
+export const Items = {
   item_recoverStatus: {
     name: "Heating Lamp",
     description: "Feeling fresh and warm",
