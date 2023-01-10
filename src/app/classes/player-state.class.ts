@@ -40,6 +40,7 @@ export class PlayerState {
     this.lineup = ['p1'];
     this.items = [
       { itemId: 'item_recoverHp', quantity: 3 },
+      { itemId: 'weapon_ironShortSword', quantity: 1 },
       // { itemId: 'item_recoverHp', instanceId: 'item1' },
       // { itemId: 'item_recoverHp', instanceId: 'item2' },
       // { itemId: 'item_recoverHp', instanceId: 'item3' },

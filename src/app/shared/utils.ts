@@ -52,6 +52,15 @@ export const Items = {
       { type: "textMessage", text: "{CASTER} recovers HP!", },
     ]
   },
+  weapon_ironShortSword: {
+    name: "Iron Short Sword",
+    description: "A sturdy weapon",
+    // success: [
+    //   { type: "textMessage", text: "{CASTER} uses a {ACTION}!"},
+    //   { type: "stateChange", status: null },
+    //   { type: "textMessage", text: "Feeling fresh!", },
+    // ]
+  },
 }
 
 export const BattleAnimations = {

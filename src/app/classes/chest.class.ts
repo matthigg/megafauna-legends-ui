@@ -138,7 +138,10 @@ export class Chest extends GameObject {
               return "x"+playerItem.quantity;
             },
             handler: () => {
-              this.depositItem(resolve);
+
+              console.log('--- playerItem:', playerItem);
+              
+              this.depositItem(resolve, playerItem.itemId);
             }
           }
         }),
@@ -150,17 +153,21 @@ export class Chest extends GameObject {
 
 
 
-  depositItem(resolve: any) {
+  depositItem(resolve: any, itemId: string) {
     
     let itemToBeDeposited: any[] = [];
     playerState.items.forEach((playerItem, i) => {
 
       // console.log('--- playerItem:', playerItem);
-      this.storedItems.push(playerItem)
-      playerState.items.pop()
+      if (playerItem.itemId === itemId) {
 
-      console.log('--- this.storedItems:', this.storedItems);
-      console.log('--- playerState:', playerState);
+        this.storedItems.push(playerItem)
+        playerState.items.splice(i, 1);
+
+        console.log('--- this.storedItems:', this.storedItems);
+        console.log('--- playerState:', playerState);
+      }
+
 
       // if (item.stackId === stackId) {
       //   if (quantity > 1) {
