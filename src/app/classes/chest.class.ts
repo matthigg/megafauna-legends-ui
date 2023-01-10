@@ -154,6 +154,8 @@ export class Chest extends GameObject {
           handler: (quantity: number) => {
 
             console.log('--- quantity:', quantity);
+            console.log('--- playerState:', playerState);
+            console.log('--- storedItems:', this.storedItems);
           }
         },
         backOption,
