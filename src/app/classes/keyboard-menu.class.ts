@@ -135,7 +135,7 @@ export class KeyboardMenu {
 
     this.element.innerHTML = `
       <div class="slidecontainer">
-        <input id="keyboard-menu-range-slider" type="range" min="1" max="${depositedPlayerItem}" value="1">
+        <input id="keyboard-menu-range-slider" type="range" min="1" max="${depositedPlayerItem.quantity}" value="1">
         <p>Value: <span id="keyboard-menu-range-slider-value"></span></p>
       </div>
     `;
