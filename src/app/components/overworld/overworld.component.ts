@@ -58,7 +58,10 @@ export class OverworldComponent implements OnInit {
 
     // Listen for an event to track the value of a custom range slider in the keyboard 
     // menu
-    document.addEventListener('TrackRangeSliderValue', () => {
+    document.addEventListener('TrackRangeSliderValue', event => {
+
+      // console.log('--- event:', event);
+      
       const slider = document.getElementById("keyboard-menu-range-slider");
       const output = document.getElementById("keyboard-menu-range-slider-value");
 

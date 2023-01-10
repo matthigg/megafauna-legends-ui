@@ -50,7 +50,7 @@ export class Chest extends GameObject {
 
   getContainerOptions(resolve: any, itemConfig?: any, depositedPlayerItem?: any, depositedPlayerItemIndex?: number) {
 
-    // console.log('--- itemConfig:', itemConfig);
+    console.log('--- itemConfig:', itemConfig);
     
     const backOption = {
       label: 'Go back',
@@ -126,7 +126,7 @@ export class Chest extends GameObject {
           description: `Place some ${itemConfig?.name} into the chest`,
           label: 'Deposit some',
           handler: () => {
-            this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve))
+            this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve), itemConfig)
             // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },
@@ -152,9 +152,9 @@ export class Chest extends GameObject {
     let depositedPlayerItemIndex: any;
     
     playerState.items.forEach((playerItem, i) => {
-      itemConfig = Items[playerItem.itemId as keyof typeof Items];
-
+      
       if (playerItem.itemId === itemId) {
+        itemConfig = Items[playerItem.itemId as keyof typeof Items];
 
         if (playerItem.quantity > 1) {
 
@@ -172,7 +172,7 @@ export class Chest extends GameObject {
           playerState.items.splice(i, 1);
         }
 
-        // The quantity here isn't accurate if player deposits a custom amount if items
+        // The quantity here isn't accurate if player deposits a custom amount of items
         // TODO - create message/alert popup to display depositedItemName
         depositedItemName = itemConfig.name + ' x' + playerItem.quantity;
 
@@ -185,6 +185,9 @@ export class Chest extends GameObject {
 
 
     if (isCustomDepositQuantity) {
+
+      // console.log('--- itemConfig:', itemConfig);
+      
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig, depositedPlayerItem, depositedPlayerItemIndex).deposit);
     } else {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
