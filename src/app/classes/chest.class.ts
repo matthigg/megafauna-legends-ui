@@ -126,7 +126,7 @@ export class Chest extends GameObject {
           description: `Place some ${itemConfig?.name} into the chest`,
           label: 'Deposit some',
           handler: () => {
-            this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve), itemConfig)
+            this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve), depositedPlayerItem)
             // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },

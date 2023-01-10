@@ -63,15 +63,15 @@ export class KeyboardMenu {
     this.down.unbind();
   }
 
-  setOptionsRangeSlider(options: any, itemConfig: any) {
+  setOptionsRangeSlider(options: any, depositedPlayerItem: any) {
 
     console.log('--- options:', options);
-    console.log('--- itemConfig:', itemConfig);
+    console.log('--- depositedPlayerItem:', depositedPlayerItem);
 
     // this.element.innerHTML = this.options.map((option, index) => {
     this.element.innerHTML = `
       <div class="slidecontainer">
-        <input id="keyboard-menu-range-slider" type="range" min="1" max="13" value="2">
+        <input id="keyboard-menu-range-slider" type="range" min="1" max="${depositedPlayerItem.quantity}" value="1">
         <p>Value: <span id="keyboard-menu-range-slider-value"></span></p>
       </div>
     `;
