@@ -48,10 +48,15 @@ export class Chest extends GameObject {
 
 
 
-  getContainerOptions(resolve: any, itemConfig?: any, depositedPlayerItem?: any, depositedPlayerItemIndex?: number) {
+  getContainerOptions(
+    resolve: any, 
+    itemConfig?: any, 
+    depositedPlayerItem?: any, 
+    depositedPlayerItemIndex?: number
+  ) {
 
-    console.log('--- itemConfig:', itemConfig);
-    console.log('--- depositedPlayerItem:', depositedPlayerItem);
+    // console.log('--- itemConfig:', itemConfig);
+    // console.log('--- depositedPlayerItem:', depositedPlayerItem);
     
     const backOption = {
       label: 'Go back',
@@ -127,8 +132,15 @@ export class Chest extends GameObject {
           description: `Place some ${itemConfig?.name} into the chest`,
           label: 'Deposit some',
           handler: () => {
-            this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve, itemConfig, depositedPlayerItem).depositSome, itemConfig, depositedPlayerItem);
-
+            this.keyboardMenu.setOptionsRangeSlider(
+              this.getContainerOptions(
+                resolve, 
+                itemConfig, 
+                depositedPlayerItem
+              ).depositSome, 
+              itemConfig, 
+              depositedPlayerItem
+            );
           }
         },
         backOption,
@@ -190,7 +202,12 @@ export class Chest extends GameObject {
 
 
     if (isCustomDepositQuantity) {
-      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig, depositedPlayerItem, depositedPlayerItemIndex).deposit);
+      this.keyboardMenu.setOptions(this.getContainerOptions(
+        resolve, 
+        itemConfig, 
+        depositedPlayerItem, 
+        depositedPlayerItemIndex
+      ).deposit);
     } else {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
     }
