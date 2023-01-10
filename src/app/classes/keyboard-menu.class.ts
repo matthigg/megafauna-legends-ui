@@ -1,4 +1,5 @@
 import { KeyPressListener } from "./key-press-listener.class";
+import { emitEvent } from "../shared/utils";
 
 export class KeyboardMenu {
   options: any[] = [];
@@ -47,6 +48,8 @@ export class KeyboardMenu {
       });      
       (nextButton as any)?.focus();
     });
+
+
   }
 
   end(): void {
@@ -67,21 +70,12 @@ export class KeyboardMenu {
     // this.element.innerHTML = this.options.map((option, index) => {
     this.element.innerHTML = `
       <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-        <p>Value: <span id="demo"></span></p>
+        <input id="keyboard-menu-range-slider" type="range" min="1" max="100" value="50">
+        <p>Value: <span id="keyboard-menu-range-slider-value"></span></p>
       </div>
-      
-      <script>
-        var slider = document.getElementById("myRange");
-        var output = document.getElementById("demo");
-        output.innerHTML = slider.value;
-        
-        slider.oninput = function() {
-          console.log('--- slider input ---');
-          output.innerHTML = this.value;
-        }
-      </script>
     `;
+
+    emitEvent('UpdateRangeSliderValue', null);
     
     
     
