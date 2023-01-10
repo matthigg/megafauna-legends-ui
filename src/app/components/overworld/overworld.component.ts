@@ -110,6 +110,12 @@ export class OverworldComponent implements OnInit {
       this.map.checkForActionCutscene();
     });
 
+    new KeyPressListener('Space', () => {
+
+      // Is there a person here to talk to?
+      this.map.checkForActionCutscene();
+    });
+
     new KeyPressListener('Escape', () => {
       if (!this.map.isCutScenePlaying) {
         this.map.startCutscene([

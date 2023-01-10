@@ -37,9 +37,9 @@ export class Chest extends GameObject {
     this.keyboardMenu.setOptions(this.getContainerOptions(resolve).mainMenu);
   }
 
+  // Condense multiple quantities of the same player items stored in playerState (ex.
+  // display 'Cheese x 2' instead of 'Cheese, Cheese')
   stackItems(): void {
-    // Condense multiple quantities of the same player items stored in playerState (ex.
-    // display 'Cheese x 2' instead of 'Cheese, Cheese')
     playerState.items.forEach((item: any) => {
       // if (item.team === caster.team) {
       let existing = this.quantityMap[item.actionId];
@@ -123,6 +123,8 @@ export class Chest extends GameObject {
       // Display items in the player's inventory that can be deposited
       items: [
         ...this.stackedItems.map((item: any) => {
+
+          console.log('--- stacked item:', item);
           
           // Note: items are stored under the shared Actions object
           const action = Actions[item.actionId as keyof typeof Actions];
@@ -152,6 +154,10 @@ export class Chest extends GameObject {
     // const x = playerState.items.find(item => item.instanceId === instanceId)
     let itemToBeDeposited: any[] = [];
     playerState.items.forEach((item, i) => {
+
+      console.log('--- item.instanceId:', item.instanceId);
+      console.log('--- instanceId:', instanceId);
+      
       if (item.instanceId === instanceId) {
         if (quantity > 1) {
 
@@ -165,8 +171,8 @@ export class Chest extends GameObject {
       }
     });
 
-    console.log('--- playerState.items:', playerState.items);
-    console.log('--- itemToBeDeposited:', itemToBeDeposited);
+    // console.log('--- playerState.items:', playerState.items);
+    // console.log('--- itemToBeDeposited:', itemToBeDeposited);
 
     let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
 
@@ -174,7 +180,7 @@ export class Chest extends GameObject {
 
     this.storedItems.push(...itemToBeDeposited);
 
-    console.log('--- this.storedItems:', this.storedItems);
+    // console.log('--- this.storedItems:', this.storedItems);
     
     // console.log('--- chest.items:', chest.items);
     // console.log('--- playerState:', playerState);
