@@ -61,89 +61,7 @@ export class KeyboardMenu {
     this.down.unbind();
   }
 
-  setOptionsRangeSlider(options: any, depositedPlayerItem: any) {
-    this.options = options;
-
-    // console.log('--- depositedPlayerItem:', depositedPlayerItem);
-
-    // this.element.innerHTML = this.options.map((option, index) => {
-    this.element.innerHTML = `
-      <div class="slidecontainer">
-        <input id="keyboard-menu-range-slider" type="range" min="1" max="${depositedPlayerItem.quantity}" value="1">
-        <p>Value: <span id="keyboard-menu-range-slider-value"></span></p>
-      </div>
-    `;
-
-    // emitEvent('TrackRangeSliderValue', null);
-
-    this.element.innerHTML += this.options.map((option: any, index: number) => {
-    // this.options.map((option: any, index: number) => {
-
-      // console.log('--- options:', options);
-      console.log('--- option:', option);
-      console.log('--- index:', index);
-      
-      const disabledAttr = option.disabled ? 'disabled' : '';
-
-      return `
-
-      <div class="option">
-        <button 
-          ${disabledAttr} 
-          data-button="${index}" 
-          data-description="${option.description}"
-        >
-          ${option.label}
-        </button>
-        <span class="right">${option.right ? option.right() : ""}</span>
-      </div>
-      
-      `;
-    }).join('');
-
-    // Note: this event has to be emitted after this.element.innerHTML has the button
-    // elements concatenated into the DOM in order for the slider value to properly 
-    // update
-    emitEvent('TrackRangeSliderValue', null);
-
-
-    this.element.querySelectorAll('button').forEach((button: any) => {
-
-      // Note: button.dataset.button references the data-button attribute on the <button> 
-      // element
-      button.addEventListener('click', () => {
-        const chosenOption = this.options[ Number(button.dataset.button) ];
-
-        // console.log('--- Number(button.dataset.button):', Number(button.dataset.button));
-        // console.log('--- this.options:', this.options);
-        // console.log('--- chosenOption:', chosenOption);
-        
-        chosenOption.handler();
-      });
-
-      button.addEventListener('mouseenter', () => {
-        button.focus();
-      });
-      button.addEventListener('focus', () => {
-        this.prevFocus = button;
-        this.descriptionElementText.innerText = button.dataset.description;
-      });
-    });
-
-    
-
-    // const depositButton = this.element.querySelector('#keyboard-menu-range-slider-deposit');
-    // const backButton = this.element.querySelector('#keyboard-menu-range-slider-back');
-
-    // depositButton.addEventListener('click', () => {
-
-    //   console.log('--- this.options:', this.options);
-      
-    //   // chosenOption.handler();
-    // });
-  }
-
-  setOptions(options: any) {
+  setOptions(options: any): void {
     this.options = options;
     
     this.element.innerHTML = this.options.map((option, index) => {
@@ -171,11 +89,6 @@ export class KeyboardMenu {
       // element
       button.addEventListener('click', () => {
         const chosenOption = this.options[ Number(button.dataset.button) ];
-
-        // console.log('--- Number(button.dataset.button):', Number(button.dataset.button));
-        // console.log('--- this.options:', this.options);
-        // console.log('--- chosenOption:', chosenOption);
-        
         chosenOption.handler();
       });
 
@@ -192,8 +105,59 @@ export class KeyboardMenu {
 
     // Focus on the first <button> element with the data-button attribute that is not disabled
     setTimeout(() => {
-      // const focusButton = this.element.querySelector("button[data-button]:not([disabled])").focus();
       const focusButtonDisasbled = this.element.querySelector("button:not([disabled])").focus();
+    });
+  }
+
+  setOptionsRangeSlider(options: any, depositedPlayerItem: any): void {
+    this.options = options;
+
+    this.element.innerHTML = `
+      <div class="slidecontainer">
+        <input id="keyboard-menu-range-slider" type="range" min="1" max="${depositedPlayerItem.quantity}" value="1">
+        <p>Value: <span id="keyboard-menu-range-slider-value"></span></p>
+      </div>
+    `;
+
+    this.element.innerHTML += this.options.map((option: any, index: number) => {
+      const disabledAttr = option.disabled ? 'disabled' : '';
+
+      return `
+        <div class="option">
+          <button 
+            ${disabledAttr} 
+            data-button="${index}" 
+            data-description="${option.description}"
+          >
+            ${option.label}
+          </button>
+          <span class="right">${option.right ? option.right() : ""}</span>
+        </div>
+      `
+    }).join('');
+
+    // Note: this event has to be emitted after this.element.innerHTML has the button
+    // elements concatenated into the DOM in order for the slider value to properly 
+    // update
+    emitEvent('TrackRangeSliderValue', null);
+
+    this.element.querySelectorAll('button').forEach((button: any) => {
+
+      // Note: button.dataset.button references the data-button attribute on the <button> 
+      // element
+      button.addEventListener('click', () => {
+        const chosenOption = this.options[ Number(button.dataset.button) ];
+        chosenOption.handler();
+      });
+
+      button.addEventListener('mouseenter', () => {
+        button.focus();
+      });
+
+      button.addEventListener('focus', () => {
+        this.prevFocus = button;
+        this.descriptionElementText.innerText = button.dataset.description;
+      });
     });
   }
 
@@ -207,8 +171,4 @@ export class KeyboardMenu {
     this.descriptionElement.innerHTML = [`<p></p>`];
     this.descriptionElementText = this.descriptionElement.querySelector('p');
   }
-
-
-
-
 }
