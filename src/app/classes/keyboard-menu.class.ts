@@ -75,11 +75,7 @@ export class KeyboardMenu {
       </div>
     `;
 
-    emitEvent('UpdateRangeSliderValue', null);
-    
-    
-    
-    
+    emitEvent('TrackRangeSliderValue', null);
   }
 
   setOptions(options: any) {

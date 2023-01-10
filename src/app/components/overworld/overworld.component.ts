@@ -56,39 +56,20 @@ export class OverworldComponent implements OnInit {
       }
     }
 
-    // Listen for an event to open a custom range slider in the keyboard menu
-    document.addEventListener('UpdateRangeSliderValue', () => {
-      console.log('--- event heard ---');
+    // Listen for an event to track the value of a custom range slider in the keyboard 
+    // menu
+    document.addEventListener('TrackRangeSliderValue', () => {
+      const slider = document.getElementById("keyboard-menu-range-slider");
+      const output = document.getElementById("keyboard-menu-range-slider-value");
 
-        const slider = document.getElementById("keyboard-menu-range-slider");
-        const output = document.getElementById("keyboard-menu-range-slider-value");
-
-        if (output && slider) {
-          output.innerHTML = (slider as any).value;
-          slider.oninput = function() {
-            if (output) {
-              output.innerHTML = (slider as any).value;
-            }
+      if (output && slider) {
+        output.innerHTML = (slider as any).value;
+        slider.oninput = function() {
+          if (output) {
+            output.innerHTML = (slider as any).value;
           }
         }
-
-
-
-
-      // <script>
-      //   console.log('--- test ----');
-      //   var slider = document.getElementById("myRange");
-      //   var output = document.getElementById("demo");
-      //   output.innerHTML = slider.value;
-        
-      //   slider.oninput = function() {
-      //     console.log('--- slider input ---');
-      //     output.innerHTML = this.value;
-      //   }
-      // </script>
-      
-      
-      
+      }
     });
 
     // Load the HUD
