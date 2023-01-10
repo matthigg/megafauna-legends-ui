@@ -15,8 +15,6 @@ export class OverworldEvent {
   constructor({ map, event }: any) {
     this.map = map;
     this.event = event;
-
-
   }
 
   init(): Promise<any> {
@@ -165,24 +163,8 @@ export class OverworldEvent {
   }
 
   openChest(resolve: any): void {
-
-    // this.keyboardMenu.setOptions(this.event.getContainerOptions(resolve).mainMenu);
-
-    // console.log('--- this.event:', this.event);
-
     const chest = (<any>window).OverworldMaps.HomeCave.gameObjects[this.event.chestName];
-
-    // console.log('--- chest:', chest);
-
-    // chest.getContainerOptions(resolve);
     chest.init(resolve);
-
-    // this.keyboardMenu = new KeyboardMenu();
-    // this.keyboardMenu.init(document.querySelector('.game-container'));
-    // this.keyboardMenu.setOptions(chest.getContainerOptions(resolve).mainMenu);
-
-    // resolve();
-    
   }
 
 

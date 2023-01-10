@@ -127,12 +127,12 @@ export class Chest extends GameObject {
           label: 'Deposit some',
           handler: () => {
             this.keyboardMenu.setOptionsRangeSlider(this.getContainerOptions(resolve).depositSome, depositedPlayerItem)
-            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
           }
         },
         backOption,
       ],
 
+      // Handle depositing a partial amount of items
       depositSome: [
         {
           label: 'Place items in chest',
@@ -145,7 +145,6 @@ export class Chest extends GameObject {
         },
         backOption,
       ],
-      
     }
   }
 
@@ -155,7 +154,6 @@ export class Chest extends GameObject {
       playerState.items.splice(depositedPlayerItemIndex, 1);
     }
   }
-
 
   depositItem(resolve: any, itemId: string) {
     let isCustomDepositQuantity: boolean | null = null;
@@ -170,16 +168,9 @@ export class Chest extends GameObject {
         itemConfig = Items[playerItem.itemId as keyof typeof Items];
 
         if (playerItem.quantity > 1) {
-
-          // console.log('--- playerItem:', playerItem);
-
-          // this.keyboardMenu?.end();
-          // resolve();
           isCustomDepositQuantity = true;
           depositedPlayerItem = playerItem;
           depositedPlayerItemIndex = i;
-          
-          
         } else {
           this.storedItems.push(playerItem)
           playerState.items.splice(i, 1);
@@ -189,18 +180,11 @@ export class Chest extends GameObject {
         // TODO - create message/alert popup to display depositedItemName
         depositedItemName = itemConfig.name + ' x' + playerItem.quantity;
 
-
-        // console.log('--- this.storedItems:', this.storedItems);
-        // console.log('--- playerState.items:', playerState.items);
       }
-
     });
 
 
     if (isCustomDepositQuantity) {
-
-      // console.log('--- itemConfig:', itemConfig);
-      
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig, depositedPlayerItem, depositedPlayerItemIndex).deposit);
     } else {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
