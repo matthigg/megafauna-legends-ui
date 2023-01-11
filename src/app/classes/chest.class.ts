@@ -11,6 +11,7 @@ export class Chest extends GameObject {
   storedItems: StoredItemsModel = {};
   keyboardMenu: any;
   depositedItemConfig: any;
+  depositedPlayerItem: any;
 
   obj = {
     test() {return 'asdf' }
@@ -81,7 +82,8 @@ export class Chest extends GameObject {
           description: 'Place items in this chest',
           handler: () => {
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
-            this.depositedItemConfig = null;
+            
+            this.clearDepositedItem();
           }
         },
         {
@@ -132,9 +134,10 @@ export class Chest extends GameObject {
           label: 'Deposit all',
           description: `Place all ${this.depositedItemConfig?.name} into the chest`,
           handler: () => {
-            this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
+            this.depositAllItems(this.depositedPlayerItem, depositedPlayerItemIndex);
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
-            this.depositedItemConfig = null;
+            
+            this.clearDepositedItem();
           }
         },
         {
@@ -145,10 +148,10 @@ export class Chest extends GameObject {
               this.getContainerOptions(
                 resolve, 
                 this.depositedItemConfig, 
-                depositedPlayerItem
+                this.depositedPlayerItem
               ).depositSome, 
               this.depositedItemConfig, 
-              depositedPlayerItem
+              this.depositedPlayerItem
             );
           }
         },
@@ -162,7 +165,7 @@ export class Chest extends GameObject {
           description: `Place some ${this.depositedItemConfig?.name} into the chest`,
           handler: (depositedPlayerItem: any, depositedQuantity: number) => {
             playerState.items.forEach((playerItem, i) => {
-              if (playerItem.itemId === depositedPlayerItem.itemId) {
+              if (playerItem.itemId === this.depositedPlayerItem.itemId) {
                 playerItem.quantity -= depositedQuantity
                 if (playerItem.quantity === 0) playerState.items.splice(i, 1);
 
@@ -175,7 +178,8 @@ export class Chest extends GameObject {
               }
             });
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
-            this.depositedItemConfig = null;
+            
+            this.clearDepositedItem();
           }
         },
         backOption,
@@ -202,7 +206,7 @@ export class Chest extends GameObject {
   }
 
   depositAllItems(depositedPlayerItem: any, depositedPlayerItemIndex: any): void {
-    this.storedItems[depositedPlayerItem.itemId] = depositedPlayerItem;
+    this.storedItems[this.depositedPlayerItem.itemId] = this.depositedPlayerItem;
     if (depositedPlayerItemIndex >= 0) {
       playerState.items.splice(depositedPlayerItemIndex, 1);
     }
@@ -212,7 +216,7 @@ export class Chest extends GameObject {
     let isCustomDepositQuantity: boolean | null = null;
     // let itemConfig: any;
     let depositedItemName: string | null = null;
-    let depositedPlayerItem: any;
+    // let depositedPlayerItem: any;
     let depositedPlayerItemIndex: any;
     
     playerState.items.forEach((playerItem, i) => {
@@ -220,7 +224,7 @@ export class Chest extends GameObject {
         this.depositedItemConfig = Items[playerItem.itemId as keyof typeof Items];
         if (playerItem.quantity > 1) {
           isCustomDepositQuantity = true;
-          depositedPlayerItem = playerItem;
+          this.depositedPlayerItem = playerItem;
           depositedPlayerItemIndex = i;
         } else {
           this.storedItems[playerItem.itemId] = playerItem;
@@ -237,14 +241,20 @@ export class Chest extends GameObject {
       this.keyboardMenu.setOptions(this.getContainerOptions(
         resolve, 
         this.depositedItemConfig, 
-        depositedPlayerItem, 
+        this.depositedPlayerItem, 
         depositedPlayerItemIndex
       ).deposit);
     } else {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
-      this.depositedItemConfig = null;
+      
+      this.clearDepositedItem();
     }
 
     // let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
+  }
+
+  clearDepositedItem(): void {
+    this.depositedItemConfig = null;
+    this.depositedPlayerItem = null;
   }
 }
