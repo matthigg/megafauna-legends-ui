@@ -55,11 +55,10 @@ export const Items = {
   weapon_ironShortSword: {
     name: "Iron Short Sword",
     description: "A sturdy weapon",
-    // success: [
-    //   { type: "textMessage", text: "{CASTER} uses a {ACTION}!"},
-    //   { type: "stateChange", status: null },
-    //   { type: "textMessage", text: "Feeling fresh!", },
-    // ]
+  },
+  object_stone: {
+    name: "Stone",
+    description: "A dirty stone",
   },
 }
 

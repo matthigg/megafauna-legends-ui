@@ -86,21 +86,14 @@ export class Chest extends GameObject {
           label: 'Withdraw',
           description: 'Take items from this chest',
           handler: () => {
-
-            console.log('--- WITHDRAW this.storedItems:', this.storedItems);
-            
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).chestItems);
-            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve));
           }
         },
         {
           label: 'Pick up chest',
           description: 'Pick up this chest',
           handler: () => {
-
-            console.log('--- PICK UP this.storedItems:', this.storedItems);
-
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).chestItems);
+            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve).chestItems);
           }
         },
         {
@@ -207,7 +200,19 @@ export class Chest extends GameObject {
         
 
         ...Object.keys(this.storedItems).map((storedItem: any) => {
-          console.log('--- storedItem:', storedItem);
+          const itemConfig = Items[storedItem as keyof typeof Items];
+
+          return {
+            label: itemConfig.name,
+            description: itemConfig.description,
+            right: () => {
+              return "x"+this.storedItems[storedItem].quantity;
+            },
+            handler: () => {
+              this.depositItem(resolve, storedItem.itemId);
+            }
+          }
+
         }),
         backOption,
       ],
