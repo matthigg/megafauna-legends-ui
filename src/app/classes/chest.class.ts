@@ -13,10 +13,6 @@ export class Chest extends GameObject {
   depositedItemConfig: any;
   depositedPlayerItem: any;
 
-  obj = {
-    test() {return 'asdf' }
-  }
-
   constructor(config: any) {
     super(config);
 
@@ -168,13 +164,6 @@ export class Chest extends GameObject {
               if (playerItem.itemId === this.depositedPlayerItem.itemId) {
                 playerItem.quantity -= depositedQuantity
                 if (playerItem.quantity === 0) playerState.items.splice(i, 1);
-
-                // this.storedItems[playerItem.itemId]
-                //   ? this.storedItems[playerItem.itemId].quantity += +depositedQuantity
-                //   : this.storedItems[playerItem.itemId] = {
-                //       itemId: playerItem.itemId, 
-                //       quantity: +depositedQuantity
-                //     }
                 this.updateStoredItems(playerItem, depositedQuantity);
               }
             });
@@ -215,9 +204,7 @@ export class Chest extends GameObject {
 
   depositItem(resolve: any, itemId: string) {
     let isCustomDepositQuantity: boolean | null = null;
-    // let itemConfig: any;
     let depositedItemName: string | null = null;
-    // let depositedPlayerItem: any;
     let depositedPlayerItemIndex: any;
     
     playerState.items.forEach((playerItem, i) => {
@@ -228,7 +215,6 @@ export class Chest extends GameObject {
           this.depositedPlayerItem = playerItem;
           depositedPlayerItemIndex = i;
         } else {
-          // this.storedItems[playerItem.itemId] = playerItem;
           this.updateStoredItems(playerItem, 1)
           playerState.items.splice(i, 1);
         }
