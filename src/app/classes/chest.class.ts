@@ -169,12 +169,13 @@ export class Chest extends GameObject {
                 playerItem.quantity -= depositedQuantity
                 if (playerItem.quantity === 0) playerState.items.splice(i, 1);
 
-                this.storedItems[playerItem.itemId]
-                  ? this.storedItems[playerItem.itemId].quantity += +depositedQuantity
-                  : this.storedItems[playerItem.itemId] = {
-                      itemId: playerItem.itemId, 
-                      quantity: +depositedQuantity
-                    }
+                // this.storedItems[playerItem.itemId]
+                //   ? this.storedItems[playerItem.itemId].quantity += +depositedQuantity
+                //   : this.storedItems[playerItem.itemId] = {
+                //       itemId: playerItem.itemId, 
+                //       quantity: +depositedQuantity
+                //     }
+                this.updateStoredItems(playerItem, depositedQuantity);
               }
             });
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
@@ -227,7 +228,8 @@ export class Chest extends GameObject {
           this.depositedPlayerItem = playerItem;
           depositedPlayerItemIndex = i;
         } else {
-          this.storedItems[playerItem.itemId] = playerItem;
+          // this.storedItems[playerItem.itemId] = playerItem;
+          this.updateStoredItems(playerItem, 1)
           playerState.items.splice(i, 1);
         }
 
@@ -256,5 +258,14 @@ export class Chest extends GameObject {
   clearDepositedItem(): void {
     this.depositedItemConfig = null;
     this.depositedPlayerItem = null;
+  }
+
+  updateStoredItems(playerItem: any, quantity: number): void {
+    this.storedItems[playerItem.itemId]
+      ? this.storedItems[playerItem.itemId].quantity += +quantity
+      : this.storedItems[playerItem.itemId] = {
+          itemId: playerItem.itemId, 
+          quantity: +quantity
+        }
   }
 }
