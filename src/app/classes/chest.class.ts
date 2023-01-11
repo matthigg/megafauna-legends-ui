@@ -176,6 +176,8 @@ export class Chest extends GameObject {
                 }
               }
             });
+
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
           }
         },
         backOption,
