@@ -125,7 +125,7 @@ export class KeyboardMenu {
 
     // Focus on the first <button> element with the data-button attribute that is not disabled
     setTimeout(() => {
-      const focusButton = this.element.querySelector("button:not([disabled])").focus();
+      this.element.querySelector("button:not([disabled])").focus();
     });
   }
 
@@ -186,6 +186,11 @@ export class KeyboardMenu {
         this.prevFocus = button;
         this.descriptionElementText.innerText = button.dataset.description;
       });
+    });
+
+    // Focus on the first <button> element with the data-button attribute that is not disabled
+    setTimeout(() => {
+      this.element.querySelector("button:not([disabled])").focus();
     });
   }
 
