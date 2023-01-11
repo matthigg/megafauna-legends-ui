@@ -81,6 +81,7 @@ export class Chest extends GameObject {
           description: 'Place items in this chest',
           handler: () => {
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
+            this.depositedItemConfig = null;
           }
         },
         {
@@ -133,6 +134,7 @@ export class Chest extends GameObject {
           handler: () => {
             this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
+            this.depositedItemConfig = null;
           }
         },
         {
@@ -173,6 +175,7 @@ export class Chest extends GameObject {
               }
             });
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
+            this.depositedItemConfig = null;
           }
         },
         backOption,
@@ -239,6 +242,7 @@ export class Chest extends GameObject {
       ).deposit);
     } else {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
+      this.depositedItemConfig = null;
     }
 
     // let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
