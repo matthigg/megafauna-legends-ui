@@ -79,21 +79,28 @@ export class Chest extends GameObject {
           label: 'Deposit',
           description: 'Place items in this chest',
           handler: () => {
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
           }
         },
         {
           label: 'Withdraw',
           description: 'Take items from this chest',
           handler: () => {
-  
+
+            console.log('--- WITHDRAW this.storedItems:', this.storedItems);
+            
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).chestItems);
+            // this.keyboardMenu.setOptions(this.getContainerOptions(resolve));
           }
         },
         {
           label: 'Pick up chest',
           description: 'Pick up this chest',
           handler: () => {
-  
+
+            console.log('--- PICK UP this.storedItems:', this.storedItems);
+
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).chestItems);
           }
         },
         {
@@ -107,8 +114,11 @@ export class Chest extends GameObject {
       ],
 
       // Display items in the player's inventory that can be deposited
-      items: [
+      playerItems: [
         ...playerState.items.map((playerItem: any) => {
+
+          // console.log('--- playerItem:', playerItem);
+          
           const itemConfig = Items[playerItem.itemId as keyof typeof Items];
 
           return {
@@ -132,7 +142,7 @@ export class Chest extends GameObject {
           description: `Place all ${itemConfig?.name} into the chest`,
           handler: () => {
             this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).items);
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
           }
         },
         {
@@ -172,9 +182,33 @@ export class Chest extends GameObject {
                     }
               }
             });
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).playerItems);
           }
         },
+        backOption,
+      ],
+
+      // Display items in a chest that can be withdrawn
+      chestItems: [
+        // ...playerState.items.map((playerItem: any) => {
+        //   const itemConfig = Items[playerItem.itemId as keyof typeof Items];
+
+        //   return {
+        //     label: itemConfig.name,
+        //     description: itemConfig.description,
+        //     right: () => {
+        //       return "x"+playerItem.quantity;
+        //     },
+        //     handler: () => {
+        //       this.depositItem(resolve, playerItem.itemId);
+        //     }
+        //   }
+        // }),
+        
+
+        ...Object.keys(this.storedItems).map((storedItem: any) => {
+          console.log('--- storedItem:', storedItem);
+        }),
         backOption,
       ],
     }
@@ -220,7 +254,7 @@ export class Chest extends GameObject {
         depositedPlayerItemIndex
       ).deposit);
     } else {
-      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
+      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).playerItems);
     }
 
     // let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1

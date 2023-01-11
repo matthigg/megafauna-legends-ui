@@ -108,6 +108,8 @@ export class KeyboardMenu {
       button.addEventListener('click', () => {
         const chosenOption = this.options[ Number(button.dataset.button) ];
         chosenOption.handler();
+
+        // console.log('--- chosenOption:', chosenOption);
       });
 
       // Note: button.focus() adds :focus-visible { outline: ... } via the user 
@@ -123,7 +125,7 @@ export class KeyboardMenu {
 
     // Focus on the first <button> element with the data-button attribute that is not disabled
     setTimeout(() => {
-      const focusButtonDisasbled = this.element.querySelector("button:not([disabled])").focus();
+      const focusButton = this.element.querySelector("button:not([disabled])").focus();
     });
   }
 
