@@ -3,10 +3,17 @@ import { playerState } from "../shared/player-state";
 import { Actions, Items } from "../shared/utils";
 import { KeyboardMenu } from "./keyboard-menu.class";
 
+interface StoredItemsModel {
+  [key: string]: { itemId: string, quantity: number }
+}
+
 export class Chest extends GameObject {
-  storedItems: any[] = [];
+  storedItems: StoredItemsModel = {};
   keyboardMenu: any;
-  stackMap: any = {}
+
+  obj = {
+    test() {return 'asdf' }
+  }
 
   constructor(config: any) {
     super(config);
@@ -167,12 +174,21 @@ export class Chest extends GameObject {
                   playerState.items.splice(i, 1);
                 }
 
-                console.log('--- playerState.items:', playerState.items);
+                // console.log('--- playerState.items:', playerState.items);
+
+                // this.storedItems.forEach(storedItem => {
+                //   console.log('--- storedItem:', storedItem);
+                // });
+
+                console.log('--- this.storedItems:', this.storedItems);
+                if (this.storedItems[playerItem.itemId]) {
+
+                }
 
               }
 
               // console.log('--- playerItem:', playerItem);
-            })
+            });
           }
         },
         backOption,
@@ -181,7 +197,8 @@ export class Chest extends GameObject {
   }
 
   depositAllItems(depositedPlayerItem: any, depositedPlayerItemIndex: any): void {
-    this.storedItems.push(depositedPlayerItem)
+    // this.storedItems.push(depositedPlayerItem)
+    this.storedItems[depositedPlayerItem.itemId] = depositedPlayerItem;
     if (depositedPlayerItemIndex >= 0) {
       playerState.items.splice(depositedPlayerItemIndex, 1);
     }
@@ -204,7 +221,8 @@ export class Chest extends GameObject {
           depositedPlayerItem = playerItem;
           depositedPlayerItemIndex = i;
         } else {
-          this.storedItems.push(playerItem)
+          // this.storedItems.push(playerItem)
+          this.storedItems[playerItem.itemId] = playerItem;
           playerState.items.splice(i, 1);
         }
 

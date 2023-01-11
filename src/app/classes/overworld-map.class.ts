@@ -189,9 +189,9 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
         y: convertToPx(10),
         isContainer: true,
         src: "assets/sfbl-container-01.svg",
-        items: [
-          { label: 'stone', description: 'this is a stone' },
-        ],
+        items: {
+          object_stone: { itemId: 'object_stone', quantity: 2 }
+        },
         // interaction: [
         talking: [
           {
