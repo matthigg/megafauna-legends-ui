@@ -151,11 +151,28 @@ export class Chest extends GameObject {
         {
           label: 'Place items in chest',
           description: `Place some ${itemConfig?.name} into the chest`,
-          handler: (quantity: number) => {
+          handler: (depositedPlayerItem: any, quantity: number) => {
 
-            console.log('--- quantity:', quantity);
-            console.log('--- playerState:', playerState);
-            console.log('--- storedItems:', this.storedItems);
+            // console.log('--- depositedPlayerItem:', depositedPlayerItem);
+            // console.log('--- quantity:', quantity);
+            // console.log('--- playerState:', playerState);
+            // console.log('--- storedItems:', this.storedItems);
+
+            playerState.items.forEach((playerItem, i) => {
+              if (playerItem.itemId === depositedPlayerItem.itemId) {
+
+                playerItem.quantity -= quantity
+
+                if (playerItem.quantity === 0) {
+                  playerState.items.splice(i, 1);
+                }
+
+                console.log('--- playerState.items:', playerState.items);
+
+              }
+
+              // console.log('--- playerItem:', playerItem);
+            })
           }
         },
         backOption,

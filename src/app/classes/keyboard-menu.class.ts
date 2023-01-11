@@ -131,7 +131,7 @@ export class KeyboardMenu {
     this.options = options;
 
     // console.log('--- itemConfig:', itemConfig);
-    console.log('--- depositedPlayerItem:', depositedPlayerItem);
+    // console.log('--- depositedPlayerItem:', depositedPlayerItem);
 
     this.element.innerHTML = `
       <div class="slidecontainer">
@@ -173,7 +173,7 @@ export class KeyboardMenu {
         const quantity = rangeSliderValue?.innerText;
         
         const chosenOption = this.options[ Number(button.dataset.button) ];
-        chosenOption.handler(quantity);
+        chosenOption.handler(depositedPlayerItem, quantity);
       });
 
       button.addEventListener('mouseenter', () => {
