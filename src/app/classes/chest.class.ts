@@ -10,6 +10,7 @@ interface StoredItemsModel {
 export class Chest extends GameObject {
   storedItems: StoredItemsModel = {};
   keyboardMenu: any;
+  depositedItemConfig: any;
 
   obj = {
     test() {return 'asdf' }
@@ -109,14 +110,10 @@ export class Chest extends GameObject {
       // Display items in the player's inventory that can be deposited
       playerItems: [
         ...playerState.items.map((playerItem: any) => {
-
-          // console.log('--- playerItem:', playerItem);
-          
-          const itemConfig = Items[playerItem.itemId as keyof typeof Items];
-
+          const playerItemConfig = Items[playerItem.itemId as keyof typeof Items];
           return {
-            label: itemConfig.name,
-            description: itemConfig.description,
+            label: playerItemConfig.name,
+            description: playerItemConfig.description,
             right: () => {
               return "x"+playerItem.quantity;
             },
@@ -132,23 +129,23 @@ export class Chest extends GameObject {
       deposit: [
         {
           label: 'Deposit all',
-          description: `Place all ${itemConfig?.name} into the chest`,
+          description: `Place all ${this.depositedItemConfig?.name} into the chest`,
           handler: () => {
             this.depositAllItems(depositedPlayerItem, depositedPlayerItemIndex);
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve).playerItems);
           }
         },
         {
-          description: `Place some ${itemConfig?.name} into the chest`,
+          description: `Place some ${this.depositedItemConfig?.name} into the chest`,
           label: 'Deposit some',
           handler: () => {
             this.keyboardMenu.setOptionsRangeSlider(
               this.getContainerOptions(
                 resolve, 
-                itemConfig, 
+                this.depositedItemConfig, 
                 depositedPlayerItem
               ).depositSome, 
-              itemConfig, 
+              this.depositedItemConfig, 
               depositedPlayerItem
             );
           }
@@ -160,7 +157,7 @@ export class Chest extends GameObject {
       depositSome: [
         {
           label: 'Place items in chest',
-          description: `Place some ${itemConfig?.name} into the chest`,
+          description: `Place some ${this.depositedItemConfig?.name} into the chest`,
           handler: (depositedPlayerItem: any, depositedQuantity: number) => {
             playerState.items.forEach((playerItem, i) => {
               if (playerItem.itemId === depositedPlayerItem.itemId) {
@@ -175,7 +172,7 @@ export class Chest extends GameObject {
                     }
               }
             });
-            this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).playerItems);
+            this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
           }
         },
         backOption,
@@ -183,28 +180,11 @@ export class Chest extends GameObject {
 
       // Display items in a chest that can be withdrawn
       chestItems: [
-        // ...playerState.items.map((playerItem: any) => {
-        //   const itemConfig = Items[playerItem.itemId as keyof typeof Items];
-
-        //   return {
-        //     label: itemConfig.name,
-        //     description: itemConfig.description,
-        //     right: () => {
-        //       return "x"+playerItem.quantity;
-        //     },
-        //     handler: () => {
-        //       this.depositItem(resolve, playerItem.itemId);
-        //     }
-        //   }
-        // }),
-        
-
         ...Object.keys(this.storedItems).map((storedItem: any) => {
-          const itemConfig = Items[storedItem as keyof typeof Items];
-
+          const chestItemConfig = Items[storedItem as keyof typeof Items];
           return {
-            label: itemConfig.name,
-            description: itemConfig.description,
+            label: chestItemConfig.name,
+            description: chestItemConfig.description,
             right: () => {
               return "x"+this.storedItems[storedItem].quantity;
             },
@@ -212,7 +192,6 @@ export class Chest extends GameObject {
               this.depositItem(resolve, storedItem.itemId);
             }
           }
-
         }),
         backOption,
       ],
@@ -228,14 +207,14 @@ export class Chest extends GameObject {
 
   depositItem(resolve: any, itemId: string) {
     let isCustomDepositQuantity: boolean | null = null;
-    let itemConfig: any;
+    // let itemConfig: any;
     let depositedItemName: string | null = null;
     let depositedPlayerItem: any;
     let depositedPlayerItemIndex: any;
     
     playerState.items.forEach((playerItem, i) => {
       if (playerItem.itemId === itemId) {
-        itemConfig = Items[playerItem.itemId as keyof typeof Items];
+        this.depositedItemConfig = Items[playerItem.itemId as keyof typeof Items];
         if (playerItem.quantity > 1) {
           isCustomDepositQuantity = true;
           depositedPlayerItem = playerItem;
@@ -247,19 +226,19 @@ export class Chest extends GameObject {
 
         // The quantity here isn't accurate if player deposits a custom amount of items
         // TODO - create message/alert popup to display depositedItemName
-        depositedItemName = itemConfig.name + ' x' + playerItem.quantity;
+        depositedItemName = this.depositedItemConfig.name + ' x' + playerItem.quantity;
       }
     });
 
     if (isCustomDepositQuantity) {
       this.keyboardMenu.setOptions(this.getContainerOptions(
         resolve, 
-        itemConfig, 
+        this.depositedItemConfig, 
         depositedPlayerItem, 
         depositedPlayerItemIndex
       ).deposit);
     } else {
-      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).playerItems);
+      this.keyboardMenu.setOptions(this.getContainerOptions(resolve, this.depositedItemConfig).playerItems);
     }
 
     // let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
