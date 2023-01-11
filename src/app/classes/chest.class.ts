@@ -162,21 +162,16 @@ export class Chest extends GameObject {
             playerState.items.forEach((playerItem, i) => {
               if (playerItem.itemId === depositedPlayerItem.itemId) {
                 playerItem.quantity -= depositedQuantity
+                if (playerItem.quantity === 0) playerState.items.splice(i, 1);
 
-                if (playerItem.quantity === 0) {
-                  playerState.items.splice(i, 1);
-                }
-
-                if (this.storedItems[playerItem.itemId]) {
-                  this.storedItems[playerItem.itemId].quantity += +depositedQuantity;
-                } else {
-                  this.storedItems[playerItem.itemId] = {
-                    itemId: playerItem.itemId, quantity: +depositedQuantity
-                  }
-                }
+                this.storedItems[playerItem.itemId]
+                  ? this.storedItems[playerItem.itemId].quantity += +depositedQuantity
+                  : this.storedItems[playerItem.itemId] = {
+                      itemId: playerItem.itemId, 
+                      quantity: +depositedQuantity
+                    }
               }
             });
-
             this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
           }
         },
@@ -186,7 +181,6 @@ export class Chest extends GameObject {
   }
 
   depositAllItems(depositedPlayerItem: any, depositedPlayerItemIndex: any): void {
-    // this.storedItems.push(depositedPlayerItem)
     this.storedItems[depositedPlayerItem.itemId] = depositedPlayerItem;
     if (depositedPlayerItemIndex >= 0) {
       playerState.items.splice(depositedPlayerItemIndex, 1);
@@ -201,16 +195,13 @@ export class Chest extends GameObject {
     let depositedPlayerItemIndex: any;
     
     playerState.items.forEach((playerItem, i) => {
-      
       if (playerItem.itemId === itemId) {
         itemConfig = Items[playerItem.itemId as keyof typeof Items];
-
         if (playerItem.quantity > 1) {
           isCustomDepositQuantity = true;
           depositedPlayerItem = playerItem;
           depositedPlayerItemIndex = i;
         } else {
-          // this.storedItems.push(playerItem)
           this.storedItems[playerItem.itemId] = playerItem;
           playerState.items.splice(i, 1);
         }
@@ -218,10 +209,8 @@ export class Chest extends GameObject {
         // The quantity here isn't accurate if player deposits a custom amount of items
         // TODO - create message/alert popup to display depositedItemName
         depositedItemName = itemConfig.name + ' x' + playerItem.quantity;
-
       }
     });
-
 
     if (isCustomDepositQuantity) {
       this.keyboardMenu.setOptions(this.getContainerOptions(
@@ -234,9 +223,6 @@ export class Chest extends GameObject {
       this.keyboardMenu.setOptions(this.getContainerOptions(resolve, itemConfig).items);
     }
 
-    let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
-      
-    // this.keyboardMenu?.end();
-    // resolve();
+    // let chest = (<any>window).OverworldMaps.HomeCave.gameObjects.chest1
   }
 }
