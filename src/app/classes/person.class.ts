@@ -5,12 +5,13 @@ export class Person extends GameObject {
   movingProgressRemaining: number = 0;
   // isStanding: boolean = false;
   isPlayerControlled: boolean = false;
+  playerSpeed: number = 2;
 
   directionUpdate: any = {
-    'up': ['y', -1],
-    'down': ['y', 1],
-    'left': ['x', -1],
-    'right': ['x', 1],
+    'up': ['y', -this.playerSpeed],
+    'down': ['y', this.playerSpeed],
+    'left': ['x', -this.playerSpeed],
+    'right': ['x', this.playerSpeed],
   }
 
   constructor(config: any) {
@@ -57,9 +58,16 @@ export class Person extends GameObject {
   }
   
   updatePosition(): void {
-    const [ property, change ] = this.directionUpdate[this.direction];
-    (this as any)[property] += change;
-    this.movingProgressRemaining -= 1;
+
+    if (this.movingProgressRemaining > 0) {
+
+      // "property" is either "x" or "y", and "change" is either 1 or -1
+      const [ property, change ] = this.directionUpdate[this.direction];
+      (this as any)[property] += change;
+      
+      // Incrementally move in a direction by 1 or -1 pixel until movingProgressRemaining === 0
+      this.movingProgressRemaining -= this.playerSpeed;
+    }
 
     // We finished the walk! Part 7 - 19:00
     if (this.movingProgressRemaining === 0) {

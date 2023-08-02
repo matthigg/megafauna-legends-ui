@@ -21,6 +21,7 @@ export class OverworldMap {
 
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;
+    // this.lowerImage.src = 'assets/sfbl-home-cave-lower-map-01.svg';
 
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc;
@@ -172,8 +173,6 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
 
 (<any>window).OverworldMaps = {
 
-
-
   HomeCave: {
     id: "HomeCave",
     lowerSrc: "assets/sfbl-home-cave-lower-map-01.svg",
@@ -223,9 +222,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
     }
   },
 
-
-
-    Outdoors: {
+  Outdoors: {
     id: "Outdoors",
     lowerSrc: "assets/sfbl-outdoors-lower-map-01.svg",
     upperSrc: "",
@@ -252,6 +249,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       ]
     }
   },
+
   DemoRoom: {
     id: 'DemoRoom',
     lowerSrc: 'assets/pizza-legends-demoroom-lower-map-01.svg',
@@ -373,6 +371,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       ],
     },
   },
+
   Kitchen: {
     id: 'Kitchen',
     lowerSrc: 'assets/pizza-legends-kitchen-lower-map-01.svg',
@@ -438,6 +437,7 @@ function nextPosition(initialX: number, initialY: number, direction: string) {
       ],
     },
   },
+
   Street: {
     id: "Street",
     lowerSrc: "assets/images/maps/StreetNort",
