@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getStudents().subscribe(response => {
       console.log('--- response:', response);
-    })
+    });
   }
 
 }
