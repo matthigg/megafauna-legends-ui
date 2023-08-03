@@ -11,4 +11,8 @@ export class ApiService {
   getStudents() {
     return this.http.get<any>('http://localhost:8080/api/v1/student');
   }
+
+  getMegafauna() {
+    return this.http.get<any>('http://localhost:8080/megafauna');
+  }
 }

@@ -189,17 +189,18 @@ export const Enemies = {
     name: 'Beth',
     src: 'assets/test-02.svg',
     pizzas: {
-      'a': {
-        pizzaId: 'f001',
-        hp: 1,
-        maxHp: 50,
-        level: 1,
+      'firstPizza': {
+        pizzaId: null,
+        hp: null,
+        maxHp: null,
+        level: null,
       },
-      // 'b': {
-      //   pizzaId: 'v001',
-      //   maxHp: 50,
-      //   level: 1,
-      // }
+      'secondPizza': {
+        pizzaId: null,
+        hp: null,
+        maxHp: null,
+        level: null,
+      }
     }
   }
 }

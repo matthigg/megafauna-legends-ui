@@ -7,6 +7,8 @@ import { KeyPressListener } from 'src/app/classes/key-press-listener.class';
 import { Hud } from 'src/app/classes/hud.class';
 import { Progress } from 'src/app/classes/progress.class';
 import { TitleScreen } from 'src/app/classes/title-screen.class';
+import { ApiService } from 'src/app/services/api.service';
+import {Enemies } from '../../shared/utils';
 
 @Component({
   selector: 'app-overworld',
@@ -25,10 +27,26 @@ export class OverworldComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private apiService: ApiService,
   ) {}
 
   // ngOnInit(): any {
   async ngOnInit(): Promise<any> {
+    // const result = this.apiService.getMegafauna().subscribe(response => {
+    this.apiService.getMegafauna().subscribe(response => {
+      console.log('--- response:', response);
+
+      Enemies.beth.pizzas.firstPizza.pizzaId = response[0].pizzaId;
+      Enemies.beth.pizzas.firstPizza.hp = response[0].hp;
+      Enemies.beth.pizzas.firstPizza.maxHp = response[0].maxHp;
+      Enemies.beth.pizzas.firstPizza.level = response[0].level;
+
+      Enemies.beth.pizzas.secondPizza.pizzaId = response[1].pizzaId;
+      Enemies.beth.pizzas.secondPizza.hp = response[1].hp;
+      Enemies.beth.pizzas.secondPizza.maxHp = response[1].maxHp;
+      Enemies.beth.pizzas.secondPizza.level = response[1].level;
+    })
+    
     this.canvas = document.getElementById("canvas-overworld") as HTMLCanvasElement;
     this.ctx = this.canvas?.getContext("2d");
 
